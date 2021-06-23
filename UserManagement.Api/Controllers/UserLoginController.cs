@@ -37,48 +37,58 @@ namespace UserManagement.Api.Controllers
         [Route("Userlogin")]
         public async Task<IActionResult> Login(UserLoginModel model)
         {
-            if (!ModelState.IsValid)
+            var data1 = await _manager.UserAllReadyLogin(model.UserName);
+            if (data1 != null)
             {
-                return BadRequest(ModelState.GetErrorList());
+                return BadRequest("This User AllReady Login");
             }
-            var data = await _manager.CheckUser(model.UserName);
-            if(data != null)
+            else
             {
-                if (UserManagement.Utilities.Utility.Decrypt(model.Password,data.Password)==false)
+                if (!ModelState.IsValid)
                 {
-                    return BadRequest("Invalid Password");
+                    return BadRequest(ModelState.GetErrorList());
                 }
-                else
+                var data = await _manager.CheckUser(model.UserName);
+                if (data != null)
                 {
-                    await _manager.LoginAddAsync(data);
-
-                    var tokenHandler = new JwtSecurityTokenHandler();
-                    var key = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("Jwt:secret"));
-                    var tokenDescription = new SecurityTokenDescriptor
+                    if (UserManagement.Utilities.Utility.Decrypt(model.Password, data.Password) == false)
                     {
-                        Subject = new ClaimsIdentity(new[]
-                        { new Claim("id", data.Id.ToString()) ,
+                        return BadRequest("Invalid Password");
+                    }
+                    else
+                    {
+                        await _manager.LoginAddAsync(data);
+
+                        var tokenHandler = new JwtSecurityTokenHandler();
+                        var key = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("Jwt:secret"));
+                        var tokenDescription = new SecurityTokenDescriptor
+                        {
+                            Subject = new ClaimsIdentity(new[]
+                            { new Claim("id", data.Id.ToString()) ,
                             new Claim("Name", data.UserName.ToString()),
                              new Claim("RoleId", data.RoleId.ToString()),
                              new Claim("RoleName", data.RoleName.ToString()),
                              new Claim("CompanyId", data.CompanyId.ToString())
                         }
-                        ),
-                        Audience = _configuration.GetValue<string>("Jwt:Audience"),
-                        Issuer = _configuration.GetValue<string>("Jwt:Issuer"),
-                        Expires = DateTime.UtcNow.AddDays(7),
-                        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-                    };
+                            ),
+                            Audience = _configuration.GetValue<string>("Jwt:Audience"),
+                            Issuer = _configuration.GetValue<string>("Jwt:Issuer"),
+                            Expires = DateTime.UtcNow.AddDays(7),
+                            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                        };
 
-                    var token = tokenHandler.CreateToken(tokenDescription);
+                        var token = tokenHandler.CreateToken(tokenDescription);
 
-                    return Ok(tokenHandler.WriteToken(token));
+                        return Ok(tokenHandler.WriteToken(token));
+                    }
+                }
+                else
+                {
+                    return BadRequest("Invalid UserName");
                 }
             }
-            else
-            {
-                return BadRequest("Invalid UserName");
-            }
+
+                
            
             
         }

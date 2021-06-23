@@ -19,6 +19,8 @@ namespace UserManagement.Entities
         public DateTime CreatedOn { get; set; }
         public string CreatedBy { get; set; }
         public DateTime? UpdatedOn { get; set; }
+        public DateTime? LastLogin { get; set; }
+
         public string UpdatedBy { get; set; }
         public UserRole Role { get; set; }
         public string App_id { get; set; }

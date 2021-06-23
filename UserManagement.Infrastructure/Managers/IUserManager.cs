@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using UserManagement.Dtos.User;
 
 namespace UserManagement.Infrastructure.Managers
 {
@@ -13,13 +14,17 @@ namespace UserManagement.Infrastructure.Managers
         Task AddAsync(UserLoginDto model);
         Task LoginAddAsync(UserDetailDto model);
         Task EditAsync(UserLoginDto model);
+        //Task<List<AssignUserRoleDto>> GetAssignUserRoleById(int id);
+
 
         Task<UserDetailDto> GetDetailAsync(int id);
 
         Task<JqDataTableResponse<UserDetailDto>> GetPagedResultAsync(JqDataTableRequest model);
         Task DeleteAsync(int id);
         Task<UserDetailDto> CheckUser(string username);
-       Task<UserDetailDto> Login(UserLoginModel model);
+        Task<UserDetailDto> UserAllReadyLogin(string username);
+
+        Task<UserDetailDto> Login(UserLoginModel model);
        // Task<JqDataTableResponse<UserDetailDto>> GetAgentPagedResultAsync(JqDataTableRequest model);
         Task LogOut(int id);
         Task<UserDetailDto> isExist(string email);

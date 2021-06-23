@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using UserManagement.Dtos.User;
 
 namespace UserManagement.Managers
 {
@@ -65,6 +66,11 @@ namespace UserManagement.Managers
             await _repository.DeleteAsync(id);
             await _unitOfWork.SaveChangesAsync();
         }
+        public async Task<UserDetailDto> UserAllReadyLogin(string username)
+        {
+            return await _repository.GetByUserAsync(username);
+        }
+
         public async Task<UserDetailDto> CheckUser(string username)
         {
             return await _repository.GetByUserAsync(username);
@@ -73,10 +79,7 @@ namespace UserManagement.Managers
         {
             return await _repository.Login(model);
         }
-        /* public async Task<JqDataTableResponse<UserDetailDto>> GetAgentPagedResultAsync(JqDataTableRequest model)
-         {
-             return await _repository.GetAgentPagedResultAsync(model);
-         }*/
+        
 
         public async Task LogOut(int id)
         {
@@ -116,10 +119,23 @@ namespace UserManagement.Managers
             return await _repository.OnlineUserPagedResult(model);
         }
 
-        /* public async Task<JqDataTableResponse<UserDetailDto>> GetOnlyOnlineAgentPagedResultAsync(JqDataTableRequest model)
-         {
-             return await _repository.GetOnlyOnlineAgentPagedResultAsync(model);
-         }*/
+        /*public async Task<List<AssignUserRoleDto>> GetUserScreenAccessById(int id)
+        {
+            List<AssignUserRoleDto> data = new List<AssignUserRoleDto>();
+            data = await _repository.GetAsyncUserRollAccess(id);
+            if (data.Count == 0)
+            {
+                var AData = await _repository.GetAllRollDetail();
+                foreach (var item in AData)
+                {
+                    AssignUserRoleDto obj = new AssignUserRoleDto();
+                    //obj
+                    data.Add(obj);
+                }
+            }
+
+            return data;
+        }*/
 
     }
 }

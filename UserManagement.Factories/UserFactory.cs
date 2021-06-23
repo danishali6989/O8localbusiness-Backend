@@ -60,6 +60,7 @@ namespace UserManagement.Factories
                 createdOn = Utility.GetDateTime(),
                 RoleId = model.RoleId,
                 CompanyId = model.CompanyId
+
                
             };
             return data;

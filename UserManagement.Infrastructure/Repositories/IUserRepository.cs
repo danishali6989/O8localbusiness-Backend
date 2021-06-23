@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using UserManagement.Dtos.User;
 
 namespace UserManagement.Infrastructure.Repositories
 {
@@ -34,8 +35,12 @@ namespace UserManagement.Infrastructure.Repositories
 
         Task changePassword(string email, string password);
 
+       /* Task<List<AssignUserRoleDto>> GetAllRollDetail();
+        Task<List<AssignUserRoleDto>> GetAsyncUserRollAccess(int id);*/
 
-         Task<JqDataTableResponse<UserDetailDto>> OnlineUserPagedResult(JqDataTableRequest model);
+
+
+        Task<JqDataTableResponse<UserDetailDto>> OnlineUserPagedResult(JqDataTableRequest model);
         // Task<JqDataTableResponse<UserDetailDto>> GetOnlyOnlineAgentPagedResultAsync(JqDataTableRequest model);
 
     }

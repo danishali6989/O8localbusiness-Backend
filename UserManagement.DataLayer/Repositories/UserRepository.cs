@@ -29,7 +29,16 @@ namespace UserManagement.DataLayer.Repositories
 
         public async Task LoginAddAsync(LoginModule entity)
         {
+            var obj = _dataContext.User.Where(x => x.Id == entity.UserId).FirstOrDefault();
+            if (obj != null)
+            {
+                obj.LastLogin = DateTime.Now;
+                _dataContext.User.Update(obj);
+            }
+
             await _dataContext.LoginModule.AddAsync(entity);
+
+
         }
 
         public void Edit(User entity)
@@ -169,7 +178,8 @@ namespace UserManagement.DataLayer.Repositories
 
         public async Task<UserDetailDto> Login(UserLoginModel model)
         {
-            return await (from s in _dataContext.User
+
+            var user = await (from s in _dataContext.User
                           where s.UserName == model.UserName && s.Password == Utility.Encrypt(model.Password)
                           select new UserDetailDto
                           {
@@ -185,6 +195,13 @@ namespace UserManagement.DataLayer.Repositories
                           })
                          .AsNoTracking()
                          .SingleOrDefaultAsync();
+            if (user!=null)
+            {
+                var obj = _dataContext.User.Where(x => x.Id == user.Id).FirstOrDefault();
+                obj.LastLogin = DateTime.Now;
+                _dataContext.User.Update(obj);
+            }
+            return user;
         }
 
         public async Task<UserDetailDto> isExist(string email)
