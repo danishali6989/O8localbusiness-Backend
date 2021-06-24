@@ -20,5 +20,7 @@ namespace UserManagement.Infrastructure.Managers
         Task<JqDataTableResponse<UserRoleDetailDto>> GetPagedResultAsync(JqDataTableRequest model);
         Task DeleteAsync(int id);
         Task<List<SelectListItemDto>> GetAllAsync();
+        bool UpdateRoleId(int roleId, int userId);
+
     }
 }

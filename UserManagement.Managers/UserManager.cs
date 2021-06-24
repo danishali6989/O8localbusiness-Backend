@@ -66,9 +66,9 @@ namespace UserManagement.Managers
             await _repository.DeleteAsync(id);
             await _unitOfWork.SaveChangesAsync();
         }
-        public async Task<UserDetailDto> UserAllReadyLogin(string username)
+        public bool UserAllReadyLogin(int userid)
         {
-            return await _repository.GetByUserAsync(username);
+            return  _repository.GetByUserAllradyAsync(userid);
         }
 
         public async Task<UserDetailDto> CheckUser(string username)

@@ -14,7 +14,7 @@ namespace UserManagement.Models.UserLogin
         public string Password { get; set; }
         public string Mobile { get; set; }
         public int RoleId { get; set; }
-        public string App_id { get; set; }
+        public int App_id { get; set; }
         public int Finance_year { get; set; }
         public string Ip_Address { get; set; }
         public int CompanyId { get; set; }

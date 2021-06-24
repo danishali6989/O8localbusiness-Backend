@@ -19,7 +19,7 @@ namespace UserManagement.Dtos.UserLogin
         public bool CallStatus { get; set; }
         public Constants.RecordStatus Status { get; set; }
         public int CompanyId { get; set; }
-        public string App_id { get; set; }
+        public int App_id { get; set; }
         public int Finance_year { get; set; }
         public string Ip_Address { get; set; }
         public string CompanyName { get; set; }

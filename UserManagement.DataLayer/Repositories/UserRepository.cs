@@ -126,6 +126,19 @@ namespace UserManagement.DataLayer.Repositories
             _dataContext.User.Update(data);
         }
 
+        public bool GetByUserAllradyAsync(int userid)
+        {
+            var user =  _dataContext.User.Where(x => x.Id == userid).FirstOrDefault();
+            
+            if (user != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         public async Task<UserDetailDto> GetByUserAsync(string username)
         {
             return await (from s in _dataContext.User
@@ -141,9 +154,9 @@ namespace UserManagement.DataLayer.Repositories
                               Email = s.Email,
                               RoleId = s.RoleId,
                               RoleName = s.Role.RoleName,
-                              App_id=s.App_id,
-                              Finance_year=s.Finance_year,
-                              Ip_Address=s.Ip_Address,
+                              App_id = s.App_id,
+                              Finance_year = s.Finance_year,
+                              Ip_Address = s.Ip_Address,
                               CompanyId = s.CompanyId
                           })
                          .AsNoTracking()

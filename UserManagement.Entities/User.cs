@@ -23,7 +23,7 @@ namespace UserManagement.Entities
 
         public string UpdatedBy { get; set; }
         public UserRole Role { get; set; }
-        public string App_id { get; set; }
+        public int App_id { get; set; }
         public int Finance_year { get; set; }
         public string Ip_Address { get; set; }
         public int CompanyId { get; set; }

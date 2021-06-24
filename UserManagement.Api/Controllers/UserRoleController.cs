@@ -68,6 +68,18 @@ namespace UserManagement.Api.Controllers
 
             return Ok();
         }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("update-role")]
+        public IActionResult UpdateRole(int roleId, int userId)
+        {
+            var data = _manager.UpdateRoleId(roleId, userId);
+            if (data == false)
+            {
+                return NotFound();
+            }
+            return Ok(data);
+        }
 
         [HttpGet]
         [AllowAnonymous]

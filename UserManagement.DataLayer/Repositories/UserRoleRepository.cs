@@ -89,7 +89,24 @@ namespace UserManagement.DataLayer.Repositories
             };
             return pagedResult;
         }
+        public bool UpdateRoleId(int roleId, int userId)
+        {
+            try
+            {
+                var user = _dataContext.User.Where(x => x.Id == userId).FirstOrDefault();
+                user.RoleId = roleId;
+                _dataContext.User.Update(user);
+                _dataContext.SaveChanges();
+                return true;
 
+            }
+            catch (Exception ex)
+            {
+                //throw ex;
+                return false;
+            }
+
+        }
         public async Task DeleteAsync(int id)
         {
             var data = await _dataContext.UsersRoles.FindAsync(id);

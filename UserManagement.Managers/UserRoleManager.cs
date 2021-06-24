@@ -64,5 +64,10 @@ namespace UserManagement.Managers
         {
             return await _repository.GetAllAsync();
         }
+        public bool UpdateRoleId(int roleId, int userId)
+        {
+            return _repository.UpdateRoleId(roleId, userId);
+
+        }
     }
 }

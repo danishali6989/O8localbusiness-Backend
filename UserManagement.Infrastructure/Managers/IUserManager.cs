@@ -22,7 +22,7 @@ namespace UserManagement.Infrastructure.Managers
         Task<JqDataTableResponse<UserDetailDto>> GetPagedResultAsync(JqDataTableRequest model);
         Task DeleteAsync(int id);
         Task<UserDetailDto> CheckUser(string username);
-        Task<UserDetailDto> UserAllReadyLogin(string username);
+        bool UserAllReadyLogin(int userid);
 
         Task<UserDetailDto> Login(UserLoginModel model);
        // Task<JqDataTableResponse<UserDetailDto>> GetAgentPagedResultAsync(JqDataTableRequest model);

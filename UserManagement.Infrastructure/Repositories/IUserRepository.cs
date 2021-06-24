@@ -24,9 +24,11 @@ namespace UserManagement.Infrastructure.Repositories
 
         Task DeleteAsync(int id);
 
-      Task<UserDetailDto> GetByUserAsync(string username);
+        Task<UserDetailDto> GetByUserAsync(string username);
+        bool GetByUserAllradyAsync(int userid);
 
-     Task<UserDetailDto> Login(UserLoginModel model);
+
+        Task<UserDetailDto> Login(UserLoginModel model);
         Task<UserDetailDto> isExist(string email);
         //  Task<JqDataTableResponse<UserDetailDto>> GetAgentPagedResultAsync(JqDataTableRequest model);
         Task LogOut(int id);
