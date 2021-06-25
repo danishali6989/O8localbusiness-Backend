@@ -8,22 +8,9 @@
 
         public enum RecordStatus { Created, Active, Inactive, Deleted }
 
-        public enum BillPaymentMode { Cash, Transfer, Cheque , CreditCard }
 
-        public enum PaymentMode { Cash, Transfer, Check }
 
-        public enum InvoiceStatus { Pending, Paid, Deleted ,Overdue}
-        public enum BillStatus { Pending, Paid, Deleted, Overdue }
-        public enum ContactType { Customer, Vendor }
-        public enum TransactionType {CustomerAdvancePayment, InvoicePayment, VendorAdvancePayment, BillPayment, AccountIncome, AccountExpence, CreditMemo}
-        public enum TransactionStatus { Pending, Paid }
-        public enum InvoiceType { Service, Product }
-        public enum ProjectTransactionType { Invoice, Bill }
-        public struct Account
-        {
-            public const int AccountReceiveable = 1;
-            public const int AccountPayable = 2;
-        }
+       
 
         public struct UserType
         {

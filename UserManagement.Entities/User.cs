@@ -30,5 +30,7 @@ namespace UserManagement.Entities
         public Company Company { get; set; }
 
         public int otp { get; set;}
+        public string image { get; set; }
+
     }
 }

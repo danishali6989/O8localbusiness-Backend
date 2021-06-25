@@ -1,6 +1,7 @@
 ﻿using UserManagement.Dtos.UserLogin;
 using UserManagement.Entities;
 using UserManagement.Models.UserLogin;
+using UserManagement.Models.User;
 using UserManagement.Utilities;
 using System;
 using System.Collections.Generic;
@@ -30,18 +31,20 @@ namespace UserManagement.Infrastructure.Repositories
 
         Task<UserDetailDto> Login(UserLoginModel model);
         Task<UserDetailDto> isExist(string email);
-        //  Task<JqDataTableResponse<UserDetailDto>> GetAgentPagedResultAsync(JqDataTableRequest model);
         Task LogOut(int id);
         Task saveOtp(string email, int otp);
         Task<UserDetailDto> getOtp(string email);
 
         Task changePassword(string email, string password);
 
-       /* Task<List<AssignUserRoleDto>> GetAllRollDetail();
-        Task<List<AssignUserRoleDto>> GetAsyncUserRollAccess(int id);*/
+       // int UserCount(int id, DateTime? startDate, DateTime? endDate);
+
+        Task<List<UserDetailDto>> GetAllAsync();
+       // Task<UserDetailDto> GetDetailAsync(int id);
 
 
-
+/*        Task<IEnumerable<UserDetailDto>> GetAllAsync(Constants.RecordStatus? status = null);
+*/
         Task<JqDataTableResponse<UserDetailDto>> OnlineUserPagedResult(JqDataTableRequest model);
         // Task<JqDataTableResponse<UserDetailDto>> GetOnlyOnlineAgentPagedResultAsync(JqDataTableRequest model);
 

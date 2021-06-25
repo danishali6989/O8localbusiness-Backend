@@ -4,6 +4,8 @@ using UserManagement.Infrastructure.DataLayer;
 using UserManagement.Infrastructure.Managers;
 using UserManagement.Infrastructure.Repositories;
 using UserManagement.Models.UserLogin;
+using UserManagement.Models.User;
+
 using UserManagement.Utilities;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -31,7 +33,7 @@ namespace UserManagement.Managers
             _unitOfWork = unitOfWork;
         }
 
-        public async Task AddAsync(UserLoginDto model)
+        public async Task AddAsync(AddUserModel model)
         {
             await _repository.AddAsync(UserFactory.Create(model, _userId));
             await _unitOfWork.SaveChangesAsync();
@@ -43,7 +45,7 @@ namespace UserManagement.Managers
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task EditAsync(UserLoginDto model)
+        public async Task EditAsync(EditUserModel model)
         {
             var item = await _repository.GetAsync(model.Id);
             UserFactory.Create(model, item, _userId);
@@ -119,23 +121,21 @@ namespace UserManagement.Managers
             return await _repository.OnlineUserPagedResult(model);
         }
 
-        /*public async Task<List<AssignUserRoleDto>> GetUserScreenAccessById(int id)
+        /*public async Task<IEnumerable<UserDetailDto>> GetAllAsync(Constants.RecordStatus? status = null)
         {
-            List<AssignUserRoleDto> data = new List<AssignUserRoleDto>();
-            data = await _repository.GetAsyncUserRollAccess(id);
-            if (data.Count == 0)
+            var response = await _repository.GetAllAsync(status);
+            foreach (var item in response)
             {
-                var AData = await _repository.GetAllRollDetail();
-                foreach (var item in AData)
-                {
-                    AssignUserRoleDto obj = new AssignUserRoleDto();
-                    //obj
-                    data.Add(obj);
-                }
+                var invSum = _repository.UserCount(item.Id, null, null);
+               
             }
-
-            return data;
+            return response;
         }*/
 
+
+        public async Task<List<UserDetailDto>> GetAllAsync()
+        {
+            return await _repository.GetAllAsync();
+        }
     }
 }

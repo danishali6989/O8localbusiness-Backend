@@ -25,7 +25,9 @@
   </ItemGroup>
 
   <ItemGroup> 
-    <Folder Include="wwwroot\invoice\" />
+    <Folder Include="wwwroot\invoice\" /> 
+    <Folder Include="wwwroot\images\" /> 
+    <Folder Include="wwwroot\templetes\" />
     <Folder Include="wwwroot\temp\" />
   </ItemGroup>
 

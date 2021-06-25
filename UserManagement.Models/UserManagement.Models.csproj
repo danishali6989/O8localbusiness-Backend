@@ -8,4 +8,8 @@
     <ProjectReference Include="..\UserManagement.Utilities\UserManagement.Utilities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ScreenDetails\" />
+  </ItemGroup>
+
 </Project>

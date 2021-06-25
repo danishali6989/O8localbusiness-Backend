@@ -1,5 +1,7 @@
 ﻿using UserManagement.Dtos.UserLogin;
 using UserManagement.Models.UserLogin;
+using UserManagement.Models.User;
+
 using UserManagement.Utilities;
 using System;
 using System.Collections.Generic;
@@ -11,9 +13,9 @@ namespace UserManagement.Infrastructure.Managers
 {
     public interface IUserManager
     {
-        Task AddAsync(UserLoginDto model);
+        Task AddAsync(AddUserModel model);
         Task LoginAddAsync(UserDetailDto model);
-        Task EditAsync(UserLoginDto model);
+        Task EditAsync(EditUserModel model);
         //Task<List<AssignUserRoleDto>> GetAssignUserRoleById(int id);
 
 
@@ -33,7 +35,9 @@ namespace UserManagement.Infrastructure.Managers
 
         Task changePassword(string email, string password);
 
-
+        Task<List<UserDetailDto>> GetAllAsync();
+/*        Task<IEnumerable<UserDetailDto>> OnlineUserPagedResult(Constants.RecordStatus? status = null);
+*/
         Task<JqDataTableResponse<UserDetailDto>> OnlineUserPagedResult(JqDataTableRequest model);
         //  Task<JqDataTableResponse<UserDetailDto>> GetOnlyOnlineAgentPagedResultAsync(JqDataTableRequest model);
     }

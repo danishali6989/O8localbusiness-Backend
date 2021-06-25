@@ -1,6 +1,8 @@
 ﻿using UserManagement.Dtos.UserLogin;
 using UserManagement.Entities;
 using UserManagement.Models.UserLogin;
+using UserManagement.Models.User;
+
 using UserManagement.Utilities;
 using System;
 using System.Collections.Generic;
@@ -10,7 +12,7 @@ namespace UserManagement.Factories
 {
     public class UserFactory
     {
-        public static User Create(UserLoginDto model, string userId)
+        public static User Create(AddUserModel model, string userId)
         {
             var data = new User
             {
@@ -24,6 +26,7 @@ namespace UserManagement.Factories
                 Password = Utility.Encrypt(model.Password),
                 Mobile = model.Mobile,
                 RoleId = model.RoleId,
+                image=model.imageUrl,
 
                 Status = Constants.RecordStatus.Active,
                 CreatedBy = userId ?? "0",
@@ -33,7 +36,7 @@ namespace UserManagement.Factories
             };
             return data;
         }
-        public static void Create(UserLoginDto model, User entity, string userId)
+        public static void Create(EditUserModel model, User entity, string userId)
         {
             entity.Usr_FName = model.FirstName;
             entity.Usr_LName = model.LastName;
@@ -48,6 +51,7 @@ namespace UserManagement.Factories
             entity.Finance_year = model.Finance_year;
             entity.App_id = model.App_id;
             entity.CompanyId = model.CompanyId;
+            entity.image = model.imageUrl;
         }
 
 

@@ -70,7 +70,8 @@ namespace UserManagement.DataLayer.Repositories
                               Ip_Address=s.Ip_Address,
                               Finance_year=s.Finance_year,
                               App_id=s.App_id,
-                              CompanyName = s.Company.CompanyName
+                              CompanyName = s.Company.CompanyName,
+                              image=s.image,
                               
                           })
                           .AsNoTracking()
@@ -216,7 +217,29 @@ namespace UserManagement.DataLayer.Repositories
             }
             return user;
         }
+        public async Task<List<UserDetailDto>> GetAllAsync()
+        {
+            return await (from s in _dataContext.User
+                          select new UserDetailDto
+                          {
+                              Id = s.Id,
+                              Usr_FName = s.Usr_FName,
+                              Usr_LName = s.Usr_LName,
+                              UserName = s.UserName,
+                              Password = s.Password,
+                              Mobile = s.Mobile,
+                              Email = s.Email,
+                              RoleId = s.RoleId,
+                              RoleName = s.Role.RoleName,
+                              App_id = s.App_id,
+                              Finance_year = s.Finance_year,
+                              Ip_Address = s.Ip_Address,
 
+                              CompanyId = s.CompanyId
+                          })
+                          .AsNoTracking()
+                          .ToListAsync();
+        }
         public async Task<UserDetailDto> isExist(string email)
         {
             return await (from s in _dataContext.User
@@ -237,124 +260,35 @@ namespace UserManagement.DataLayer.Repositories
                          .SingleOrDefaultAsync();
         }
 
-        /* public async Task<JqDataTableResponse<UserDetailDto>> GetAgentPagedResultAsync(JqDataTableRequest model)
-         {
-             if (model.Length == 0)
-             {
-                 model.Length = Constants.DefaultPageSize;
-             }
+       /* public async Task<IEnumerable<UserDetailDto>> GetAllAsync(Constants.RecordStatus? status = null)
+        {
+            return await (from s in _dataContext.User
+                          
+                          where status == null
+                            ? s.Status != Constants.RecordStatus.Deleted
+                            : s.Status == status.Value
+                          orderby s.UserName
+                          select new UserDetailDto
+                          {
+                              Id = s.Id,
+                              Usr_FName = s.Usr_FName,
+                              Usr_LName = s.Usr_LName,
+                              UserName = s.UserName,
+                              Password = s.Password,
+                              Mobile = s.Mobile,
+                              Email = s.Email,
+                              RoleId = s.RoleId,
+                              RoleName = s.Role.RoleName,
+                              App_id = s.App_id,
+                              Finance_year = s.Finance_year,
+                              Ip_Address = s.Ip_Address,
 
-             var filterKey = model.Search.Value;
-
-             var linqStmt = (from s in _dataContext.User
-                             where s.Role.RoleName == "Agent"  && s.Status != Constants.RecordStatus.Deleted && (model.filterKey == null || EF.Functions.Like(s.FirstName, "%" + model.filterKey + "%")
-                             || EF.Functions.Like(s.LastName, "%" + model.filterKey + "%"))
-                             select new UserDetailDto
-                             {
-                                 Id = s.Id,
-                                 FirstName = s.FirstName,
-                                 LastName = s.LastName,
-                                 UserName = s.UserName,
-                                 Password = s.Password,
-                                 Mobile = s.Mobile,
-                                 Email = s.Email,
-                                 RoleId = s.RoleId,
-                                 RoleName = s.Role.RoleName
-                             })
-                             .AsNoTracking();
-
-             var sortExpresstion = model.GetSortExpression();
-
-             var pagedResult = new JqDataTableResponse<UserDetailDto>
-             {
-                 RecordsTotal = await _dataContext.User.CountAsync(x => x.Status != Constants.RecordStatus.Deleted),
-                 RecordsFiltered = await linqStmt.CountAsync(),
-                 Data = await linqStmt.OrderBy(sortExpresstion).Skip(model.Start).Take(model.Length).ToListAsync()
-             };
-             return pagedResult;
-         }*/
-
-
-        /* //with online status
-         public async Task<JqDataTableResponse<UserDetailDto>> GetOnlineAgentPagedResultAsync(JqDataTableRequest model)
-         {
-             if (model.Length == 0)
-             {
-                 model.Length = Constants.DefaultPageSize;
-             }
-
-             var filterKey = model.Search.Value;
-
-             var linqStmt = (from s in _dataContext.User
-                             join l in _dataContext.LoginModule on s.Id equals l.UserId into sl
-                             from l in sl.DefaultIfEmpty()
-                             where s.Role.RoleName == "Agent" && s.Status != Constants.RecordStatus.Deleted && (model.filterKey == null || EF.Functions.Like(s.FirstName, "%" + model.filterKey + "%")
-                             || EF.Functions.Like(s.LastName, "%" + model.filterKey + "%"))
-                             select new UserDetailDto
-                             {
-                                 Id = s.Id,
-                                 FirstName = s.FirstName,
-                                 LastName = s.LastName,
-                                 UserName = s.UserName,
-                                 Password = s.Password,
-                                 Mobile = s.Mobile,
-                                 Email = s.Email,
-                                 RoleId = s.RoleId,
-                                 RoleName = s.Role.RoleName,
-                                 CallStatus = l.status ?? false
-                             })
-                             .AsNoTracking();
-
-             var sortExpresstion = model.GetSortExpression();
-
-             var pagedResult = new JqDataTableResponse<UserDetailDto>
-             {
-                 RecordsTotal = await _dataContext.User.CountAsync(x => x.Status != Constants.RecordStatus.Deleted),
-                 RecordsFiltered = await linqStmt.CountAsync(),
-                 Data = await linqStmt.OrderBy(sortExpresstion).Skip(model.Start).Take(model.Length).ToListAsync()
-             };
-             return pagedResult;
-         }*/
-
-        //get only online agent
-        /* public async Task<JqDataTableResponse<UserDetailDto>> GetOnlyOnlineAgentPagedResultAsync(JqDataTableRequest model)
-         {
-             if (model.Length == 0)
-             {
-                 model.Length = Constants.DefaultPageSize;
-             }
-
-             var filterKey = model.Search.Value;
-
-             var linqStmt = (from s in _dataContext.LoginModule
-                             where s.user.Role.RoleName == "Agent" 
-                             select new UserDetailDto
-                             {
-                                 Id = s.Id,
-                                 FirstName = s.user.FirstName,
-                                 LastName = s.user.LastName,
-                                 UserName = s.user.UserName,
-                                 Password = s.user.Password,
-                                 Mobile = s.user.Mobile,
-                                 Email = s.user.Email,
-                                 RoleId = s.user.RoleId,
-                                 RoleName = s.user.Role.RoleName,
-                                 CallStatus = s.status ?? false
-                             })
-                             .AsNoTracking();
-
-             var sortExpresstion = model.GetSortExpression();
-
-             var pagedResult = new JqDataTableResponse<UserDetailDto>
-             {
-                 RecordsTotal = await _dataContext.User.CountAsync(x => x.Status != Constants.RecordStatus.Deleted),
-                 RecordsFiltered = await linqStmt.CountAsync(),
-                 Data = await linqStmt.OrderBy(sortExpresstion).Skip(model.Start).Take(model.Length).ToListAsync()
-             };
-             return pagedResult;
-         }
- */
-
+                              CompanyId = s.CompanyId
+                          })
+                          .AsNoTracking()
+                            .ToListAsync();
+        }
+*/
 
         public async Task LogOut(int id)
         {
