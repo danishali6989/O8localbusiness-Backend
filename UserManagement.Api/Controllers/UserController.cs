@@ -211,6 +211,45 @@ namespace UserManagement.Api.Controllers
         {
             return Ok(await _manager.GetAllAsync());
         }
-      
+
+        [HttpPost]
+        [Route("editImg")]
+        public async Task<IActionResult> EditImg([FromBody] EditImgModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.GetErrorList());
+            }
+
+            try
+            {
+                var myfilename = string.Format(@"{0}", Guid.NewGuid());
+
+                //Generate unique filename
+                string uploadsFolder = Path.Combine(_hostingEnv.WebRootPath, "images");
+
+                string filepath = uploadsFolder + "/" + myfilename + ".jpeg";
+
+                string filename = "images/" + myfilename + ".jpeg";
+
+
+                var bytess = Convert.FromBase64String(model.image);
+                using (var imageFile = new FileStream(filepath, FileMode.Create))
+                {
+                    imageFile.Write(bytess, 0, bytess.Length);
+                    imageFile.Flush();
+                }
+                model.imageUrl = filename;
+
+
+                await _manager.EditImgAsync(model);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Ok();
+        }
     }
 }

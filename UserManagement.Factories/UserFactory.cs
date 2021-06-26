@@ -54,6 +54,15 @@ namespace UserManagement.Factories
             entity.image = model.imageUrl;
         }
 
+        public static void EditImag(EditImgModel model, User entity, string userId)
+        {
+            
+            //  entity.Password = Utility.Encrypt(model.Password);
+            entity.UpdatedBy = userId ?? "0";
+            entity.UpdatedOn = Utility.GetDateTime();
+            entity.image = model.imageUrl;
+        }
+
 
         public static LoginModule Login(UserDetailDto model)
         {

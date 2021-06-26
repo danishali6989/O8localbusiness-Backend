@@ -53,6 +53,13 @@ namespace UserManagement.Managers
             await _unitOfWork.SaveChangesAsync();
         }
 
+        public async Task EditImgAsync(EditImgModel model)
+        {
+            var item = await _repository.GetAsync(model.Id);
+            UserFactory.EditImag(model, item, _userId);
+            _repository.Edit(item);
+            await _unitOfWork.SaveChangesAsync();
+        }
         public async Task<UserDetailDto> GetDetailAsync(int id)
         {
             return await _repository.GetDetailAsync(id);

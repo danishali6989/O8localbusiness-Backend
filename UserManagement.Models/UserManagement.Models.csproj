@@ -5,11 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UserManagement.Utilities\UserManagement.Utilities.csproj" />
+    <Compile Remove="ScreenDetails\**" />
+    <EmbeddedResource Remove="ScreenDetails\**" />
+    <None Remove="ScreenDetails\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ScreenDetails\" />
+    <ProjectReference Include="..\UserManagement.Utilities\UserManagement.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

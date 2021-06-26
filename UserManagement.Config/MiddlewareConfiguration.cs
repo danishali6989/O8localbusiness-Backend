@@ -35,7 +35,9 @@ namespace UserManagement.Config
             services.AddScoped<IUserAccessMAnager, UserAccessManager>();
             services.AddScoped<IUserManager, UserManager>();
             services.AddScoped<IUserRoleManager, UserRoleManager>();
-            
+            services.AddScoped<I1ScreenManager, ScreenManager>();
+
+
 
 
         }
@@ -47,6 +49,8 @@ namespace UserManagement.Config
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
+            services.AddScoped<IScreenRepository, ScreenRepository>();
+
 
 
         }

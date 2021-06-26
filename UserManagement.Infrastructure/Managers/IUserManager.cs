@@ -16,6 +16,8 @@ namespace UserManagement.Infrastructure.Managers
         Task AddAsync(AddUserModel model);
         Task LoginAddAsync(UserDetailDto model);
         Task EditAsync(EditUserModel model);
+        Task EditImgAsync(EditImgModel model);
+
         //Task<List<AssignUserRoleDto>> GetAssignUserRoleById(int id);
 
 
