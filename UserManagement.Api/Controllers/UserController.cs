@@ -18,6 +18,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IO;
+using Microsoft.AspNetCore.Identity;
+using UserManagement.DataLayer;
 
 namespace UserManagement.Api.Controllers
 {
@@ -30,14 +32,17 @@ namespace UserManagement.Api.Controllers
         private readonly IUserManager _manager;
         private readonly IHostingEnvironment _environment;
         private readonly IHostingEnvironment _hostingEnv;
+        private readonly UserManager<AppUser> _userManager;
+
 
         public UserController(IHostingEnvironment hostingEnv, IConfiguration configuration, IUserManager manager,
-            IHostingEnvironment environment)
+            IHostingEnvironment environment, UserManager<AppUser> userManager)
         {
             _configuration = configuration;
             _manager = manager;
             _environment = environment;
              _hostingEnv = hostingEnv;
+            _userManager = userManager;
         }
 
         /*[HttpPost]
@@ -66,6 +71,7 @@ namespace UserManagement.Api.Controllers
         }*/
 
         [HttpPost]
+        [Authorize]
         [Route("add")]
         public async Task<IActionResult> Add([FromBody] AddUserModel model)
         {
@@ -115,6 +121,7 @@ namespace UserManagement.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("edit")]
         public async Task<IActionResult> Edit([FromBody] EditUserModel model)
         {
@@ -151,7 +158,7 @@ namespace UserManagement.Api.Controllers
                 return BadRequest(ex.Message);
             }
 
-            return Ok();
+            return Ok("User Updated");
         }
 
         /*[HttpPost]
@@ -176,6 +183,7 @@ namespace UserManagement.Api.Controllers
         }
 */
         [HttpGet]
+        [Authorize]
         [AllowAnonymous]
         [Route("get-detail/{id}")]
         public async Task<IActionResult> GetDetail(int id)
@@ -189,6 +197,7 @@ namespace UserManagement.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("paged-result")]
         public async Task<IActionResult> PagedResult(JqDataTableRequest model)
         {
@@ -196,15 +205,17 @@ namespace UserManagement.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             await _manager.DeleteAsync(id);
 
-            return Ok();
+            return Ok("Deleted");
         }
 
         [HttpGet]
+        [Authorize]
         [AllowAnonymous]
         [Route("get-all")]
         public async Task<IActionResult> GetAllAsync()
@@ -213,6 +224,7 @@ namespace UserManagement.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("editImg")]
         public async Task<IActionResult> EditImg([FromBody] EditImgModel model)
         {
@@ -249,7 +261,35 @@ namespace UserManagement.Api.Controllers
                 return BadRequest(ex.Message);
             }
 
-            return Ok();
+            return Ok("Image Updated");
         }
+
+        [HttpPost]
+        [Authorize]
+        [Route("toggle-status/{id}")]
+        public async Task<IActionResult> ToggleStatus( int id,int status)
+        {
+           
+            var user = new UserStatus();
+            user.userid = id;
+            if (status == 1)
+            {
+                user.status = Constants.RecordStatus.Active;
+            }
+            else
+            if(status == 2)
+            {
+                user.status = Constants.RecordStatus.Inactive;
+            }
+            else
+            {
+                user.status = Constants.RecordStatus.Deleted;
+
+            }
+
+            await _manager.UpdateStatus(user);
+           return Ok("Status Updated");
+        }
+
     }
 }

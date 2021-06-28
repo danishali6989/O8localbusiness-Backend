@@ -104,6 +104,8 @@ namespace UserManagement.DataLayer.Repositories
                                 App_id=s.App_id,
                                 Finance_year=s.Finance_year,
                                 Ip_Address=s.Ip_Address,
+                                image=s.image,
+
 
                                 CompanyId = s.CompanyId
                             })
@@ -234,7 +236,7 @@ namespace UserManagement.DataLayer.Repositories
                               App_id = s.App_id,
                               Finance_year = s.Finance_year,
                               Ip_Address = s.Ip_Address,
-
+                              image=s.image,
                               CompanyId = s.CompanyId
                           })
                           .AsNoTracking()

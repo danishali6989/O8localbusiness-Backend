@@ -7,6 +7,7 @@ using UserManagement.Models.UserAccess;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UserManagement.Api.Controllers
 {
@@ -27,6 +28,7 @@ namespace UserManagement.Api.Controllers
 
 
         [HttpPost]
+        [Authorize]
         [Route("AddScreenAccess")]
         public async Task<IActionResult> AddQualifyAnswer(ScreenAccessModel model)
         {
@@ -39,17 +41,19 @@ namespace UserManagement.Api.Controllers
                 return BadRequest(ex.Message);
             }
 
-            return Ok();
+            return Ok("Created");
         }
 
 
         [HttpGet]
+        [Authorize]
         [Route("getScreenAccessByUserRoleIdId/{id}")]
         public async Task<IActionResult> GetQualifyAnser(int id)
         {
             return Ok(await _manager.GetUserScreenAccessById(id));
         }
         [HttpGet]
+        [Authorize]
         [Route("getAllScreens")]
         public async Task<IActionResult> GetAllScreenDetail()
         {

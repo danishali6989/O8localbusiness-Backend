@@ -13,6 +13,7 @@ using System.Text;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using UserManagement.Utilities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UserManagement.Api.Controllers
 {
@@ -165,6 +166,7 @@ namespace UserManagement.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("logout/{id}")]
         public async Task<IActionResult> LogOut(int id)
         {
@@ -174,6 +176,7 @@ namespace UserManagement.Api.Controllers
 
 
         [HttpPost]
+        [Authorize]
         [Route("onlineUser-paged-result")]
         public async Task<IActionResult> OnlineUserPagedResult(JqDataTableRequest model)
         {

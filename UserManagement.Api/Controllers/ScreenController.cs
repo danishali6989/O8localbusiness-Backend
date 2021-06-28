@@ -26,6 +26,7 @@ namespace UserManagement.Api.Controllers
             _environment = environment;
         }
         [HttpPost]
+        [Authorize]
         [Route("add")]
         public async Task<IActionResult> Add([FromBody] ScreenAddModel model)
         {
@@ -46,6 +47,7 @@ namespace UserManagement.Api.Controllers
             return Ok("Screen Created");
         }
         [HttpPost]
+        [Authorize]
         [Route("edit")]
         public async Task<IActionResult> Edit([FromBody] ScreenEditModel model)
         {
@@ -66,6 +68,7 @@ namespace UserManagement.Api.Controllers
             return Ok("Screen Updated");
         }
         [HttpGet]
+        [Authorize]
         [AllowAnonymous]
         [Route("get-detail/{id}")]
         public async Task<IActionResult> GetDetail(int id)
@@ -78,6 +81,7 @@ namespace UserManagement.Api.Controllers
             return Ok(data);
         }
         [HttpGet]
+        [Authorize]
         [AllowAnonymous]
         [Route("get-all")]
         public async Task<IActionResult> GetAllAsync()
@@ -86,6 +90,7 @@ namespace UserManagement.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("paged-result")]
         public async Task<IActionResult> PagedResult(JqDataTableRequest model)
         {
@@ -97,7 +102,7 @@ namespace UserManagement.Api.Controllers
         {
             await _manager.DeleteAsync(id);
 
-            return Ok();
+            return Ok("deleted");
         }
     }
 }

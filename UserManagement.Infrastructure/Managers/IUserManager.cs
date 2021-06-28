@@ -36,6 +36,8 @@ namespace UserManagement.Infrastructure.Managers
         Task<UserDetailDto> getOtp(string email);
 
         Task changePassword(string email, string password);
+        Task UpdateStatus(UserStatus model);
+
 
         Task<List<UserDetailDto>> GetAllAsync();
 /*        Task<IEnumerable<UserDetailDto>> OnlineUserPagedResult(Constants.RecordStatus? status = null);

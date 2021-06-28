@@ -53,6 +53,14 @@ namespace UserManagement.Managers
             await _unitOfWork.SaveChangesAsync();
         }
 
+        public async Task UpdateStatus(UserStatus model)
+        {
+            var item = await _repository.GetAsync(model.userid);
+            UserFactory.Create(model, item, _userId);
+            _repository.Edit(item);
+            await _unitOfWork.SaveChangesAsync();
+        }
+
         public async Task EditImgAsync(EditImgModel model)
         {
             var item = await _repository.GetAsync(model.Id);
@@ -64,6 +72,7 @@ namespace UserManagement.Managers
         {
             return await _repository.GetDetailAsync(id);
         }
+        
 
         public async Task<JqDataTableResponse<UserDetailDto>> GetPagedResultAsync(JqDataTableRequest model)
         {

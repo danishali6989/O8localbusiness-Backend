@@ -20,12 +20,15 @@ namespace UserManagement.Infrastructure.Repositories
         Task<User> GetAsync(int id);
 
         Task<UserDetailDto> GetDetailAsync(int id);
+        //Task<UserDetailDto> UpdateStatus(int id);
+
 
         Task<JqDataTableResponse<UserDetailDto>> GetPagedResultAsync(JqDataTableRequest model);
 
         Task DeleteAsync(int id);
 
         Task<UserDetailDto> GetByUserAsync(string username);
+
         bool GetByUserAllradyAsync(int userid);
 
 

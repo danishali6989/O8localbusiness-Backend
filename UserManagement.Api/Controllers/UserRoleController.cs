@@ -28,6 +28,7 @@ namespace UserManagement.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("add")]
         public async Task<IActionResult> Add([FromBody] UserRoleModel model)
         {
@@ -45,10 +46,11 @@ namespace UserManagement.Api.Controllers
                 return BadRequest(ex.Message);
             }
 
-            return Ok();
+            return Ok("Created");
         }
 
         [HttpPost]
+        [Authorize]
         [Route("edit")]
         public async Task<IActionResult> Edit([FromBody] UserRoleModel model)
         {
@@ -66,9 +68,10 @@ namespace UserManagement.Api.Controllers
                 return BadRequest(ex.Message);
             }
 
-            return Ok();
+            return Ok("Updeted");
         }
         [HttpGet]
+        [Authorize]
         [AllowAnonymous]
         [Route("update-role")]
         public IActionResult UpdateRole(int roleId, int userId)
@@ -82,6 +85,7 @@ namespace UserManagement.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [AllowAnonymous]
         [Route("get-detail/{id}")]
         public async Task<IActionResult> GetDetail(int id)
@@ -95,6 +99,7 @@ namespace UserManagement.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("paged-result")]
         public async Task<IActionResult> PagedResult(JqDataTableRequest model)
         {
@@ -106,9 +111,10 @@ namespace UserManagement.Api.Controllers
         {
             await _manager.DeleteAsync(id);
 
-            return Ok();
+            return Ok("Deleted");
         }
         [HttpGet]
+        [Authorize]
         [AllowAnonymous]
         [Route("get-all")]
         public async Task<IActionResult> GetAllAsync()

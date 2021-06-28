@@ -53,7 +53,14 @@ namespace UserManagement.Factories
             entity.CompanyId = model.CompanyId;
             entity.image = model.imageUrl;
         }
-
+        public static void Create(UserStatus model, User entity, string userId)
+        {
+            
+            entity.UpdatedBy = userId ?? "0";
+            entity.UpdatedOn = Utility.GetDateTime();
+            entity.Status = model.status;
+           
+        }
         public static void EditImag(EditImgModel model, User entity, string userId)
         {
             
