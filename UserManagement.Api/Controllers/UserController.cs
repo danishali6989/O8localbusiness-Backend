@@ -41,7 +41,7 @@ namespace UserManagement.Api.Controllers
             _configuration = configuration;
             _manager = manager;
             _environment = environment;
-             _hostingEnv = hostingEnv;
+            _hostingEnv = hostingEnv;
             _userManager = userManager;
         }
 
@@ -75,6 +75,8 @@ namespace UserManagement.Api.Controllers
         [Route("add")]
         public async Task<IActionResult> Add([FromBody] AddUserModel model)
         {
+            var header = Request.Headers["CompanyId"];
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState.GetErrorList());
@@ -109,7 +111,7 @@ namespace UserManagement.Api.Controllers
 
 
 
-                await _manager.AddAsync(model);
+                await _manager.AddAsync(model, header.ToString());
             }
             catch (Exception ex)
             {
@@ -125,6 +127,8 @@ namespace UserManagement.Api.Controllers
         [Route("edit")]
         public async Task<IActionResult> Edit([FromBody] EditUserModel model)
         {
+            var header = Request.Headers["CompanyId"];
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState.GetErrorList());
@@ -151,7 +155,7 @@ namespace UserManagement.Api.Controllers
                 model.imageUrl = filename;
 
 
-                await _manager.EditAsync(model);
+                await _manager.EditAsync(model, header.ToString());
             }
             catch (Exception ex)
             {
@@ -188,7 +192,9 @@ namespace UserManagement.Api.Controllers
         [Route("get-detail/{id}")]
         public async Task<IActionResult> GetDetail(int id)
         {
-            var data = await _manager.GetDetailAsync(id);
+            var header = Request.Headers["CompanyId"];
+
+            var data = await _manager.GetDetailAsync(id, Convert.ToInt32(header));
             if (data == null)
             {
                 return NotFound();
@@ -201,7 +207,9 @@ namespace UserManagement.Api.Controllers
         [Route("paged-result")]
         public async Task<IActionResult> PagedResult(JqDataTableRequest model)
         {
-            return Ok(await _manager.GetPagedResultAsync(model));
+            var header = Request.Headers["CompanyId"];
+
+            return Ok(await _manager.GetPagedResultAsync(model, Convert.ToInt32(header)));
         }
 
         [HttpPost]
@@ -209,7 +217,9 @@ namespace UserManagement.Api.Controllers
         [Route("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _manager.DeleteAsync(id);
+            var header = Request.Headers["CompanyId"];
+
+            await _manager.DeleteAsync(id, Convert.ToInt32(header));
 
             return Ok("Deleted");
         }
@@ -220,6 +230,8 @@ namespace UserManagement.Api.Controllers
         [Route("get-all")]
         public async Task<IActionResult> GetAllAsync()
         {
+            var header = Request.Headers["CompanyId"];
+
             return Ok(await _manager.GetAllAsync());
         }
 
@@ -228,6 +240,8 @@ namespace UserManagement.Api.Controllers
         [Route("editImg")]
         public async Task<IActionResult> EditImg([FromBody] EditImgModel model)
         {
+            var header = Request.Headers["CompanyId"];
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState.GetErrorList());
@@ -254,7 +268,7 @@ namespace UserManagement.Api.Controllers
                 model.imageUrl = filename;
 
 
-                await _manager.EditImgAsync(model);
+                await _manager.EditImgAsync(model, header.ToString());
             }
             catch (Exception ex)
             {
@@ -267,9 +281,11 @@ namespace UserManagement.Api.Controllers
         [HttpPost]
         [Authorize]
         [Route("toggle-status/{id}")]
-        public async Task<IActionResult> ToggleStatus( int id,int status)
+        public async Task<IActionResult> ToggleStatus(int id, int status)
         {
-           
+            var header = Request.Headers["CompanyId"];
+
+
             var user = new UserStatus();
             user.userid = id;
             if (status == 1)
@@ -277,7 +293,7 @@ namespace UserManagement.Api.Controllers
                 user.status = Constants.RecordStatus.Active;
             }
             else
-            if(status == 2)
+            if (status == 2)
             {
                 user.status = Constants.RecordStatus.Inactive;
             }
@@ -287,8 +303,8 @@ namespace UserManagement.Api.Controllers
 
             }
 
-            await _manager.UpdateStatus(user);
-           return Ok("Status Updated");
+            await _manager.UpdateStatus(user, header.ToString());
+            return Ok("Status Updated");
         }
 
     }

@@ -13,7 +13,7 @@ using UserManagement.Models.UserLogin;
 
 namespace UserManagement.DataLayer.Repositories
 {
-    public class UserRepository:IUserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly DataContext _dataContext;
 
@@ -46,39 +46,39 @@ namespace UserManagement.DataLayer.Repositories
             _dataContext.User.Update(entity);
         }
 
-        public async Task<User> GetAsync(int id)
+        public async Task<User> GetAsync(int id, int header)
         {
             return await _dataContext.User.FindAsync(id);
         }
 
-        public async Task<UserDetailDto> GetDetailAsync(int id)
+        public async Task<UserDetailDto> GetDetailAsync(int id, int header)
         {
             return await (from s in _dataContext.User
-                          where s.Id == id
+                          where s.Id == id && s.CompanyId == header //&& s.Status == Constants.RecordStatus.Active
                           select new UserDetailDto
                           {
                               Id = s.Id,
                               Usr_FName = s.Usr_FName,
                               Usr_LName = s.Usr_LName,
                               UserName = s.UserName,
-                              Password =s.Password,
+                              Password = s.Password,
                               Mobile = s.Mobile,
                               Email = s.Email,
                               RoleId = s.RoleId,
                               RoleName = s.Role.RoleName,
                               CompanyId = s.CompanyId,
-                              Ip_Address=s.Ip_Address,
-                              Finance_year=s.Finance_year,
-                              App_id=s.App_id,
+                              Ip_Address = s.Ip_Address,
+                              Finance_year = s.Finance_year,
+                              App_id = s.App_id,
                               CompanyName = s.Company.CompanyName,
-                              image=s.image,
-                              
+                              image = s.image,
+
                           })
                           .AsNoTracking()
                           .SingleOrDefaultAsync();
         }
 
-        public async Task<JqDataTableResponse<UserDetailDto>> GetPagedResultAsync(JqDataTableRequest model)
+        public async Task<JqDataTableResponse<UserDetailDto>> GetPagedResultAsync(JqDataTableRequest model, int header)
         {
             if (model.Length == 0)
             {
@@ -89,7 +89,7 @@ namespace UserManagement.DataLayer.Repositories
 
             var linqStmt = (from s in _dataContext.User
                             where s.Status != Constants.RecordStatus.Deleted && (model.filterKey == null || EF.Functions.Like(s.Usr_FName, "%" + model.filterKey + "%")
-                            || EF.Functions.Like(s.Usr_FName, "%" + model.filterKey + "%"))
+                            || EF.Functions.Like(s.Usr_FName, "%" + model.filterKey + "%")) && s.CompanyId == header
                             select new UserDetailDto
                             {
                                 Id = s.Id,
@@ -101,10 +101,10 @@ namespace UserManagement.DataLayer.Repositories
                                 Email = s.Email,
                                 RoleId = s.RoleId,
                                 RoleName = s.Role.RoleName,
-                                App_id=s.App_id,
-                                Finance_year=s.Finance_year,
-                                Ip_Address=s.Ip_Address,
-                                image=s.image,
+                                App_id = s.App_id,
+                                Finance_year = s.Finance_year,
+                                Ip_Address = s.Ip_Address,
+                                image = s.image,
 
 
                                 CompanyId = s.CompanyId
@@ -122,7 +122,7 @@ namespace UserManagement.DataLayer.Repositories
             return pagedResult;
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id, int header1)
         {
             var data = await _dataContext.User.FindAsync(id);
             data.Status = Constants.RecordStatus.Deleted;
@@ -131,8 +131,8 @@ namespace UserManagement.DataLayer.Repositories
 
         public bool GetByUserAllradyAsync(int userid)
         {
-            var user =  _dataContext.User.Where(x => x.Id == userid).FirstOrDefault();
-            
+            var user = _dataContext.User.Where(x => x.Id == userid).FirstOrDefault();
+
             if (user != null)
             {
                 return true;
@@ -185,8 +185,8 @@ namespace UserManagement.DataLayer.Repositories
                               Finance_year = s.Finance_year,
                               Ip_Address = s.Ip_Address,
                               CompanyId = s.CompanyId,
-                              otp=s.otp
-                              
+                              otp = s.otp
+
                           })
                          .AsNoTracking()
                          .SingleOrDefaultAsync();
@@ -196,22 +196,22 @@ namespace UserManagement.DataLayer.Repositories
         {
 
             var user = await (from s in _dataContext.User
-                          where s.UserName == model.UserName && s.Password == Utility.Encrypt(model.Password)
-                          select new UserDetailDto
-                          {
-                              Id = s.Id,
-                              Usr_FName = s.Usr_FName,
-                              Usr_LName = s.Usr_LName,
-                              UserName = s.UserName,
-                              Password = s.Password,
-                              Mobile = s.Mobile,
-                              Email = s.Email,
-                              RoleId = s.RoleId,
-                              RoleName = s.Role.RoleName
-                          })
+                              where s.UserName == model.UserName && s.Password == Utility.Encrypt(model.Password)
+                              select new UserDetailDto
+                              {
+                                  Id = s.Id,
+                                  Usr_FName = s.Usr_FName,
+                                  Usr_LName = s.Usr_LName,
+                                  UserName = s.UserName,
+                                  Password = s.Password,
+                                  Mobile = s.Mobile,
+                                  Email = s.Email,
+                                  RoleId = s.RoleId,
+                                  RoleName = s.Role.RoleName
+                              })
                          .AsNoTracking()
                          .SingleOrDefaultAsync();
-            if (user!=null)
+            if (user != null)
             {
                 var obj = _dataContext.User.Where(x => x.Id == user.Id).FirstOrDefault();
                 obj.LastLogin = DateTime.Now;
@@ -236,7 +236,7 @@ namespace UserManagement.DataLayer.Repositories
                               App_id = s.App_id,
                               Finance_year = s.Finance_year,
                               Ip_Address = s.Ip_Address,
-                              image=s.image,
+                              image = s.image,
                               CompanyId = s.CompanyId
                           })
                           .AsNoTracking()
@@ -262,35 +262,35 @@ namespace UserManagement.DataLayer.Repositories
                          .SingleOrDefaultAsync();
         }
 
-       /* public async Task<IEnumerable<UserDetailDto>> GetAllAsync(Constants.RecordStatus? status = null)
-        {
-            return await (from s in _dataContext.User
-                          
-                          where status == null
-                            ? s.Status != Constants.RecordStatus.Deleted
-                            : s.Status == status.Value
-                          orderby s.UserName
-                          select new UserDetailDto
-                          {
-                              Id = s.Id,
-                              Usr_FName = s.Usr_FName,
-                              Usr_LName = s.Usr_LName,
-                              UserName = s.UserName,
-                              Password = s.Password,
-                              Mobile = s.Mobile,
-                              Email = s.Email,
-                              RoleId = s.RoleId,
-                              RoleName = s.Role.RoleName,
-                              App_id = s.App_id,
-                              Finance_year = s.Finance_year,
-                              Ip_Address = s.Ip_Address,
+        /* public async Task<IEnumerable<UserDetailDto>> GetAllAsync(Constants.RecordStatus? status = null)
+         {
+             return await (from s in _dataContext.User
 
-                              CompanyId = s.CompanyId
-                          })
-                          .AsNoTracking()
-                            .ToListAsync();
-        }
-*/
+                           where status == null
+                             ? s.Status != Constants.RecordStatus.Deleted
+                             : s.Status == status.Value
+                           orderby s.UserName
+                           select new UserDetailDto
+                           {
+                               Id = s.Id,
+                               Usr_FName = s.Usr_FName,
+                               Usr_LName = s.Usr_LName,
+                               UserName = s.UserName,
+                               Password = s.Password,
+                               Mobile = s.Mobile,
+                               Email = s.Email,
+                               RoleId = s.RoleId,
+                               RoleName = s.Role.RoleName,
+                               App_id = s.App_id,
+                               Finance_year = s.Finance_year,
+                               Ip_Address = s.Ip_Address,
+
+                               CompanyId = s.CompanyId
+                           })
+                           .AsNoTracking()
+                             .ToListAsync();
+         }
+ */
 
         public async Task LogOut(int id)
         {
@@ -302,7 +302,7 @@ namespace UserManagement.DataLayer.Repositories
 
         public async Task saveOtp(string email, int otp)
         {
-            var data = await _dataContext.User.Where(x => x.Email== email).FirstOrDefaultAsync();
+            var data = await _dataContext.User.Where(x => x.Email == email).FirstOrDefaultAsync();
             data.otp = otp;
 
             _dataContext.User.Update(data);
@@ -320,44 +320,44 @@ namespace UserManagement.DataLayer.Repositories
 
         }
 
-         //with online status
-         public async Task<JqDataTableResponse<UserDetailDto>> OnlineUserPagedResult(JqDataTableRequest model)
-         {
-             if (model.Length == 0)
-             {
-                 model.Length = Constants.DefaultPageSize;
-             }
+        //with online status
+        public async Task<JqDataTableResponse<UserDetailDto>> OnlineUserPagedResult(JqDataTableRequest model)
+        {
+            if (model.Length == 0)
+            {
+                model.Length = Constants.DefaultPageSize;
+            }
 
-             var filterKey = model.Search.Value;
+            var filterKey = model.Search.Value;
 
-             var linqStmt = (from s in _dataContext.User
-                             join l in _dataContext.LoginModule on s.Id equals l.UserId 
-                             where s.Status != Constants.RecordStatus.Deleted && (model.filterKey == null || EF.Functions.Like(s.Usr_FName, "%" + model.filterKey + "%")
-                             || EF.Functions.Like(s.Usr_LName, "%" + model.filterKey + "%"))
-                             select new UserDetailDto
-                             {
-                                 Id = s.Id,
-                                 Usr_FName = s.Usr_FName,
-                                 Usr_LName = s.Usr_LName,
-                                 UserName = s.UserName,
-                                 Password = s.Password,
-                                 Mobile = s.Mobile,
-                                 Email = s.Email,
-                                 RoleId = s.RoleId,
-                                 RoleName = s.Role.RoleName,
-                                 CallStatus = l.status ?? false
-                             })
-                             .AsNoTracking();
+            var linqStmt = (from s in _dataContext.User
+                            join l in _dataContext.LoginModule on s.Id equals l.UserId
+                            where s.Status != Constants.RecordStatus.Deleted && (model.filterKey == null || EF.Functions.Like(s.Usr_FName, "%" + model.filterKey + "%")
+                            || EF.Functions.Like(s.Usr_LName, "%" + model.filterKey + "%"))
+                            select new UserDetailDto
+                            {
+                                Id = s.Id,
+                                Usr_FName = s.Usr_FName,
+                                Usr_LName = s.Usr_LName,
+                                UserName = s.UserName,
+                                Password = s.Password,
+                                Mobile = s.Mobile,
+                                Email = s.Email,
+                                RoleId = s.RoleId,
+                                RoleName = s.Role.RoleName,
+                                CallStatus = l.status ?? false
+                            })
+                            .AsNoTracking();
 
-             var sortExpresstion = model.GetSortExpression();
+            var sortExpresstion = model.GetSortExpression();
 
-             var pagedResult = new JqDataTableResponse<UserDetailDto>
-             {
-                 RecordsTotal = await _dataContext.User.CountAsync(x => x.Status != Constants.RecordStatus.Deleted),
-                 RecordsFiltered = await linqStmt.CountAsync(),
-                 Data = await linqStmt.OrderBy(sortExpresstion).Skip(model.Start).Take(model.Length).ToListAsync()
-             };
-             return pagedResult;
-         }
+            var pagedResult = new JqDataTableResponse<UserDetailDto>
+            {
+                RecordsTotal = await _dataContext.User.CountAsync(x => x.Status != Constants.RecordStatus.Deleted),
+                RecordsFiltered = await linqStmt.CountAsync(),
+                Data = await linqStmt.OrderBy(sortExpresstion).Skip(model.Start).Take(model.Length).ToListAsync()
+            };
+            return pagedResult;
+        }
     }
 }

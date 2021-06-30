@@ -13,35 +13,35 @@ namespace UserManagement.Infrastructure.Managers
 {
     public interface IUserManager
     {
-        Task AddAsync(AddUserModel model);
+        Task AddAsync(AddUserModel model, string header);
         Task LoginAddAsync(UserDetailDto model);
-        Task EditAsync(EditUserModel model);
-        Task EditImgAsync(EditImgModel model);
+        Task EditAsync(EditUserModel model, string header);
+        Task EditImgAsync(EditImgModel model, string header);
 
         //Task<List<AssignUserRoleDto>> GetAssignUserRoleById(int id);
 
 
-        Task<UserDetailDto> GetDetailAsync(int id);
+        Task<UserDetailDto> GetDetailAsync(int id, int header);
 
-        Task<JqDataTableResponse<UserDetailDto>> GetPagedResultAsync(JqDataTableRequest model);
-        Task DeleteAsync(int id);
+        Task<JqDataTableResponse<UserDetailDto>> GetPagedResultAsync(JqDataTableRequest model, int header);
+        Task DeleteAsync(int id, int header);
         Task<UserDetailDto> CheckUser(string username);
         bool UserAllReadyLogin(int userid);
 
         Task<UserDetailDto> Login(UserLoginModel model);
-       // Task<JqDataTableResponse<UserDetailDto>> GetAgentPagedResultAsync(JqDataTableRequest model);
+        // Task<JqDataTableResponse<UserDetailDto>> GetAgentPagedResultAsync(JqDataTableRequest model);
         Task LogOut(int id);
         Task<UserDetailDto> isExist(string email);
         Task saveOtp(string email, int otp);
         Task<UserDetailDto> getOtp(string email);
 
         Task changePassword(string email, string password);
-        Task UpdateStatus(UserStatus model);
+        Task UpdateStatus(UserStatus model, string header);
 
 
         Task<List<UserDetailDto>> GetAllAsync();
-/*        Task<IEnumerable<UserDetailDto>> OnlineUserPagedResult(Constants.RecordStatus? status = null);
-*/
+        /*        Task<IEnumerable<UserDetailDto>> OnlineUserPagedResult(Constants.RecordStatus? status = null);
+        */
         Task<JqDataTableResponse<UserDetailDto>> OnlineUserPagedResult(JqDataTableRequest model);
         //  Task<JqDataTableResponse<UserDetailDto>> GetOnlyOnlineAgentPagedResultAsync(JqDataTableRequest model);
     }

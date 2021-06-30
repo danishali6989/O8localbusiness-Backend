@@ -33,9 +33,9 @@ namespace UserManagement.Managers
             _unitOfWork = unitOfWork;
         }
 
-        public async Task AddAsync(AddUserModel model)
+        public async Task AddAsync(AddUserModel model, string header)
         {
-            await _repository.AddAsync(UserFactory.Create(model, _userId));
+            await _repository.AddAsync(UserFactory.Create(model, _userId, header));
             await _unitOfWork.SaveChangesAsync();
         }
 
@@ -45,48 +45,48 @@ namespace UserManagement.Managers
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task EditAsync(EditUserModel model)
+        public async Task EditAsync(EditUserModel model, string header)
         {
-            var item = await _repository.GetAsync(model.Id);
-            UserFactory.Create(model, item, _userId);
+            var item = await _repository.GetAsync(model.Id, Convert.ToInt32(header));
+            UserFactory.Create(model, item, _userId, header);
             _repository.Edit(item);
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task UpdateStatus(UserStatus model)
+        public async Task UpdateStatus(UserStatus model, string header)
         {
-            var item = await _repository.GetAsync(model.userid);
-            UserFactory.Create(model, item, _userId);
+            var item = await _repository.GetAsync(model.userid, Convert.ToInt32(header));
+            UserFactory.Create(model, item, _userId, header);
             _repository.Edit(item);
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task EditImgAsync(EditImgModel model)
+        public async Task EditImgAsync(EditImgModel model, string header)
         {
-            var item = await _repository.GetAsync(model.Id);
-            UserFactory.EditImag(model, item, _userId);
+            var item = await _repository.GetAsync(model.Id, Convert.ToInt32(header));
+            UserFactory.EditImag(model, item, _userId, header);
             _repository.Edit(item);
             await _unitOfWork.SaveChangesAsync();
         }
-        public async Task<UserDetailDto> GetDetailAsync(int id)
+        public async Task<UserDetailDto> GetDetailAsync(int id, int header)
         {
-            return await _repository.GetDetailAsync(id);
-        }
-        
-
-        public async Task<JqDataTableResponse<UserDetailDto>> GetPagedResultAsync(JqDataTableRequest model)
-        {
-            return await _repository.GetPagedResultAsync(model);
+            return await _repository.GetDetailAsync(id, header);
         }
 
-        public async Task DeleteAsync(int id)
+
+        public async Task<JqDataTableResponse<UserDetailDto>> GetPagedResultAsync(JqDataTableRequest model, int header)
         {
-            await _repository.DeleteAsync(id);
+            return await _repository.GetPagedResultAsync(model, header);
+        }
+
+        public async Task DeleteAsync(int id, int header)
+        {
+            await _repository.DeleteAsync(id, header);
             await _unitOfWork.SaveChangesAsync();
         }
         public bool UserAllReadyLogin(int userid)
         {
-            return  _repository.GetByUserAllradyAsync(userid);
+            return _repository.GetByUserAllradyAsync(userid);
         }
 
         public async Task<UserDetailDto> CheckUser(string username)
@@ -97,7 +97,7 @@ namespace UserManagement.Managers
         {
             return await _repository.Login(model);
         }
-        
+
 
         public async Task LogOut(int id)
         {
@@ -107,7 +107,7 @@ namespace UserManagement.Managers
 
         public async Task saveOtp(string email, int otp)
         {
-            await _repository.saveOtp(email,otp);
+            await _repository.saveOtp(email, otp);
             await _unitOfWork.SaveChangesAsync();
         }
 
@@ -122,7 +122,7 @@ namespace UserManagement.Managers
             {
                 return await _repository.isExist(email);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
