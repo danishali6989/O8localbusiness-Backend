@@ -15,15 +15,15 @@ namespace UserManagement.Infrastructure.Repositories
 
         void Edit(UserRole entity);
 
-        Task<UserRole> GetAsync(int id);
+        Task<UserRole> GetAsync(int id, int header);
 
-        Task<UserRoleDetailDto> GetDetailAsync(int id);
+        Task<UserRoleDetailDto> GetDetailAsync(int id, int header);
 
-        Task<JqDataTableResponse<UserRoleDetailDto>> GetPagedResultAsync(JqDataTableRequest model);
+        Task<JqDataTableResponse<UserRoleDetailDto>> GetPagedResultAsync(JqDataTableRequest model, int header);
 
-        Task DeleteAsync(int id);
-        Task<List<SelectListItemDto>> GetAllAsync();
+        Task DeleteAsync(int id, int header);
+        Task<List<SelectListItemDto>> GetAllAsync(int header);
 
-        bool UpdateRoleId(int roleId, int userId);
+        bool UpdateRoleId(int roleId, int userId, string header);
     }
 }

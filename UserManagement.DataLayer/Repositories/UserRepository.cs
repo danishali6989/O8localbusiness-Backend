@@ -105,8 +105,6 @@ namespace UserManagement.DataLayer.Repositories
                                 Finance_year = s.Finance_year,
                                 Ip_Address = s.Ip_Address,
                                 image = s.image,
-
-
                                 CompanyId = s.CompanyId
                             })
                             .AsNoTracking();
@@ -122,7 +120,7 @@ namespace UserManagement.DataLayer.Repositories
             return pagedResult;
         }
 
-        public async Task DeleteAsync(int id, int header1)
+        public async Task DeleteAsync(int id, int header)
         {
             var data = await _dataContext.User.FindAsync(id);
             data.Status = Constants.RecordStatus.Deleted;
@@ -219,9 +217,10 @@ namespace UserManagement.DataLayer.Repositories
             }
             return user;
         }
-        public async Task<List<UserDetailDto>> GetAllAsync()
+        public async Task<List<UserDetailDto>> GetAllAsync(int header)
         {
             return await (from s in _dataContext.User
+                          where s.CompanyId == header
                           select new UserDetailDto
                           {
                               Id = s.Id,

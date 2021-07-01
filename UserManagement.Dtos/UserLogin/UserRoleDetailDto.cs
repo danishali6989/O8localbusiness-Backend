@@ -8,5 +8,10 @@ namespace UserManagement.Dtos.UserLogin
     {
         public int Id { get; set; }
         public string RoleName { get; set; }
+
+        public int CompanyId { get; set; }
+
+
+
     }
 }

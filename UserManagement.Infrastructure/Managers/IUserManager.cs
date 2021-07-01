@@ -39,7 +39,7 @@ namespace UserManagement.Infrastructure.Managers
         Task UpdateStatus(UserStatus model, string header);
 
 
-        Task<List<UserDetailDto>> GetAllAsync();
+        Task<List<UserDetailDto>> GetAllAsync(int header);
         /*        Task<IEnumerable<UserDetailDto>> OnlineUserPagedResult(Constants.RecordStatus? status = null);
         */
         Task<JqDataTableResponse<UserDetailDto>> OnlineUserPagedResult(JqDataTableRequest model);

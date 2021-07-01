@@ -23,7 +23,11 @@ namespace UserManagement.DataLayer.EntityConfigurations
             builder.Property(x => x.CreatedOn).IsRequired();
             builder.Property(x => x.CreatedBy).IsRequired().HasMaxLength(40);
             builder.Property(x => x.UpdatedOn).IsRequired(false);
+          builder.Property(x => x.CompanyId).IsRequired();
+
             builder.Property(x => x.UpdatedBy).IsRequired(false).HasMaxLength(40);
+          //  builder.HasMany(x => x.Company).WithOne().HasForeignKey(x => x.CompanyId);
+
         }
     }
 }

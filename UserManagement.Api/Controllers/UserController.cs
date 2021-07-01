@@ -71,7 +71,7 @@ namespace UserManagement.Api.Controllers
         }*/
 
         [HttpPost]
-        [Authorize]
+       [Authorize]
         [Route("add")]
         public async Task<IActionResult> Add([FromBody] AddUserModel model)
         {
@@ -232,7 +232,7 @@ namespace UserManagement.Api.Controllers
         {
             var header = Request.Headers["CompanyId"];
 
-            return Ok(await _manager.GetAllAsync());
+            return Ok(await _manager.GetAllAsync(Convert.ToInt32(header)));
         }
 
         [HttpPost]

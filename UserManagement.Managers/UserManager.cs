@@ -149,9 +149,9 @@ namespace UserManagement.Managers
         }*/
 
 
-        public async Task<List<UserDetailDto>> GetAllAsync()
+        public async Task<List<UserDetailDto>> GetAllAsync(int header)
         {
-            return await _repository.GetAllAsync();
+            return await _repository.GetAllAsync(header);
         }
     }
 }

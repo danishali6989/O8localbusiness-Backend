@@ -11,16 +11,16 @@ namespace UserManagement.Infrastructure.Managers
 {
     public interface IUserRoleManager
     {
-        Task AddAsync(UserRoleModel model);
+        Task AddAsync(UserRoleModel model, string header);
 
-        Task EditAsync(UserRoleModel model);
+        Task EditAsync(UserRoleModel model, string header);
 
-        Task<UserRoleDetailDto> GetDetailAsync(int id);
+        Task<UserRoleDetailDto> GetDetailAsync(int id, int header);
 
-        Task<JqDataTableResponse<UserRoleDetailDto>> GetPagedResultAsync(JqDataTableRequest model);
-        Task DeleteAsync(int id);
-        Task<List<SelectListItemDto>> GetAllAsync();
-        bool UpdateRoleId(int roleId, int userId);
+        Task<JqDataTableResponse<UserRoleDetailDto>> GetPagedResultAsync(JqDataTableRequest model, int header);
+        Task DeleteAsync(int id, int header);
+        Task<List<SelectListItemDto>> GetAllAsync(int header);
+        bool UpdateRoleId(int roleId, int userId, string header);
 
     }
 }

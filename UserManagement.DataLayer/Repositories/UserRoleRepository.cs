@@ -32,15 +32,15 @@ namespace UserManagement.DataLayer.Repositories
             _dataContext.UsersRoles.Update(entity);
         }
 
-        public async Task<UserRole> GetAsync(int id)
+        public async Task<UserRole> GetAsync(int id, int header)
         {
             return await _dataContext.UsersRoles.FindAsync(id);
         }
 
-        public async Task<UserRoleDetailDto> GetDetailAsync(int id)
+        public async Task<UserRoleDetailDto> GetDetailAsync(int id, int header)
         {
             return await (from s in _dataContext.UsersRoles
-                          where s.Id == id
+                          where s.Id == id && s.CompanyId == header
                           select new UserRoleDetailDto
                           {
                               Id = s.Id,
@@ -49,19 +49,21 @@ namespace UserManagement.DataLayer.Repositories
                           .AsNoTracking()
                           .SingleOrDefaultAsync();
         }
-        public async Task<List<SelectListItemDto>> GetAllAsync()
+        public async Task<List<SelectListItemDto>> GetAllAsync(int header)
         {
             return await (from s in _dataContext.UsersRoles
+                          where s.CompanyId == header
                           select new SelectListItemDto
                           {
                               KeyInt = s.Id,
-                              Value = s.RoleName
+                              Value = s.RoleName,
+                              CompanyId=s.CompanyId
                           })
                           .AsNoTracking()
                           .ToListAsync();
         }
 
-        public async Task<JqDataTableResponse<UserRoleDetailDto>> GetPagedResultAsync(JqDataTableRequest model)
+        public async Task<JqDataTableResponse<UserRoleDetailDto>> GetPagedResultAsync(JqDataTableRequest model, int header)
         {
             if (model.Length == 0)
             {
@@ -71,11 +73,13 @@ namespace UserManagement.DataLayer.Repositories
             var filterKey = model.Search.Value;
 
             var linqStmt = (from s in _dataContext.UsersRoles
-                            where s.Status != Constants.RecordStatus.Deleted && (filterKey == null || EF.Functions.Like(s.RoleName, "%" + filterKey + "%"))
+                            where s.Status != Constants.RecordStatus.Deleted && (filterKey == null || EF.Functions.Like(s.RoleName, "%" + filterKey + "%")) && s.CompanyId == header
                             select new UserRoleDetailDto
                             {
                                 Id = s.Id,
-                                RoleName = s.RoleName
+                                RoleName = s.RoleName,
+                                CompanyId=s.CompanyId
+                                
                             })
                             .AsNoTracking();
 
@@ -89,7 +93,7 @@ namespace UserManagement.DataLayer.Repositories
             };
             return pagedResult;
         }
-        public bool UpdateRoleId(int roleId, int userId)
+        public bool UpdateRoleId(int roleId, int userId, string header)
         {
             try
             {
@@ -107,7 +111,7 @@ namespace UserManagement.DataLayer.Repositories
             }
 
         }
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id, int header)
         {
             var data = await _dataContext.UsersRoles.FindAsync(id);
             data.Status = Constants.RecordStatus.Deleted;

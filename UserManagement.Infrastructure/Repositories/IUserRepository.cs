@@ -42,7 +42,7 @@ namespace UserManagement.Infrastructure.Repositories
 
         // int UserCount(int id, DateTime? startDate, DateTime? endDate);
 
-        Task<List<UserDetailDto>> GetAllAsync();
+        Task<List<UserDetailDto>> GetAllAsync(int header);
         // Task<UserDetailDto> GetDetailAsync(int id);
 
 

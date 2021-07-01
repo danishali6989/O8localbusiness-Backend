@@ -31,42 +31,42 @@ namespace UserManagement.Managers
             _unitOfWork = unitOfWork;
         }
 
-        public async Task AddAsync(UserRoleModel model)
+        public async Task AddAsync(UserRoleModel model, string header)
         {
-            await _repository.AddAsync(UserRoleFactory.Create(model, _userId));
+            await _repository.AddAsync(UserRoleFactory.Create(model, _userId, header));
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task EditAsync(UserRoleModel model)
+        public async Task EditAsync(UserRoleModel model, string header)
         {
-            var item = await _repository.GetAsync(model.Id);
-            UserRoleFactory.Create(model, item, _userId);
+            var item = await _repository.GetAsync(model.Id, Convert.ToInt32(header));
+            UserRoleFactory.Create(model, item, _userId, header);
             _repository.Edit(item);
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<UserRoleDetailDto> GetDetailAsync(int id)
+        public async Task<UserRoleDetailDto> GetDetailAsync(int id, int header)
         {
-            return await _repository.GetDetailAsync(id);
+            return await _repository.GetDetailAsync(id, header);
         }
 
-        public async Task<JqDataTableResponse<UserRoleDetailDto>> GetPagedResultAsync(JqDataTableRequest model)
+        public async Task<JqDataTableResponse<UserRoleDetailDto>> GetPagedResultAsync(JqDataTableRequest model, int header)
         {
-            return await _repository.GetPagedResultAsync(model);
+            return await _repository.GetPagedResultAsync(model, header);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id, int header)
         {
-            await _repository.DeleteAsync(id);
+            await _repository.DeleteAsync(id, header);
             await _unitOfWork.SaveChangesAsync();
         }
-        public async Task<List<SelectListItemDto>> GetAllAsync()
+        public async Task<List<SelectListItemDto>> GetAllAsync(int header)
         {
-            return await _repository.GetAllAsync();
+            return await _repository.GetAllAsync(header);
         }
-        public bool UpdateRoleId(int roleId, int userId)
+        public bool UpdateRoleId(int roleId, int userId, string header)
         {
-            return _repository.UpdateRoleId(roleId, userId);
+            return _repository.UpdateRoleId(roleId, userId,header);
 
         }
     }

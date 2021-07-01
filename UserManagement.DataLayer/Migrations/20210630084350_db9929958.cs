@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace UserManagement.DataLayer.Migrations
 {
-    public partial class MyFirstMigration09062021222 : Migration
+    public partial class db9929958 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -57,13 +57,13 @@ namespace UserManagement.DataLayer.Migrations
                 name: "Companys",
                 columns: table => new
                 {
-                    CompanyTenantId = table.Column<int>(nullable: false)
+                    CompanyId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CompanyName = table.Column<string>(maxLength: 500, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Companys", x => x.CompanyTenantId);
+                    table.PrimaryKey("PK_Companys", x => x.CompanyId);
                 });
 
             migrationBuilder.CreateTable(
@@ -73,7 +73,12 @@ namespace UserManagement.DataLayer.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ScreenName = table.Column<string>(nullable: false),
-                    ScreenCode = table.Column<string>(nullable: false)
+                    ScreenCode = table.Column<string>(nullable: false),
+                    Status = table.Column<int>(nullable: false),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    CreatedBy = table.Column<string>(maxLength: 40, nullable: false),
+                    UpdatedOn = table.Column<DateTime>(nullable: true),
+                    UpdatedBy = table.Column<string>(maxLength: 40, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -242,21 +247,23 @@ namespace UserManagement.DataLayer.Migrations
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     CreatedBy = table.Column<string>(maxLength: 40, nullable: false),
                     UpdatedOn = table.Column<DateTime>(nullable: true),
+                    LastLogin = table.Column<DateTime>(nullable: true),
                     UpdatedBy = table.Column<string>(maxLength: 40, nullable: true),
-                    App_id = table.Column<string>(nullable: false),
+                    App_id = table.Column<int>(nullable: false),
                     Finance_year = table.Column<int>(nullable: false),
                     Ip_Address = table.Column<string>(nullable: false),
-                    CompanyTenantId = table.Column<int>(nullable: false),
-                    OTP = table.Column<int>(nullable: false)
+                    CompanyId = table.Column<int>(nullable: false),
+                    otp = table.Column<int>(nullable: false),
+                    image = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Users_Companys_CompanyTenantId",
-                        column: x => x.CompanyTenantId,
+                        name: "FK_Users_Companys_CompanyId",
+                        column: x => x.CompanyId,
                         principalTable: "Companys",
-                        principalColumn: "CompanyTenantId",
+                        principalColumn: "CompanyId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Users_UserRoles_RoleId",
@@ -276,7 +283,7 @@ namespace UserManagement.DataLayer.Migrations
                     createdOn = table.Column<DateTime>(nullable: true),
                     status = table.Column<bool>(nullable: true),
                     RoleId = table.Column<int>(nullable: true),
-                    CompanyTenantId = table.Column<int>(nullable: true)
+                    CompanyId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -334,9 +341,9 @@ namespace UserManagement.DataLayer.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_CompanyTenantId",
+                name: "IX_Users_CompanyId",
                 table: "Users",
-                column: "CompanyTenantId");
+                column: "CompanyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_RoleId",

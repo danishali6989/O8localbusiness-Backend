@@ -28,10 +28,12 @@ namespace UserManagement.Api.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+       [Authorize]
         [Route("add")]
         public async Task<IActionResult> Add([FromBody] UserRoleModel model)
         {
+            var header = Request.Headers["CompanyId"];
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState.GetErrorList());
@@ -39,7 +41,7 @@ namespace UserManagement.Api.Controllers
 
             try
             {
-                await _manager.AddAsync(model);
+                await _manager.AddAsync(model, header.ToString());
             }
             catch (Exception ex)
             {
@@ -50,10 +52,12 @@ namespace UserManagement.Api.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+      [Authorize]
         [Route("edit")]
         public async Task<IActionResult> Edit([FromBody] UserRoleModel model)
         {
+            var header = Request.Headers["CompanyId"];
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState.GetErrorList());
@@ -61,7 +65,7 @@ namespace UserManagement.Api.Controllers
 
             try
             {
-                await _manager.EditAsync(model);
+                await _manager.EditAsync(model, header.ToString());
             }
             catch (Exception ex)
             {
@@ -76,7 +80,9 @@ namespace UserManagement.Api.Controllers
         [Route("update-role")]
         public IActionResult UpdateRole(int roleId, int userId)
         {
-            var data = _manager.UpdateRoleId(roleId, userId);
+            var header = Request.Headers["CompanyId"];
+
+            var data = _manager.UpdateRoleId(roleId, userId, header.ToString());
             if (data == false)
             {
                 return NotFound();
@@ -85,12 +91,14 @@ namespace UserManagement.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+       [Authorize]
         [AllowAnonymous]
         [Route("get-detail/{id}")]
         public async Task<IActionResult> GetDetail(int id)
         {
-            var data = await _manager.GetDetailAsync(id);
+            var header = Request.Headers["CompanyId"];
+
+            var data = await _manager.GetDetailAsync(id, Convert.ToInt32(header));
             if (data == null)
             {
                 return NotFound();
@@ -99,27 +107,33 @@ namespace UserManagement.Api.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+       [Authorize]
         [Route("paged-result")]
         public async Task<IActionResult> PagedResult(JqDataTableRequest model)
         {
-            return Ok(await _manager.GetPagedResultAsync(model));
+            var header = Request.Headers["CompanyId"];
+
+            return Ok(await _manager.GetPagedResultAsync(model, Convert.ToInt32(header)));
         }
         [HttpPost]
         [Route("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _manager.DeleteAsync(id);
+            var header = Request.Headers["CompanyId"];
+
+            await _manager.DeleteAsync(id, Convert.ToInt32(header));
 
             return Ok("Deleted");
         }
         [HttpGet]
-        [Authorize]
+       [Authorize]
         [AllowAnonymous]
         [Route("get-all")]
         public async Task<IActionResult> GetAllAsync()
         {
-            return Ok(await _manager.GetAllAsync());
+            var header = Request.Headers["CompanyId"];
+
+            return Ok(await _manager.GetAllAsync(Convert.ToInt32(header)));
         }
     }
 }

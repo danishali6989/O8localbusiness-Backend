@@ -10,8 +10,8 @@ using UserManagement.DataLayer;
 namespace UserManagement.DataLayer.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210623090758_2306202188")]
-    partial class _2306202188
+    [Migration("20210630085740_db9929958222")]
+    partial class db9929958222
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -238,11 +238,24 @@ namespace UserManagement.DataLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime>("CreatedOn");
+
                     b.Property<string>("ScreenCode")
                         .IsRequired();
 
                     b.Property<string>("ScreenName")
                         .IsRequired();
+
+                    b.Property<int>("Status");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime?>("UpdatedOn");
 
                     b.HasKey("Id");
 
@@ -255,8 +268,7 @@ namespace UserManagement.DataLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("App_id")
-                        .IsRequired();
+                    b.Property<int>("App_id");
 
                     b.Property<int>("CompanyId");
 
@@ -300,6 +312,8 @@ namespace UserManagement.DataLayer.Migrations
                     b.Property<string>("Usr_LName")
                         .IsRequired();
 
+                    b.Property<string>("image");
+
                     b.Property<int>("otp");
 
                     b.HasKey("Id");
@@ -316,6 +330,8 @@ namespace UserManagement.DataLayer.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CompanyId");
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()

@@ -329,6 +329,8 @@ namespace UserManagement.DataLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CompanyId");
+
                     b.Property<string>("CreatedBy")
                         .IsRequired()
                         .HasMaxLength(40);
