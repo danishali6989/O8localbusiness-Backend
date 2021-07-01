@@ -166,7 +166,7 @@ namespace UserManagement.Api.Controllers
         }
 
         [HttpPost]
-       // [Authorize]
+       [Authorize]
         [Route("logout/{id}")]
         public async Task<IActionResult> LogOut(int id)
         {
@@ -176,7 +176,7 @@ namespace UserManagement.Api.Controllers
 
 
         [HttpPost]
-       // [Authorize]
+       [Authorize]
         [Route("onlineUser-paged-result")]
         public async Task<IActionResult> OnlineUserPagedResult(JqDataTableRequest model)
         {
