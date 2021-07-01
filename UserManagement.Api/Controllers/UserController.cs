@@ -225,7 +225,7 @@ namespace UserManagement.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+       // [Authorize]
         [AllowAnonymous]
         [Route("get-all")]
         public async Task<IActionResult> GetAllAsync()

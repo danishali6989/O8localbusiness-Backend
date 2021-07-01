@@ -129,7 +129,7 @@ namespace UserManagement.DataLayer.Repositories
 
         public bool GetByUserAllradyAsync(int userid)
         {
-            var user = _dataContext.User.Where(x => x.Id == userid).FirstOrDefault();
+            var user = _dataContext.LoginModule.Where(x => x.UserId == userid).FirstOrDefault();
 
             if (user != null)
             {
