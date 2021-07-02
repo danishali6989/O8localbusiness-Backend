@@ -33,38 +33,41 @@ namespace UserManagement.DataLayer.Repositories
             _dataContext.ScreenDetail.Update(entity);
         }
 
-        public async Task<ScreenDetail> GetAsync(int id)
+        public async Task<ScreenDetail> GetAsync(int id, int header)
         {
             return await _dataContext.ScreenDetail.FindAsync(id);
         }
 
-        public async Task<ScreenDto> GetDetailAsync(int id)
+        public async Task<ScreenDto> GetDetailAsync(int id, int header)
         {
             return await (from s in _dataContext.ScreenDetail
-                          where s.Id == id
+                          where s.Id == id && s.CompanyId == header
                           select new ScreenDto
                           {
                               Id = s.Id,
                               ScreenName=s.ScreenName,
-                              ScreenCode=s.ScreenCode
+                              ScreenCode=s.ScreenCode,
+                              CompanyId=s.CompanyId
                           })
                           .AsNoTracking()
                           .SingleOrDefaultAsync();
         }
-        public async Task<List<ScreenDto>> GetAllAsync()
+        public async Task<List<ScreenDto>> GetAllAsync(int header)
         {
             return await (from s in _dataContext.ScreenDetail
                           select new ScreenDto
                           {
                               Id=s.Id,
                               ScreenName = s.ScreenName,
-                              ScreenCode = s.ScreenCode
+                              ScreenCode = s.ScreenCode,
+                              CompanyId = s.CompanyId
+
                           })
                           .AsNoTracking()
                           .ToListAsync();
         }
 
-        public async Task<JqDataTableResponse<ScreenDto>> GetPagedResultAsync(JqDataTableRequest model)
+        public async Task<JqDataTableResponse<ScreenDto>> GetPagedResultAsync(JqDataTableRequest model, int header)
         {
             if (model.Length == 0)
             {
@@ -74,12 +77,13 @@ namespace UserManagement.DataLayer.Repositories
             var filterKey = model.Search.Value;
 
             var linqStmt = (from s in _dataContext.ScreenDetail
-                            where s.Status != Constants.RecordStatus.Deleted && (filterKey == null || EF.Functions.Like(s.ScreenName, "%" + filterKey + "%"))
+                            where s.Status != Constants.RecordStatus.Deleted && (filterKey == null || EF.Functions.Like(s.ScreenName, "%" + filterKey + "%")) && s.CompanyId == header
                             select new ScreenDto
                             {
                                 Id = s.Id,
                                 ScreenCode=s.ScreenCode,
-                                ScreenName=s.ScreenName
+                                ScreenName=s.ScreenName,
+                                CompanyId=s.CompanyId
                             })
                             .AsNoTracking();
 
@@ -94,7 +98,7 @@ namespace UserManagement.DataLayer.Repositories
             return pagedResult;
         }
         
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id, int header)
         {
             var data = await _dataContext.ScreenDetail.FindAsync(id);
             data.Status = Constants.RecordStatus.Deleted;

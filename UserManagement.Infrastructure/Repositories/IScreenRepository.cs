@@ -14,14 +14,14 @@ namespace UserManagement.Infrastructure.Repositories
         Task AddAsync(ScreenDetail entity);
 
         void Edit(ScreenDetail entity);
-        Task<ScreenDetail> GetAsync(int id);
-        Task<ScreenDto> GetDetailAsync(int id);
+        Task<ScreenDetail> GetAsync(int id, int header);
+        Task<ScreenDto> GetDetailAsync(int id, int header);
 
-        Task<List<ScreenDto>> GetAllAsync();
+        Task<List<ScreenDto>> GetAllAsync(int header);
 
-        Task<JqDataTableResponse<ScreenDto>> GetPagedResultAsync(JqDataTableRequest model);
+        Task<JqDataTableResponse<ScreenDto>> GetPagedResultAsync(JqDataTableRequest model, int header);
 
-        Task DeleteAsync(int id);
+        Task DeleteAsync(int id, int header);
 
 
     }

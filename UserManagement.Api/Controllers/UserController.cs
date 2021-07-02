@@ -71,7 +71,7 @@ namespace UserManagement.Api.Controllers
         }*/
 
         [HttpPost]
-       [Authorize]
+     //  [Authorize]
         [Route("add")]
         public async Task<IActionResult> Add([FromBody] AddUserModel model)
         {
@@ -84,6 +84,11 @@ namespace UserManagement.Api.Controllers
             if (await _manager.CheckUser(model.UserName) != null)
             {
                 return BadRequest("UserName Already SS Exist");
+            }
+
+            if (await _manager.CheckEmail(model.Email) != null)
+            {
+                return BadRequest("Email Already SS Exist");
             }
 
             try
@@ -225,7 +230,7 @@ namespace UserManagement.Api.Controllers
         }
 
         [HttpGet]
-       // [Authorize]
+        [Authorize]
         [AllowAnonymous]
         [Route("get-all")]
         public async Task<IActionResult> GetAllAsync()

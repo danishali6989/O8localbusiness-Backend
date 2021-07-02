@@ -19,6 +19,7 @@ namespace UserManagement.Infrastructure.Managers
         Task EditImgAsync(EditImgModel model, string header);
 
         //Task<List<AssignUserRoleDto>> GetAssignUserRoleById(int id);
+        Task<UserDetailDto> CheckEmail(string Email);
 
 
         Task<UserDetailDto> GetDetailAsync(int id, int header);
@@ -30,7 +31,7 @@ namespace UserManagement.Infrastructure.Managers
 
         Task<UserDetailDto> Login(UserLoginModel model);
         // Task<JqDataTableResponse<UserDetailDto>> GetAgentPagedResultAsync(JqDataTableRequest model);
-        Task LogOut(int id);
+        Task LogOut(int id, int header);
         Task<UserDetailDto> isExist(string email);
         Task saveOtp(string email, int otp);
         Task<UserDetailDto> getOtp(string email);
@@ -42,7 +43,11 @@ namespace UserManagement.Infrastructure.Managers
         Task<List<UserDetailDto>> GetAllAsync(int header);
         /*        Task<IEnumerable<UserDetailDto>> OnlineUserPagedResult(Constants.RecordStatus? status = null);
         */
-        Task<JqDataTableResponse<UserDetailDto>> OnlineUserPagedResult(JqDataTableRequest model);
+        Task<JqDataTableResponse<UserDetailDto>> OnlineUserPagedResult(JqDataTableRequest model, int header);
+        bool CheckPassword(int adminid, string adminPassword);
+        Task ChangePasswordAdmin(ChangePasswordModel model);
+
         //  Task<JqDataTableResponse<UserDetailDto>> GetOnlyOnlineAgentPagedResultAsync(JqDataTableRequest model);
     }
+
 }

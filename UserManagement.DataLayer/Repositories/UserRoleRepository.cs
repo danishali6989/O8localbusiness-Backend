@@ -44,7 +44,9 @@ namespace UserManagement.DataLayer.Repositories
                           select new UserRoleDetailDto
                           {
                               Id = s.Id,
-                              RoleName = s.RoleName
+                              RoleName = s.RoleName,
+                              CompanyId=s.CompanyId
+                              
                           })
                           .AsNoTracking()
                           .SingleOrDefaultAsync();

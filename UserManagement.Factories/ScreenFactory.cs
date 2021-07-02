@@ -10,7 +10,7 @@ namespace UserManagement.Factories
 {
     public class ScreenFactory
     {
-        public static ScreenDetail Create(ScreenAddModel model, string userId)
+        public static ScreenDetail Create(ScreenAddModel model, string userId, string header)
         {
             var data = new ScreenDetail
             {
@@ -19,15 +19,19 @@ namespace UserManagement.Factories
                 Status = Constants.RecordStatus.Active,
                 CreatedBy = userId ?? "0",
                 CreatedOn = Utility.GetDateTime(),
+                CompanyId = Convert.ToInt32(header),
+
             };
             return data;
         }
-        public static void Create(ScreenEditModel model, ScreenDetail entity, string userId)
+        public static void Create(ScreenEditModel model, ScreenDetail entity, string userId, string header)
         {
             entity.ScreenCode = model.ScreenCode;
             entity.ScreenName = model.ScreenName;
             entity.UpdatedBy = userId ?? "0";
             entity.UpdatedOn = Utility.GetDateTime();
+            entity.CompanyId = Convert.ToInt32(header);
+
         }
     }
 }

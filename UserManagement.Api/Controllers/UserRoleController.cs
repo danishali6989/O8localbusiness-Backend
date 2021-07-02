@@ -116,6 +116,7 @@ namespace UserManagement.Api.Controllers
             return Ok(await _manager.GetPagedResultAsync(model, Convert.ToInt32(header)));
         }
         [HttpPost]
+        [Authorize]
         [Route("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {

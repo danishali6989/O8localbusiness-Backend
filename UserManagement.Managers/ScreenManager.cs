@@ -30,35 +30,35 @@ namespace UserManagement.Managers
             _repository = repository;
             _unitOfWork = unitOfWork;
         }
-        public async Task AddAsync(ScreenAddModel model)
+        public async Task AddAsync(ScreenAddModel model, string header)
         {
-            await _repository.AddAsync(ScreenFactory.Create(model, _userId));
+            await _repository.AddAsync(ScreenFactory.Create(model, _userId, header));
             await _unitOfWork.SaveChangesAsync();
         }
-        public async Task EditAsync(ScreenEditModel model)
+        public async Task EditAsync(ScreenEditModel model, string header)
         {
-            var item = await _repository.GetAsync(model.Id);
-            ScreenFactory.Create(model, item, _userId);
+            var item = await _repository.GetAsync(model.Id, Convert.ToInt32(header));
+            ScreenFactory.Create(model, item, _userId, header);
             _repository.Edit(item);
             await _unitOfWork.SaveChangesAsync();
         }
-        public async Task<ScreenDto> GetDetailAsync(int id)
+        public async Task<ScreenDto> GetDetailAsync(int id, int header)
         {
-            return await _repository.GetDetailAsync(id);
+            return await _repository.GetDetailAsync(id, header);
         }
-        public async Task<List<ScreenDto>> GetAllAsync()
+        public async Task<List<ScreenDto>> GetAllAsync(int header)
         {
-            return await _repository.GetAllAsync();
-        }
-
-        public async Task<JqDataTableResponse<ScreenDto>> GetPagedResultAsync(JqDataTableRequest model)
-        {
-            return await _repository.GetPagedResultAsync(model);
+            return await _repository.GetAllAsync(header);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task<JqDataTableResponse<ScreenDto>> GetPagedResultAsync(JqDataTableRequest model, int header)
         {
-            await _repository.DeleteAsync(id);
+            return await _repository.GetPagedResultAsync(model, header);
+        }
+
+        public async Task DeleteAsync(int id, int header)
+        {
+            await _repository.DeleteAsync(id, header);
             await _unitOfWork.SaveChangesAsync();
         }
     }

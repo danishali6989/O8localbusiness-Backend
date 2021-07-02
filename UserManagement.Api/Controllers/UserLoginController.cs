@@ -166,21 +166,60 @@ namespace UserManagement.Api.Controllers
         }
 
         [HttpPost]
-       [Authorize]
+      [Authorize]
         [Route("logout/{id}")]
         public async Task<IActionResult> LogOut(int id)
         {
-            await _manager.LogOut(id);
+            var header = Request.Headers["CompanyId"];
+
+            await _manager.LogOut(id, Convert.ToInt32(header));
             return Ok();
         }
 
 
         [HttpPost]
-       [Authorize]
+        [Authorize]
         [Route("onlineUser-paged-result")]
         public async Task<IActionResult> OnlineUserPagedResult(JqDataTableRequest model)
         {
-            return Ok(await _manager.OnlineUserPagedResult(model));
+            var header = Request.Headers["CompanyId"];
+            return Ok(await _manager.OnlineUserPagedResult(model, Convert.ToInt32(header)));
+        }
+
+        [HttpPost]
+        //  [Authorize]
+        [Route("Admin-change-password")]
+        public async Task<IActionResult> AdminChangePassword([FromBody] ChangePasswordModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.GetErrorList());
+            }
+            // var user = await _manager.GetDetailAsync(model.id);
+
+            var check_Admin = _manager.CheckPassword(model.adminid, model.adminPassword);
+
+            if (check_Admin == true)
+            {
+                await _manager.ChangePasswordAdmin(model);
+                var data = new
+                {
+                    msg = "Your password has been changed.",
+                };
+                return Ok(data);
+
+                /* if (result.Succeeded)
+                 {
+                     return Ok();
+                 }*/
+
+                /* return BadRequest(result.Errors.Select(x => x.Description));*/
+            }
+
+
+            return BadRequest("not a valid admin");
+
+
         }
 
     }

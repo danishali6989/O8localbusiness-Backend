@@ -19,6 +19,8 @@ namespace UserManagement.Infrastructure.Repositories
 
         Task<User> GetAsync(int id, int header);
 
+        Task<UserDetailDto> GetByUserEmailAsync(string username);
+
         Task<UserDetailDto> GetDetailAsync(int id, int header);
         //Task<UserDetailDto> UpdateStatus(int id);
 
@@ -34,7 +36,7 @@ namespace UserManagement.Infrastructure.Repositories
 
         Task<UserDetailDto> Login(UserLoginModel model);
         Task<UserDetailDto> isExist(string email);
-        Task LogOut(int id);
+        Task LogOut(int id, int header);
         Task saveOtp(string email, int otp);
         Task<UserDetailDto> getOtp(string email);
 
@@ -48,8 +50,9 @@ namespace UserManagement.Infrastructure.Repositories
 
         /*        Task<IEnumerable<UserDetailDto>> GetAllAsync(Constants.RecordStatus? status = null);
         */
-        Task<JqDataTableResponse<UserDetailDto>> OnlineUserPagedResult(JqDataTableRequest model);
+        Task<JqDataTableResponse<UserDetailDto>> OnlineUserPagedResult(JqDataTableRequest model, int header);
         // Task<JqDataTableResponse<UserDetailDto>> GetOnlyOnlineAgentPagedResultAsync(JqDataTableRequest model);
-
+        bool CheckPasswordAsync(int adminid, string adminPassword);
+        Task ChangePasswordAdmin(ChangePasswordModel model);
     }
 }

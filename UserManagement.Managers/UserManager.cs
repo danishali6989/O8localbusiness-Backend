@@ -33,6 +33,11 @@ namespace UserManagement.Managers
             _unitOfWork = unitOfWork;
         }
 
+        public async Task<UserDetailDto> CheckEmail(string Email)
+        {
+            return await _repository.GetByUserEmailAsync(Email);
+        }
+
         public async Task AddAsync(AddUserModel model, string header)
         {
             await _repository.AddAsync(UserFactory.Create(model, _userId, header));
@@ -99,9 +104,9 @@ namespace UserManagement.Managers
         }
 
 
-        public async Task LogOut(int id)
+        public async Task LogOut(int id, int header)
         {
-            await _repository.LogOut(id);
+            await _repository.LogOut(id, header);
             await _unitOfWork.SaveChangesAsync();
         }
 
@@ -132,9 +137,9 @@ namespace UserManagement.Managers
         {
             return await _repository.getOtp(email);
         }
-        public async Task<JqDataTableResponse<UserDetailDto>> OnlineUserPagedResult(JqDataTableRequest model)
+        public async Task<JqDataTableResponse<UserDetailDto>> OnlineUserPagedResult(JqDataTableRequest model, int header)
         {
-            return await _repository.OnlineUserPagedResult(model);
+            return await _repository.OnlineUserPagedResult(model, header);
         }
 
         /*public async Task<IEnumerable<UserDetailDto>> GetAllAsync(Constants.RecordStatus? status = null)
@@ -152,6 +157,16 @@ namespace UserManagement.Managers
         public async Task<List<UserDetailDto>> GetAllAsync(int header)
         {
             return await _repository.GetAllAsync(header);
+        }
+
+        public bool CheckPassword(int adminid, string adminPassword)
+        {
+            return _repository.CheckPasswordAsync(adminid, adminPassword);
+        }
+        public async Task ChangePasswordAdmin(ChangePasswordModel model)
+        {
+            await _repository.ChangePasswordAdmin(model);
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }

@@ -54,7 +54,7 @@ namespace UserManagement.DataLayer.Repositories
         public async Task<UserDetailDto> GetDetailAsync(int id, int header)
         {
             return await (from s in _dataContext.User
-                          where s.Id == id && s.CompanyId == header //&& s.Status == Constants.RecordStatus.Active
+                          where s.Id == id && s.CompanyId == header  //&& s.Status == Constants.RecordStatus.Active
                           select new UserDetailDto
                           {
                               Id = s.Id,
@@ -194,7 +194,7 @@ namespace UserManagement.DataLayer.Repositories
         {
 
             var user = await (from s in _dataContext.User
-                              where s.UserName == model.UserName && s.Password == Utility.Encrypt(model.Password)
+                              where s.UserName == model.UserName && s.Password == Utility.Encrypt(model.Password) && s.Status== Constants.RecordStatus.Active
                               select new UserDetailDto
                               {
                                   Id = s.Id,
@@ -291,9 +291,9 @@ namespace UserManagement.DataLayer.Repositories
          }
  */
 
-        public async Task LogOut(int id)
+        public async Task LogOut(int id, int header)
         {
-            var data = await _dataContext.LoginModule.Where(x => x.UserId == id).FirstOrDefaultAsync();
+            var data = await _dataContext.LoginModule.Where(x => x.UserId == id && x.CompanyId==header).FirstOrDefaultAsync();
 
             _dataContext.LoginModule.Remove(data);
 
@@ -320,7 +320,7 @@ namespace UserManagement.DataLayer.Repositories
         }
 
         //with online status
-        public async Task<JqDataTableResponse<UserDetailDto>> OnlineUserPagedResult(JqDataTableRequest model)
+        public async Task<JqDataTableResponse<UserDetailDto>> OnlineUserPagedResult(JqDataTableRequest model, int header)
         {
             if (model.Length == 0)
             {
@@ -332,7 +332,7 @@ namespace UserManagement.DataLayer.Repositories
             var linqStmt = (from s in _dataContext.User
                             join l in _dataContext.LoginModule on s.Id equals l.UserId
                             where s.Status != Constants.RecordStatus.Deleted && (model.filterKey == null || EF.Functions.Like(s.Usr_FName, "%" + model.filterKey + "%")
-                            || EF.Functions.Like(s.Usr_LName, "%" + model.filterKey + "%"))
+                            || EF.Functions.Like(s.Usr_LName, "%" + model.filterKey + "%")) && s.CompanyId == header
                             select new UserDetailDto
                             {
                                 Id = s.Id,
@@ -344,7 +344,9 @@ namespace UserManagement.DataLayer.Repositories
                                 Email = s.Email,
                                 RoleId = s.RoleId,
                                 RoleName = s.Role.RoleName,
-                                CallStatus = l.status ?? false
+                                CallStatus = l.status ?? false,
+                                CompanyId =s.CompanyId
+
                             })
                             .AsNoTracking();
 
@@ -358,5 +360,57 @@ namespace UserManagement.DataLayer.Repositories
             };
             return pagedResult;
         }
+
+        public bool CheckPasswordAsync(int adminid, string adminPassword)
+        {
+            // if (UserManagement.Utilities.Utility.Decrypt(adminPassword, data.Password) == false)
+
+            var pass = adminPassword;
+            var user = _dataContext.User.Where(x => x.Id == adminid && (Utilities.Utility.Decrypt(pass, x.Password))).FirstOrDefault();
+
+            if (user != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public async Task ChangePasswordAdmin(ChangePasswordModel model) /*changePasswordByAdmin*/
+        {
+            var data = await _dataContext.User.Where(x => x.Id == model.id).FirstOrDefaultAsync();
+            data.Password = Utility.Encrypt(model.NewPassword);
+
+            _dataContext.User.Update(data);
+
+
+        }
+
+        public async Task<UserDetailDto> GetByUserEmailAsync(string Email)
+        {
+            return await (from s in _dataContext.User
+                          where s.Email == Email
+                          select new UserDetailDto
+                          {
+                              Id = s.Id,
+                              Usr_FName = s.Usr_FName,
+                              Usr_LName = s.Usr_LName,
+                              UserName = s.UserName,
+                              Password = s.Password,
+                              Mobile = s.Mobile,
+                              Email = s.Email,
+                              RoleId = s.RoleId,
+                              RoleName = s.Role.RoleName,
+                              App_id = s.App_id,
+                              Finance_year = s.Finance_year,
+                              Ip_Address = s.Ip_Address,
+                              CompanyId = s.CompanyId
+                          })
+                         .AsNoTracking()
+                         .SingleOrDefaultAsync();
+        }
+
     }
 }
