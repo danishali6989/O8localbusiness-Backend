@@ -128,7 +128,7 @@ namespace UserManagement.Api.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+       [Authorize]
         [Route("edit")]
         public async Task<IActionResult> Edit([FromBody] EditUserModel model)
         {

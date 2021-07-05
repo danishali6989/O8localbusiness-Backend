@@ -236,7 +236,8 @@ namespace UserManagement.DataLayer.Repositories
                               Finance_year = s.Finance_year,
                               Ip_Address = s.Ip_Address,
                               image = s.image,
-                              CompanyId = s.CompanyId
+                              CompanyId = s.CompanyId,
+                              Status=s.Status
                           })
                           .AsNoTracking()
                           .ToListAsync();
