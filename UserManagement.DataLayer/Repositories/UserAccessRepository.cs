@@ -28,18 +28,20 @@ namespace UserManagement.DataLayer.Repositories
 
         }
 
-        public async Task<List<ScreenAccessDto>> GetAsyncUserScreenAccess(int id)
+        public async Task<List<ScreenAccessDto>> GetAsyncUserScreenAccess(int id, int header)
         {
             return await (from s in _dataContext.UserScreenAccess
-                          where s.UserRoleId == id
+                          where s.UserRoleId == id && s.CompanyId==header
                           select new ScreenAccessDto
                           {
                               Id = s.Id,
                               ScreenId = s.ScreenId,
                               UserRoleId = s.UserRoleId,
                               CanAccess = s.CanAccess,
-                              ScreenName = s.Screen.ScreenName
-                              
+                              ScreenName = s.Screen.ScreenName,
+                              CompanyId = s.CompanyId
+
+
                           })
                          .AsNoTracking()
                          .OrderBy("ScreenName Asc")
@@ -55,19 +57,35 @@ namespace UserManagement.DataLayer.Repositories
             }
 
         }
-        public async Task<List<ScreendetailDto>> GetAllScreenDetail()
+        public async Task<List<ScreendetailDto>> GetAllScreenDetail(int header)
         {
             return await (from s in _dataContext.ScreenDetail
+                          where s.CompanyId == header
                           select new ScreendetailDto
                           {
                               Id = s.Id,
                               ScreenCode = s.ScreenCode,
-                              ScreenName = s.ScreenName
+                              ScreenName = s.ScreenName,
+                              CompanyId=s.CompanyId
                           })
                          .AsNoTracking()
                          .ToListAsync();
         }
 
+        public async Task<List<ScreendetailDto>> GetAllScreen()
+        {
+            return await (from s in _dataContext.ScreenDetail
+                         
+                          select new ScreendetailDto
+                          {
+                              Id = s.Id,
+                              ScreenCode = s.ScreenCode,
+                              ScreenName = s.ScreenName,
+                              CompanyId = s.CompanyId
+                          })
+                         .AsNoTracking()
+                         .ToListAsync();
+        }
 
     }
 }

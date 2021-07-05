@@ -10,8 +10,11 @@ namespace UserManagement.Infrastructure.Repositories
     public interface IUserAccessRepository
     {
         Task AddUserScreenAccessAsync(List<UserScreenAccess> entity);
-        Task<List<ScreenAccessDto>> GetAsyncUserScreenAccess(int id);
+        Task<List<ScreenAccessDto>> GetAsyncUserScreenAccess(int id, int header);
         Task DeleteAsyncUserScreenAccess(int id);
-        Task<List<ScreendetailDto>> GetAllScreenDetail();
+        Task<List<ScreendetailDto>> GetAllScreenDetail(int header);
+        Task<List<ScreendetailDto>> GetAllScreen();
+
+
     }
 }

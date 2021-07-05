@@ -187,15 +187,16 @@ namespace UserManagement.Api.Controllers
         }
 
         [HttpPost]
-        //  [Authorize]
+         [Authorize]
         [Route("Admin-change-password")]
         public async Task<IActionResult> AdminChangePassword([FromBody] ChangePasswordModel model)
         {
+            var header = Request.Headers["CompanyId"];
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState.GetErrorList());
             }
-            // var user = await _manager.GetDetailAsync(model.id);
 
             var check_Admin = _manager.CheckPassword(model.adminid, model.adminPassword);
 
@@ -208,12 +209,7 @@ namespace UserManagement.Api.Controllers
                 };
                 return Ok(data);
 
-                /* if (result.Succeeded)
-                 {
-                     return Ok();
-                 }*/
-
-                /* return BadRequest(result.Errors.Select(x => x.Description));*/
+               
             }
 
 

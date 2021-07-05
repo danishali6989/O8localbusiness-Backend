@@ -55,6 +55,7 @@ namespace UserManagement.DataLayer.Repositories
         public async Task<List<ScreenDto>> GetAllAsync(int header)
         {
             return await (from s in _dataContext.ScreenDetail
+                          where s.CompanyId == header
                           select new ScreenDto
                           {
                               Id=s.Id,

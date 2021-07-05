@@ -8,7 +8,7 @@ namespace UserManagement.Factories
 {
     public class UserScreenAccessFactory
     {
-        public static void CreateUserScreenAccess(ScreenAccessModel model, List<UserScreenAccess> entities)
+        public static void CreateUserScreenAccess(ScreenAccessModel model, List<UserScreenAccess> entities, string header)
         {
 
             //foreach (var item in model)
@@ -21,7 +21,9 @@ namespace UserManagement.Factories
                     //  Id = Guid.NewGuid(),
                     UserRoleId = model.UserRoleId,
                     ScreenId =Convert.ToInt32(ids[i]),
-                    CanAccess = model.CanAccess
+                    CanAccess = model.CanAccess,
+                    CompanyId = Convert.ToInt32(header),
+
                 };
                 entities.Add(data);
             }

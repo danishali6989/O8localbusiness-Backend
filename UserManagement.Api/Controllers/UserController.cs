@@ -71,7 +71,7 @@ namespace UserManagement.Api.Controllers
         }*/
 
         [HttpPost]
-     //  [Authorize]
+      [Authorize]
         [Route("add")]
         public async Task<IActionResult> Add([FromBody] AddUserModel model)
         {

@@ -31,24 +31,24 @@ namespace UserManagement.Managers
             _unitOfWork = unitOfWork;
         }
 
-        public async Task AddUserScreenAccessAsync(ScreenAccessModel model)
+        public async Task AddUserScreenAccessAsync(ScreenAccessModel model, string header)
         {
             await _repository.DeleteAsyncUserScreenAccess(model.UserRoleId);
             await _unitOfWork.SaveChangesAsync();
             List<UserScreenAccess> item = new List<UserScreenAccess>();
            
-            UserScreenAccessFactory.CreateUserScreenAccess(model, item);
+            UserScreenAccessFactory.CreateUserScreenAccess(model, item, header);
             await _repository.AddUserScreenAccessAsync(item);
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<List<ScreenAccessDto>> GetUserScreenAccessById(int id)
+        public async Task<List<ScreenAccessDto>> GetUserScreenAccessById(int id, int header)
         {
             List<ScreenAccessDto> data = new List<ScreenAccessDto>();
-          data = await _repository.GetAsyncUserScreenAccess(id);
+          data = await _repository.GetAsyncUserScreenAccess(id, header);
             if(data.Count == 0)
             {
-                var screenData = await _repository.GetAllScreenDetail();
+                var screenData = await _repository.GetAllScreen();
                 foreach(var item in screenData)
                 {
                     ScreenAccessDto obj = new ScreenAccessDto();
@@ -62,9 +62,9 @@ namespace UserManagement.Managers
 
             return data;
         }
-        public async Task<List<ScreendetailDto>> GetAllScreenDetail()
+        public async Task<List<ScreendetailDto>> GetAllScreenDetail(int header)
         {
-            return await _repository.GetAllScreenDetail();
+            return await _repository.GetAllScreenDetail(header);
         }
     }
 }

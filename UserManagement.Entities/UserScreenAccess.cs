@@ -10,6 +10,9 @@ namespace UserManagement.Entities
         public int UserRoleId { get; set; }
         public int ScreenId { get; set; }
         public bool CanAccess { get; set; }
+
+        public int CompanyId { get; set; }
+
         public ScreenDetail Screen { get; set; }
     }
 }

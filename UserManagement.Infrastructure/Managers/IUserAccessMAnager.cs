@@ -9,8 +9,8 @@ namespace UserManagement.Infrastructure.Managers
 {
     public interface IUserAccessMAnager
     {
-        Task AddUserScreenAccessAsync(ScreenAccessModel model);
-        Task<List<ScreenAccessDto>> GetUserScreenAccessById(int id);
-        Task<List<ScreendetailDto>> GetAllScreenDetail();
+        Task AddUserScreenAccessAsync(ScreenAccessModel model, string header);
+        Task<List<ScreenAccessDto>> GetUserScreenAccessById(int id, int header);
+        Task<List<ScreendetailDto>> GetAllScreenDetail(int header);
     }
 }

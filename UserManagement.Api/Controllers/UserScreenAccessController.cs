@@ -30,11 +30,13 @@ namespace UserManagement.Api.Controllers
         [HttpPost]
         [Authorize]
         [Route("AddScreenAccess")]
-        public async Task<IActionResult> AddQualifyAnswer(ScreenAccessModel model)
+        public async Task<IActionResult> AddScreenAcess(ScreenAccessModel model)
         {
+            var header = Request.Headers["CompanyId"];
+
             try
             {
-                await _manager.AddUserScreenAccessAsync(model);
+                await _manager.AddUserScreenAccessAsync(model, header.ToString());
             }
             catch (Exception ex)
             {
@@ -47,17 +49,21 @@ namespace UserManagement.Api.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("getScreenAccessByUserRoleIdId/{id}")]
-        public async Task<IActionResult> GetQualifyAnser(int id)
+        [Route("getScreenAccessByUserRoleId/{id}")]
+        public async Task<IActionResult> GetScreenAccessByUserRoleId(int id)
         {
-            return Ok(await _manager.GetUserScreenAccessById(id));
+            var header = Request.Headers["CompanyId"];
+
+            return Ok(await _manager.GetUserScreenAccessById(id, Convert.ToInt32(header)));
         }
         [HttpGet]
         [Authorize]
         [Route("getAllScreens")]
         public async Task<IActionResult> GetAllScreenDetail()
         {
-            return Ok(await _manager.GetAllScreenDetail());
+            var header = Request.Headers["CompanyId"];
+
+            return Ok(await _manager.GetAllScreenDetail(Convert.ToInt32(header)));
         }
     }
 }
