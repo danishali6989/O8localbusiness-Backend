@@ -39,7 +39,8 @@ namespace UserManagement.DataLayer.Repositories
                               UserRoleId = s.UserRoleId,
                               CanAccess = s.CanAccess,
                               ScreenName = s.Screen.ScreenName,
-                              CompanyId = s.CompanyId
+                              CompanyId = s.CompanyId,
+                              ScreenUrl=s.Screen.ScreenUrl
 
 
                           })
@@ -66,7 +67,8 @@ namespace UserManagement.DataLayer.Repositories
                               Id = s.Id,
                               ScreenCode = s.ScreenCode,
                               ScreenName = s.ScreenName,
-                              CompanyId=s.CompanyId
+                              CompanyId=s.CompanyId,
+                              ScreenUrl=s.ScreenUrl
                           })
                          .AsNoTracking()
                          .ToListAsync();
@@ -81,7 +83,8 @@ namespace UserManagement.DataLayer.Repositories
                               Id = s.Id,
                               ScreenCode = s.ScreenCode,
                               ScreenName = s.ScreenName,
-                              CompanyId = s.CompanyId
+                              CompanyId = s.CompanyId,
+                              ScreenUrl=s.ScreenUrl
                           })
                          .AsNoTracking()
                          .ToListAsync();

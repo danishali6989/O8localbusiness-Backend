@@ -45,7 +45,8 @@ namespace UserManagement.DataLayer.Repositories
                           {
                               Id = s.Id,
                               RoleName = s.RoleName,
-                              CompanyId=s.CompanyId
+                              CompanyId=s.CompanyId,
+                              Status=s.Status
                               
                           })
                           .AsNoTracking()
@@ -59,7 +60,8 @@ namespace UserManagement.DataLayer.Repositories
                           {
                               KeyInt = s.Id,
                               Value = s.RoleName,
-                              CompanyId=s.CompanyId
+                              CompanyId=s.CompanyId,
+                              Status=s.Status
                           })
                           .AsNoTracking()
                           .ToListAsync();
@@ -80,7 +82,8 @@ namespace UserManagement.DataLayer.Repositories
                             {
                                 Id = s.Id,
                                 RoleName = s.RoleName,
-                                CompanyId=s.CompanyId
+                                CompanyId=s.CompanyId,
+                                Status=s.Status
                                 
                             })
                             .AsNoTracking();

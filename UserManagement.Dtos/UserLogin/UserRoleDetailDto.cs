@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using UserManagement.Utilities;
 
 namespace UserManagement.Dtos.UserLogin
 {
@@ -10,6 +11,8 @@ namespace UserManagement.Dtos.UserLogin
         public string RoleName { get; set; }
 
         public int CompanyId { get; set; }
+        public Constants.RecordStatus Status { get; set; }
+
 
 
 

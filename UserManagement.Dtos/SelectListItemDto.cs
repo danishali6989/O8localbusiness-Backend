@@ -1,4 +1,6 @@
-﻿namespace UserManagement.Dtos
+﻿using UserManagement.Utilities;
+
+namespace UserManagement.Dtos
 {
     public class SelectListItemDto
     {
@@ -6,6 +8,8 @@
         public string KeyString { get; set; }
         public string Value { get; set; }
         public int CompanyId { get; set; }
+        public Constants.RecordStatus Status { get; set; }
+
 
 
     }

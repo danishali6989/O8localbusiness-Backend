@@ -12,5 +12,8 @@ namespace UserManagement.Dtos.UserAccess
 
         public int CompanyId { get; set; }
 
+        public string ScreenUrl { get; set; }
+
+
     }
 }

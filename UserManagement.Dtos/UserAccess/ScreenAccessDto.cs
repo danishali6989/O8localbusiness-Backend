@@ -12,6 +12,8 @@ namespace UserManagement.Dtos.UserAccess
         public bool CanAccess { get; set; }
         public string ScreenName { get; set; }
         public int CompanyId { get; set; }
+        public string ScreenUrl { get; set; }
+
 
     }
 }

@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using IRecurringJobManager = Hangfire.IRecurringJobManager;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace UserManagement.Api
 {
@@ -44,17 +45,36 @@ namespace UserManagement.Api
                 options.Password.RequiredLength = 6;
             });
 
-            services.AddSwaggerGen(config =>  //add this service
+           /* services.AddSwaggerGen(config =>  //add this service
             {
                 config.SwaggerDoc("v1", new Info { Title = "My API", Version = "V1" });
 
                 config.OperationFilter<CustomHeader>();
-            });
-
-           /* services.AddSession(session =>
-            {
-                session.IdleTimeout = TimeSpan.FromSeconds(180000);
             });*/
+
+            services.AddSwaggerGen(c =>
+            {
+
+                c.SwaggerDoc("v1.0", new Info { Title = "Main API v1.0", Version = "v1.0" });
+                c.OperationFilter<CustomHeader>();
+
+                var security = new Dictionary<string, IEnumerable<string>>
+                {
+                    {"Bearer", new string[] { }},
+                };
+                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = "header",
+                    Type = "apiKey"
+                });
+                c.AddSecurityRequirement(security);
+            });
+            /* services.AddSession(session =>
+             {
+                 session.IdleTimeout = TimeSpan.FromSeconds(180000);
+             });*/
 
             /* services.AddSwaggerGen(c =>
              {
@@ -143,6 +163,14 @@ namespace UserManagement.Api
         {
             if (env.IsDevelopment())
             {
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "Versioned API v1.0");
+                    // c.DocExpansion("none");
+                    c.DocumentTitle = "UserManagement";
+                    c.DocExpansion(DocExpansion.None);
+                });
                 app.UseDeveloperExceptionPage();
             }
             else
@@ -162,10 +190,18 @@ namespace UserManagement.Api
             app.UseCors("AllowAll");
             app.UseStaticFiles();
             app.UseHttpsRedirection();
+            /* app.UseSwagger();
+             app.UseSwaggerUI(c =>
+             {
+                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "HR Portal API V1");
+             });*/
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "HR Portal API V1");
+                c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "Versioned API v1.0");
+                // c.DocExpansion("none");
+                c.DocumentTitle = "UserManagement";
+                c.DocExpansion(DocExpansion.None);
             });
             app.UseAuthentication();
            // app.UseSession();

@@ -108,7 +108,7 @@ namespace UserManagement.Api.Controllers
         }
 
         [HttpPost]
-        [Route("forgotPassword/{id}")]
+        [Route("forgotPassword")]
         public async Task<IActionResult> FogotPassword(string email)
         {
             var exist = await _manager.isExist(email);
@@ -166,7 +166,7 @@ namespace UserManagement.Api.Controllers
         }
 
         [HttpPost]
-      [Authorize]
+        // [Authorize]
         [Route("logout/{id}")]
         public async Task<IActionResult> LogOut(int id)
         {

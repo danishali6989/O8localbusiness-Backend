@@ -20,6 +20,7 @@ namespace UserManagement.Factories
                 CreatedBy = userId ?? "0",
                 CreatedOn = Utility.GetDateTime(),
                 CompanyId = Convert.ToInt32(header),
+                ScreenUrl=model.ScreenUrl,
 
             };
             return data;
@@ -31,6 +32,7 @@ namespace UserManagement.Factories
             entity.UpdatedBy = userId ?? "0";
             entity.UpdatedOn = Utility.GetDateTime();
             entity.CompanyId = Convert.ToInt32(header);
+            entity.ScreenUrl = model.ScreenUrl;
 
         }
     }

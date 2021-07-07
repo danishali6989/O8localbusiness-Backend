@@ -72,6 +72,7 @@ namespace UserManagement.DataLayer.Repositories
                               App_id = s.App_id,
                               CompanyName = s.Company.CompanyName,
                               image = s.image,
+                              Status=s.Status,
 
                           })
                           .AsNoTracking()
@@ -105,7 +106,8 @@ namespace UserManagement.DataLayer.Repositories
                                 Finance_year = s.Finance_year,
                                 Ip_Address = s.Ip_Address,
                                 image = s.image,
-                                CompanyId = s.CompanyId
+                                CompanyId = s.CompanyId,
+                                Status=s.Status
                             })
                             .AsNoTracking();
 
@@ -158,7 +160,8 @@ namespace UserManagement.DataLayer.Repositories
                               App_id = s.App_id,
                               Finance_year = s.Finance_year,
                               Ip_Address = s.Ip_Address,
-                              CompanyId = s.CompanyId
+                              CompanyId = s.CompanyId,
+                              Status=s.Status
                           })
                          .AsNoTracking()
                          .SingleOrDefaultAsync();

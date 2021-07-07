@@ -47,7 +47,12 @@ namespace UserManagement.DataLayer.Repositories
                               Id = s.Id,
                               ScreenName=s.ScreenName,
                               ScreenCode=s.ScreenCode,
-                              CompanyId=s.CompanyId
+                              CompanyId=s.CompanyId,
+                              ScreenUrl=s.ScreenUrl,
+                              Status=s.Status
+                              
+                           
+
                           })
                           .AsNoTracking()
                           .SingleOrDefaultAsync();
@@ -61,7 +66,9 @@ namespace UserManagement.DataLayer.Repositories
                               Id=s.Id,
                               ScreenName = s.ScreenName,
                               ScreenCode = s.ScreenCode,
-                              CompanyId = s.CompanyId
+                              CompanyId = s.CompanyId,
+                              ScreenUrl=s.ScreenUrl,
+                              Status=s.Status
 
                           })
                           .AsNoTracking()
@@ -84,7 +91,9 @@ namespace UserManagement.DataLayer.Repositories
                                 Id = s.Id,
                                 ScreenCode=s.ScreenCode,
                                 ScreenName=s.ScreenName,
-                                CompanyId=s.CompanyId
+                                CompanyId=s.CompanyId,
+                                ScreenUrl=s.ScreenUrl,
+                                Status=s.Status
                             })
                             .AsNoTracking();
 

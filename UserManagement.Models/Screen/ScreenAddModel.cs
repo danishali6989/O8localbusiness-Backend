@@ -9,5 +9,7 @@ namespace UserManagement.Models.Screen
         public int Id { get; set; }
         public string ScreenName { get; set; }
         public string ScreenCode { get; set; }
+        public string ScreenUrl { get; set; }
+
     }
 }

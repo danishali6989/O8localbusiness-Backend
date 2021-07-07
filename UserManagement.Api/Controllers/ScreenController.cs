@@ -27,7 +27,7 @@ namespace UserManagement.Api.Controllers
             _environment = environment;
         }
         [HttpPost]
-    //  [Authorize]
+     [Authorize]
         [Route("add")]
         public async Task<IActionResult> Add([FromBody] ScreenAddModel model)
         {
