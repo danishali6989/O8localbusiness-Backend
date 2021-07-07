@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UserManagement.DataLayer;
 
 namespace UserManagement.DataLayer.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210707123448_db45617")]
+    partial class db45617
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -205,36 +207,6 @@ namespace UserManagement.DataLayer.Migrations
                     b.HasKey("CompanyId");
 
                     b.ToTable("Companys");
-                });
-
-            modelBuilder.Entity("UserManagement.Entities.Languages", b =>
-                {
-                    b.Property<int>("lang_id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasMaxLength(40);
-
-                    b.Property<DateTime>("CreatedOn");
-
-                    b.Property<int>("Status");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(40);
-
-                    b.Property<DateTime?>("UpdatedOn");
-
-                    b.Property<string>("lang_name")
-                        .IsRequired();
-
-                    b.Property<string>("lang_orientation")
-                        .IsRequired();
-
-                    b.HasKey("lang_id");
-
-                    b.ToTable("Languages");
                 });
 
             modelBuilder.Entity("UserManagement.Entities.LoginModule", b =>

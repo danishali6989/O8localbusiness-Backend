@@ -16,6 +16,8 @@ namespace UserManagement.DataLayer
         public DbSet<UserScreenAccess> UserScreenAccess { get; set; }
         public DbSet<ScreenDetail> ScreenDetail { get; set; }
         public DbSet<Company> Company { get; set; }
+        public DbSet<Languages> Languages { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,7 +29,9 @@ namespace UserManagement.DataLayer
             modelBuilder.ApplyConfiguration(new LoginModuleConfiguration());
             modelBuilder.ApplyConfiguration(new UserScreenAccessConfiguration());
             modelBuilder.ApplyConfiguration(new ScreenDetailConfiguration());
+            modelBuilder.ApplyConfiguration(new LanguagesConfiguration());
             modelBuilder.ApplyConfiguration(new CompanyConfiguration());
+
 
 
 

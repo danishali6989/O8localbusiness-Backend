@@ -36,6 +36,8 @@ namespace UserManagement.Config
             services.AddScoped<IUserManager, UserManager>();
             services.AddScoped<IUserRoleManager, UserRoleManager>();
             services.AddScoped<I1ScreenManager, ScreenManager>();
+            services.AddScoped<ILanguagesManager, LanguagesManager>();
+
 
 
 
@@ -50,6 +52,8 @@ namespace UserManagement.Config
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IScreenRepository, ScreenRepository>();
+            services.AddScoped<ILanguagesRepository, LanguagesRepository>();
+
 
 
 

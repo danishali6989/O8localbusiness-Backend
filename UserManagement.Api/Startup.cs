@@ -200,7 +200,7 @@ namespace UserManagement.Api
             {
                 c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "Versioned API v1.0");
                 // c.DocExpansion("none");
-                c.DocumentTitle = "UserManagement";
+                c.DocumentTitle = "Title Documentation";
                 c.DocExpansion(DocExpansion.None);
             });
             app.UseAuthentication();
