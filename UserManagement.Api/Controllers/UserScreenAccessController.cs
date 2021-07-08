@@ -28,7 +28,7 @@ namespace UserManagement.Api.Controllers
 
 
         [HttpPost]
-        [Authorize]
+       [Authorize]
         [Route("AddScreenAccess")]
         public async Task<IActionResult> AddScreenAcess(ScreenAccessModel model)
         {

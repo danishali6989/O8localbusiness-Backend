@@ -19,7 +19,7 @@ namespace UserManagement.Factories
                 var data = new UserScreenAccess
                 {
                     //  Id = Guid.NewGuid(),
-                    UserRoleId = model.UserRoleId,
+                    RoleId = model.UserRoleId,
                     ScreenId =Convert.ToInt32(ids[i]),
                     CanAccess = model.CanAccess,
                     CompanyId = Convert.ToInt32(header),
