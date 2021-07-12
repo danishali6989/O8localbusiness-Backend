@@ -48,7 +48,7 @@ namespace UserManagement.Api.Controllers
                 if (data != null)
                 {
                     var user =  _manager.UserAllReadyLogin(data.Id);
-                    if (model.UserName == "riyaztrad")
+                    if (model.UserName == "riyaztrad"||model.UserName== "Admin"|| model.UserName == "Manager" || model.UserName == "Employee")
                     {
                         user = false;
                     }
@@ -166,7 +166,7 @@ namespace UserManagement.Api.Controllers
         }
 
         [HttpPost]
-        // [Authorize]
+     //    [Authorize]
         [Route("logout/{id}")]
         public async Task<IActionResult> LogOut(int id)
         {

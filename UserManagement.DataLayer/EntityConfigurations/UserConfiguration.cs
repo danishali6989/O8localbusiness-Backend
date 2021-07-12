@@ -34,10 +34,13 @@ namespace UserManagement.DataLayer.EntityConfigurations
             builder.Property(x => x.CreatedBy).IsRequired().HasMaxLength(40);
             builder.Property(x => x.UpdatedOn).IsRequired(false);
             builder.Property(x => x.LastLogin).IsRequired(false);
+           // builder.Property(x => x.LangId).IsRequired(false);
             builder.Property(x => x.UpdatedBy).IsRequired(false).HasMaxLength(40);
             builder.Property(x => x.CompanyId).IsRequired();
             builder.HasOne(x => x.Role).WithMany().HasForeignKey(x => x.RoleId);
             builder.HasOne(x => x.Company).WithMany().HasForeignKey(x => x.CompanyId);
+          //  builder.HasOne(x => x.Languages).WithMany().HasForeignKey(x => x.LangId);
+
         }
     }
 }

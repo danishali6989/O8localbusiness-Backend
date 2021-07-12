@@ -30,7 +30,8 @@ namespace UserManagement.DataLayer.Repositories
 
         public async Task<List<ScreenAccessDto>> GetAsyncUserScreenAccess(int id, int header)
         {
-            return await (from s in _dataContext.UserScreenAccess
+           var obj= await (from s in _dataContext.UserScreenAccess
+                          join s1 in _dataContext.ScreenDetail on s.ScreenId equals s1.Id
                           where s.RoleId == id && s.CompanyId==header
                           select new ScreenAccessDto
                           {
@@ -38,15 +39,16 @@ namespace UserManagement.DataLayer.Repositories
                               ScreenId = s.ScreenId,
                               UserRoleId = s.UserRole.Id,
                               CanAccess = s.CanAccess,
-                              ScreenName = s.Screen.ScreenName,
+                              ScreenName = s1.ScreenName,
                               CompanyId = s.CompanyId,
-                              ScreenUrl=s.Screen.ScreenUrl
+                              ScreenUrl=s1.ScreenUrl
 
 
                           })
                          .AsNoTracking()
                          .OrderBy("ScreenName Asc")
                          .ToListAsync();
+            return obj;
         }
 
         public async Task DeleteAsyncUserScreenAccess(int id)

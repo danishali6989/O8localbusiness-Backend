@@ -11,24 +11,29 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using UserManagement.Dtos.UserAccess;
 
 namespace UserManagement.Managers
 {
     public class UserRoleManager:IUserRoleManager
     {
         private readonly IUserRoleRepository _repository;
+        private readonly IUserAccessMAnager _screenrepository;
         private readonly IUnitOfWork _unitOfWork;
 
         private readonly string _userId;
 
         public UserRoleManager(IHttpContextAccessor contextAccessor,
-          IUserRoleRepository repository,
+          IUserRoleRepository repository, IUserAccessMAnager screenRepository,
           IUnitOfWork unitOfWork)
         {
             _userId = contextAccessor.HttpContext.User.GetUserId();
 
             _repository = repository;
             _unitOfWork = unitOfWork;
+            _screenrepository = screenRepository;
+
+
         }
 
         public async Task AddAsync(UserRoleModel model, string header)
@@ -60,9 +65,31 @@ namespace UserManagement.Managers
             await _repository.DeleteAsync(id, header);
             await _unitOfWork.SaveChangesAsync();
         }
-        public async Task<List<SelectListItemDto>> GetAllAsync(int header)
+        public async Task<List<UserRoleDetailDto>> GetAllAsync(int header)
         {
-            return await _repository.GetAllAsync(header);
+            List<UserRoleDetailDto> data = new List<UserRoleDetailDto>();
+                      data = await _repository.GetAllAsync(header);
+            if (data.Count >0)
+            {
+                List<ScreenAccessDto> Screens = new List<ScreenAccessDto>();
+                ScreenAccessDto obj = new ScreenAccessDto();
+
+                foreach (var item in data)
+                {
+                    obj.Id = item.Id;
+
+                    obj.ScreenName = item.ScreenName;
+                    obj.ScreenId = item.Id;
+
+                    Screens.Add(obj);
+                    item.Screens = await _screenrepository.GetUserScreenAccessById(item.Id, header);
+                }
+            }
+
+
+
+                    return data;
+            
         }
         public bool UpdateRoleId(int roleId, int userId, string header)
         {

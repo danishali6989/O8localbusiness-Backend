@@ -28,7 +28,7 @@ namespace UserManagement.Api.Controllers
 
 
         [HttpPost]
-       [Authorize]
+      [Authorize]
         [Route("AddScreenAccess")]
         public async Task<IActionResult> AddScreenAcess(ScreenAccessModel model)
         {
@@ -48,7 +48,7 @@ namespace UserManagement.Api.Controllers
 
 
         [HttpGet]
-        [Authorize]
+       [Authorize]
         [Route("getScreenAccessByUserRoleId/{id}")]
         public async Task<IActionResult> GetScreenAccessByUserRoleId(int id)
         {

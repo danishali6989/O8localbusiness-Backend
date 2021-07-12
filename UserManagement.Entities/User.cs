@@ -29,8 +29,13 @@ namespace UserManagement.Entities
         public int CompanyId { get; set; }
         public Company Company { get; set; }
 
+       // public int? LangId { get; set; }
+
         public int otp { get; set;}
         public string image { get; set; }
+
+     //   public Languages Languages { get; set; }
+
 
     }
 }

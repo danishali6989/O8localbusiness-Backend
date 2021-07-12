@@ -40,28 +40,36 @@ namespace UserManagement.DataLayer.Repositories
         public async Task<UserRoleDetailDto> GetDetailAsync(int id, int header)
         {
             return await (from s in _dataContext.UsersRoles
+                          join s1 in _dataContext.ScreenDetail on s.Id equals s1.Id
                           where s.Id == id && s.CompanyId == header
                           select new UserRoleDetailDto
                           {
                               Id = s.Id,
                               RoleName = s.RoleName,
                               CompanyId=s.CompanyId,
-                              Status=s.Status
+                              Status=s.Status,
+                              ScreenName=s1.ScreenName,
+                              ScreenId=s1.Id
                               
                           })
                           .AsNoTracking()
                           .SingleOrDefaultAsync();
         }
-        public async Task<List<SelectListItemDto>> GetAllAsync(int header)
+        public async Task<List<UserRoleDetailDto>> GetAllAsync(int header)
         {
             return await (from s in _dataContext.UsersRoles
+                        
                           where s.CompanyId == header
-                          select new SelectListItemDto
+                          select new UserRoleDetailDto
                           {
-                              KeyInt = s.Id,
-                              Value = s.RoleName,
+                             // KeyInt = s.Id,
+                             // Value = s.RoleName,
+                             RoleName=s.RoleName,
+                             Id=s.Id,
                               CompanyId=s.CompanyId,
                               Status=s.Status
+                              
+                             
                           })
                           .AsNoTracking()
                           .ToListAsync();

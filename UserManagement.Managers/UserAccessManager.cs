@@ -1,4 +1,7 @@
-﻿using UserManagement.Dtos.UserAccess;
+﻿using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using UserManagement.Dtos.UserAccess;
 using UserManagement.Entities;
 using UserManagement.Factories;
 using UserManagement.Infrastructure.DataLayer;
@@ -6,11 +9,6 @@ using UserManagement.Infrastructure.Managers;
 using UserManagement.Infrastructure.Repositories;
 using UserManagement.Models.UserAccess;
 using UserManagement.Utilities;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UserManagement.Managers
 {
@@ -48,14 +46,17 @@ namespace UserManagement.Managers
           data = await _repository.GetAsyncUserScreenAccess(id, header);
             if(data.Count == 0)
             {
-                var screenData = await _repository.GetAllScreen();
-                foreach(var item in screenData)
+                //var screenData = await _repository.GetAllScreen();
+                ScreenAccessDto obj = new ScreenAccessDto();
+                foreach (var item in data)
                 {
-                    ScreenAccessDto obj = new ScreenAccessDto();
+                    
+
                     obj.ScreenId = item.Id;
                     obj.UserRoleId = id;
                     obj.CanAccess = false;
                     obj.ScreenName = item.ScreenName;
+                    obj.ScreenUrl = item.ScreenUrl;
                     data.Add(obj);
                 }
             }
