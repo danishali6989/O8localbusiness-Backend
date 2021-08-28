@@ -35,10 +35,8 @@ namespace UserManagement.DataLayer.Repositories
                 obj.LastLogin = DateTime.Now;
                 _dataContext.User.Update(obj);
             }
-
             await _dataContext.LoginModule.AddAsync(entity);
-
-
+            
         }
 
         public void Edit(User entity)
@@ -73,6 +71,8 @@ namespace UserManagement.DataLayer.Repositories
                               CompanyName = s.Company.CompanyName,
                               image = s.image,
                               Status=s.Status,
+                              LangId = s.LangId
+                              
 
                           })
                           .AsNoTracking()
@@ -107,7 +107,8 @@ namespace UserManagement.DataLayer.Repositories
                                 Ip_Address = s.Ip_Address,
                                 image = s.image,
                                 CompanyId = s.CompanyId,
-                                Status=s.Status
+                                Status=s.Status,
+                                LangId = s.LangId,
                             })
                             .AsNoTracking();
 
@@ -131,7 +132,7 @@ namespace UserManagement.DataLayer.Repositories
 
         public bool GetByUserAllradyAsync(int userid)
         {
-            var user = _dataContext.LoginModule.Where(x => x.UserId == userid).FirstOrDefault();
+            var user = _dataContext.LoginModule.Where(x => x.UserId == userid && x.Status == Constants.RecordStatus.Created).FirstOrDefault();
 
             if (user != null)
             {
@@ -161,7 +162,9 @@ namespace UserManagement.DataLayer.Repositories
                               Finance_year = s.Finance_year,
                               Ip_Address = s.Ip_Address,
                               CompanyId = s.CompanyId,
-                              Status=s.Status
+                              Status=s.Status,
+                              otp = s.otp,
+                              LangId = s.LangId
                           })
                          .AsNoTracking()
                          .SingleOrDefaultAsync();
@@ -209,6 +212,7 @@ namespace UserManagement.DataLayer.Repositories
                                   Email = s.Email,
                                   RoleId = s.RoleId,
                                   RoleName = s.Role.RoleName
+                                  
                               })
                          .AsNoTracking()
                          .SingleOrDefaultAsync();
@@ -240,7 +244,8 @@ namespace UserManagement.DataLayer.Repositories
                               Ip_Address = s.Ip_Address,
                               image = s.image,
                               CompanyId = s.CompanyId,
-                              Status=s.Status
+                              Status=s.Status,
+                              LangId = s.LangId
                           })
                           .AsNoTracking()
                           .ToListAsync();
@@ -265,41 +270,16 @@ namespace UserManagement.DataLayer.Repositories
                          .SingleOrDefaultAsync();
         }
 
-        /* public async Task<IEnumerable<UserDetailDto>> GetAllAsync(Constants.RecordStatus? status = null)
-         {
-             return await (from s in _dataContext.User
-
-                           where status == null
-                             ? s.Status != Constants.RecordStatus.Deleted
-                             : s.Status == status.Value
-                           orderby s.UserName
-                           select new UserDetailDto
-                           {
-                               Id = s.Id,
-                               Usr_FName = s.Usr_FName,
-                               Usr_LName = s.Usr_LName,
-                               UserName = s.UserName,
-                               Password = s.Password,
-                               Mobile = s.Mobile,
-                               Email = s.Email,
-                               RoleId = s.RoleId,
-                               RoleName = s.Role.RoleName,
-                               App_id = s.App_id,
-                               Finance_year = s.Finance_year,
-                               Ip_Address = s.Ip_Address,
-
-                               CompanyId = s.CompanyId
-                           })
-                           .AsNoTracking()
-                             .ToListAsync();
-         }
- */
+        
 
         public async Task LogOut(int id, int header)
         {
-            var data = await _dataContext.LoginModule.Where(x => x.UserId == id && x.CompanyId==header).FirstOrDefaultAsync();
-
-            _dataContext.LoginModule.Remove(data);
+            var data = await _dataContext.LoginModule.Where(x => x.UserId == id && x.CompanyId==header && x.LastLogin == null).FirstOrDefaultAsync();
+            data.LastLogin = DateTime.Now;
+            data.status1 = false;
+            data.Status = Constants.RecordStatus.Deleted;
+            _dataContext.LoginModule.Update(data);
+         
 
         }
 
@@ -348,8 +328,9 @@ namespace UserManagement.DataLayer.Repositories
                                 Email = s.Email,
                                 RoleId = s.RoleId,
                                 RoleName = s.Role.RoleName,
-                                CallStatus = l.status ?? false,
-                                CompanyId =s.CompanyId
+                                CallStatus = l.status1 ?? false,
+                                CompanyId =s.CompanyId,
+                                LangId  = s.LangId
 
                             })
                             .AsNoTracking();
@@ -410,7 +391,8 @@ namespace UserManagement.DataLayer.Repositories
                               App_id = s.App_id,
                               Finance_year = s.Finance_year,
                               Ip_Address = s.Ip_Address,
-                              CompanyId = s.CompanyId
+                              CompanyId = s.CompanyId,
+                              LangId =s.LangId
                           })
                          .AsNoTracking()
                          .SingleOrDefaultAsync();

@@ -17,6 +17,10 @@ namespace UserManagement.DataLayer
         public DbSet<ScreenDetail> ScreenDetail { get; set; }
         public DbSet<Company> Company { get; set; }
         public DbSet<Languages> Languages { get; set; }
+        public DbSet<Field> Field { get; set; }
+        public DbSet<EmailSetting> EmailSetting { get; set; }
+
+        public DbSet<LogRecord> LogRecord { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,6 +35,9 @@ namespace UserManagement.DataLayer
             modelBuilder.ApplyConfiguration(new ScreenDetailConfiguration());
             modelBuilder.ApplyConfiguration(new LanguagesConfiguration());
             modelBuilder.ApplyConfiguration(new CompanyConfiguration());
+            modelBuilder.ApplyConfiguration(new FieldConfiguration());
+            modelBuilder.ApplyConfiguration(new EmailSettingConfiguration());
+            modelBuilder.ApplyConfiguration(new LogRecordConfiguration());
 
 
 

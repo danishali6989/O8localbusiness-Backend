@@ -9,7 +9,7 @@ using UserManagement.Api.Helpers;
 using UserManagement.Infrastructure.Managers;
 using UserManagement.Models.UserLogin;
 using UserManagement.Models.User;
-
+using UserManagement.Models.Languages;
 using UserManagement.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -45,31 +45,7 @@ namespace UserManagement.Api.Controllers
             _userManager = userManager;
         }
 
-        /*[HttpPost]
-        [Route("add")]
-        public async Task<IActionResult> Add([FromBody] AddUserModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState.GetErrorList());
-            }
-            if(await _manager.CheckUser(model.UserName) != null)
-            {
-                return BadRequest("UserName Already SS Exist");
-            }
-
-            try
-            {
-                await _manager.AddAsync(model);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-
-            return Ok();
-        }*/
-
+        
         [HttpPost]
       [Authorize]
         [Route("add")]
@@ -170,27 +146,7 @@ namespace UserManagement.Api.Controllers
             return Ok("User Updated");
         }
 
-        /*[HttpPost]
-        [Route("edit")]
-        public async Task<IActionResult> Edit([FromBody] UserLoginDto model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState.GetErrorList());
-            }
-
-            try
-            {
-                await _manager.EditAsync(model);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-
-            return Ok("User Updated");
-        }
-*/
+       
         [HttpGet]
         [Authorize]
         [AllowAnonymous]

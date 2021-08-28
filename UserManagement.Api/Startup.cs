@@ -18,6 +18,8 @@ using System.Collections.Generic;
 using System.Text;
 using IRecurringJobManager = Hangfire.IRecurringJobManager;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using UserManagement.Infrastructure.Services;
+using UserManagement.Services;
 
 namespace UserManagement.Api
 {
@@ -45,13 +47,7 @@ namespace UserManagement.Api
                 options.Password.RequiredLength = 6;
             });
 
-           /* services.AddSwaggerGen(config =>  //add this service
-            {
-                config.SwaggerDoc("v1", new Info { Title = "My API", Version = "V1" });
-
-                config.OperationFilter<CustomHeader>();
-            });*/
-
+          
             services.AddSwaggerGen(c =>
             {
 
@@ -71,33 +67,7 @@ namespace UserManagement.Api
                 });
                 c.AddSecurityRequirement(security);
             });
-            /* services.AddSession(session =>
-             {
-                 session.IdleTimeout = TimeSpan.FromSeconds(180000);
-             });*/
-
-            /* services.AddSwaggerGen(c =>
-             {
-
-
-                 c.AddSecurityDefinition("Bearer", new ApiKeyScheme()
-                 {
-                     Description = "tenent_id",
-                     Name = "",
-                     In = "header",
-                     Type = "apiKey"
-                 });
-
-                 c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
-                 {
-                     { "Bearer", new string[] { "Value" } }
-
-                 });
-
-
-
-             });
- */
+           
             services.AddAuthentication(x =>
                 {
                     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -121,7 +91,8 @@ namespace UserManagement.Api
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll",
-                    builder => builder.AllowAnyOrigin()
+                    builder =>
+                    builder.AllowAnyOrigin()
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials());
@@ -152,6 +123,9 @@ namespace UserManagement.Api
             );
 
             services.AddHangfireServer();
+
+
+            services.AddScoped<IEmailService, EmailService>();//27-7
 
             //services.AddScoped<IRecurringJob, RecurringJob>();
         }
@@ -211,6 +185,8 @@ namespace UserManagement.Api
                 context.Response.Headers.Add("X-Developed-By", "Your Name");
                 await next.Invoke();
             });
+
+
            /* recurringJobManager.AddOrUpdate(
                 "Run Every Minute", () => serviceProvider.GetService<Infrastructure.Managers.IRecurringJobManager>().SetOverdueStatus(),
                Cron.Hourly

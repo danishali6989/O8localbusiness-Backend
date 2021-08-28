@@ -13,6 +13,8 @@ namespace UserManagement.Infrastructure.Managers
         Task AddAsync(LanguagesAddModel model);
         Task EditAsync(LanguagesEditModel model);
 
+        Task UpdateAsync(LanguagesUpdateModel model);
+
         Task<LanguagesDto> GetDetailAsync(int id);
 
         Task<List<LanguagesDto>> GetAllAsync();

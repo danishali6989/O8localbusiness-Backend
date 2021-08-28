@@ -1,6 +1,7 @@
 ﻿using UserManagement.Dtos.UserLogin;
 using UserManagement.Models.UserLogin;
 using UserManagement.Models.User;
+using UserManagement.Models.Languages;
 
 using UserManagement.Utilities;
 using System;
@@ -16,6 +17,7 @@ namespace UserManagement.Infrastructure.Managers
         Task AddAsync(AddUserModel model, string header);
         Task LoginAddAsync(UserDetailDto model);
         Task EditAsync(EditUserModel model, string header);
+      //  Task UpdateAsync(LanguagesUpdateModel model);
         Task EditImgAsync(EditImgModel model, string header);
 
         //Task<List<AssignUserRoleDto>> GetAssignUserRoleById(int id);
@@ -47,6 +49,7 @@ namespace UserManagement.Infrastructure.Managers
         bool CheckPassword(int adminid, string adminPassword);
         Task ChangePasswordAdmin(ChangePasswordModel model);
 
+       
         //  Task<JqDataTableResponse<UserDetailDto>> GetOnlyOnlineAgentPagedResultAsync(JqDataTableRequest model);
     }
 

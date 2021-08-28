@@ -5,6 +5,7 @@ using UserManagement.Infrastructure.Managers;
 using UserManagement.Infrastructure.Repositories;
 using UserManagement.Models.UserLogin;
 using UserManagement.Models.User;
+using UserManagement.Models.Languages;
 
 using UserManagement.Utilities;
 using Microsoft.AspNetCore.Http;
@@ -57,6 +58,15 @@ namespace UserManagement.Managers
             _repository.Edit(item);
             await _unitOfWork.SaveChangesAsync();
         }
+
+       /* public async Task UpdateAsync(LanguagesUpdateModel model)
+        {
+            var item = await _repository.GetAsync(model);
+            UserFactory.Create(model, item, _userId);
+            _repository.Edit(item);
+            await _unitOfWork.SaveChangesAsync();
+        }*/
+
 
         public async Task UpdateStatus(UserStatus model, string header)
         {
@@ -168,5 +178,7 @@ namespace UserManagement.Managers
             await _repository.ChangePasswordAdmin(model);
             await _unitOfWork.SaveChangesAsync();
         }
+
+    
     }
 }

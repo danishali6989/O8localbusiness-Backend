@@ -22,6 +22,8 @@ namespace UserManagement.Factories
                 Email = model.Email,
                 App_id = model.App_id,
                 Finance_year = model.Finance_year,
+                //App_id = model.App_id == null?1 : model.App_id,
+                // Finance_year = model.Finance_year == null ?2000 : model.Finance_year,
                 Ip_Address = model.Ip_Address,
                 Password = Utility.Encrypt(model.Password),
                 Mobile = model.Mobile,
@@ -32,6 +34,7 @@ namespace UserManagement.Factories
                 CreatedBy = userId ?? "0",
                 CreatedOn = Utility.GetDateTime(),
                 CompanyId = Convert.ToInt32(header),
+                LangId = 1,
 
             };
             return data;
@@ -77,16 +80,21 @@ namespace UserManagement.Factories
 
         public static LoginModule Login(UserDetailDto model)
         {
+            
             var data = new LoginModule
             {
+                
+
                 UserId = model.Id,
-                status = true,
+                status1 = true,
                 createdOn = Utility.GetDateTime(),
                 RoleId = model.RoleId,
-                CompanyId = model.CompanyId
-
+                CompanyId = model.CompanyId,
+             
+               
 
             };
+
             return data;
         }
     }

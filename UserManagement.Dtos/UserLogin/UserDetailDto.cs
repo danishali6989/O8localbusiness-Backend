@@ -27,6 +27,8 @@ namespace UserManagement.Dtos.UserLogin
         public string image { get; set; }
         public string imageUrl { get; set; }
 
+        public int? LangId { get; set; }
+
 
 
 

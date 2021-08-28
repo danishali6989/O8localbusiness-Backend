@@ -39,7 +39,7 @@ namespace UserManagement.DataLayer.EntityConfigurations
             builder.Property(x => x.CompanyId).IsRequired();
             builder.HasOne(x => x.Role).WithMany().HasForeignKey(x => x.RoleId);
             builder.HasOne(x => x.Company).WithMany().HasForeignKey(x => x.CompanyId);
-          //  builder.HasOne(x => x.Languages).WithMany().HasForeignKey(x => x.LangId);
+            builder.HasOne(x => x.Language).WithMany().HasForeignKey(x => x.LangId);
 
         }
     }

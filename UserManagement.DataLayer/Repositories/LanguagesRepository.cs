@@ -40,9 +40,19 @@ namespace UserManagement.DataLayer.Repositories
         {
             _dataContext.Languages.Update(entity);
         }
+
+        public void Edit(User entity)
+        {
+            _dataContext.User.Update(entity);
+        }
         public async Task<Languages> GetAsync(int id)
         {
             return await _dataContext.Languages.FindAsync(id);
+        }
+
+        public async Task<User> GetLanguageAsync(int id)
+        {
+            return await _dataContext.User.FindAsync(id);
         }
         public async Task<LanguagesDto> GetDetailAsync(int id)
         {
@@ -64,6 +74,7 @@ namespace UserManagement.DataLayer.Repositories
                           
                           select new LanguagesDto
                           {
+                              lang_id = s.lang_id,
                               lang_name = s.lang_name,
                               lang_orientation = s.lang_orientation,
                               Status = s.Status

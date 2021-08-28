@@ -50,6 +50,9 @@ namespace UserManagement.Api.Controllers
 
             return Ok("Language Added");
         }
+      
+        
+        
         [HttpPost]
         [Authorize]
         [Route("edit")]
@@ -72,6 +75,31 @@ namespace UserManagement.Api.Controllers
 
             return Ok("Language Updated");
         }
+
+
+        [HttpPost]
+        [Authorize]
+        [Route("UpdateUserLanguage")]
+        public async Task<IActionResult> UpdateLanguage([FromBody] LanguagesUpdateModel model)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.GetErrorList());
+            }
+
+            try
+            {
+                await _manager.UpdateAsync(model);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Ok("Language Updated");
+        }
+
 
         [HttpGet]
         [Authorize]

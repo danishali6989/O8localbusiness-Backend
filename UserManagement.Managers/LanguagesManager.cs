@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using UserManagement.Dtos.Languages;
+
+
 using UserManagement.Factories;
 using UserManagement.Infrastructure.DataLayer;
 using UserManagement.Infrastructure.Managers;
@@ -31,16 +33,25 @@ namespace UserManagement.Managers
         }
         public async Task AddAsync(LanguagesAddModel model)
         {
-            await _repository.AddAsync(LanguagesFactory.Create(model, _userId));
+            await _repository.AddAsync(FieldFactory.Create(model, _userId));
             await _unitOfWork.SaveChangesAsync();
         }
         public async Task EditAsync(LanguagesEditModel model)
         {
             var item = await _repository.GetAsync(model.lang_id);
-            LanguagesFactory.Create(model, item, _userId);
+            FieldFactory.Create(model, item, _userId);
             _repository.Edit(item);
             await _unitOfWork.SaveChangesAsync();
         }
+
+        public async Task UpdateAsync(LanguagesUpdateModel model)
+        {
+            var item = await _repository.GetLanguageAsync(model.user_id);
+            FieldFactory.Update(model, item, _userId);
+            _repository.Edit(item);
+            await _unitOfWork.SaveChangesAsync();
+        }
+
         public async Task<LanguagesDto> GetDetailAsync(int id)
         {
             return await _repository.GetDetailAsync(id);

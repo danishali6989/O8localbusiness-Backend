@@ -14,7 +14,10 @@ namespace UserManagement.Infrastructure.Repositories
 
         void Edit(Languages entity);
 
+        void Edit(User entity); //for update user language
+
         Task<Languages> GetAsync(int id);
+        Task<User> GetLanguageAsync(int user_id);
 
         Task<LanguagesDto> GetDetailAsync(int id);
 

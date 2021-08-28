@@ -9,6 +9,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.12.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\UserManagement.DataLayer\UserManagement.DataLayer.csproj" />
     <ProjectReference Include="..\UserManagement.Dtos\UserManagement.Dtos.csproj" />
     <ProjectReference Include="..\UserManagement.Entities\UserManagement.Entities.csproj" />

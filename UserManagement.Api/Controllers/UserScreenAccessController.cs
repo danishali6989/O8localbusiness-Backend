@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using UserManagement.Models.EmailSetting;
 
 namespace UserManagement.Api.Controllers
 {
@@ -17,13 +18,15 @@ namespace UserManagement.Api.Controllers
     public class UserScreenAccessController : ControllerBase
     {
         private readonly IUserAccessMAnager _manager;
+       
         private readonly IHostingEnvironment _environment;
 
-        public UserScreenAccessController(IUserAccessMAnager manager,
+        public UserScreenAccessController( IUserAccessMAnager manager,
             IHostingEnvironment environment)
         {
             _manager = manager;
             _environment = environment;
+        
         }
 
 
@@ -65,5 +68,9 @@ namespace UserManagement.Api.Controllers
 
             return Ok(await _manager.GetAllScreenDetail(Convert.ToInt32(header)));
         }
+
+
+
+        
     }
 }

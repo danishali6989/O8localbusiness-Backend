@@ -16,6 +16,7 @@ namespace UserManagement.DataLayer.EntityConfigurations
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
+          //  builder.Property(x => x.screen_id).IsRequired();
             builder.Property(x => x.ScreenName).IsRequired();
             builder.Property(x => x.ScreenCode).IsRequired();
             builder.Property(x => x.ScreenUrl).IsRequired();

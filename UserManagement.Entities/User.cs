@@ -13,8 +13,11 @@ namespace UserManagement.Entities
         public string UserName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        //public string ResetPassword { get; set; }
+
         public string Mobile { get; set; }
         public int RoleId { get; set; }
+        public UserRole Role { get; set; }
         public Constants.RecordStatus Status { get; set; }
         public DateTime CreatedOn { get; set; }
         public string CreatedBy { get; set; }
@@ -22,19 +25,18 @@ namespace UserManagement.Entities
         public DateTime? LastLogin { get; set; }
 
         public string UpdatedBy { get; set; }
-        public UserRole Role { get; set; }
         public int App_id { get; set; }
         public int Finance_year { get; set; }
         public string Ip_Address { get; set; }
         public int CompanyId { get; set; }
         public Company Company { get; set; }
 
-       // public int? LangId { get; set; }
 
         public int otp { get; set;}
         public string image { get; set; }
 
-     //   public Languages Languages { get; set; }
+        public int? LangId { get; set; }
+        public Languages Language { get; set; }
 
 
     }

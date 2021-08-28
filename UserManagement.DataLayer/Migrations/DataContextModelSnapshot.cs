@@ -207,6 +207,84 @@ namespace UserManagement.DataLayer.Migrations
                     b.ToTable("Companys");
                 });
 
+            modelBuilder.Entity("UserManagement.Entities.EmailSetting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("CompanyId");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime>("CreatedOn");
+
+                    b.Property<int>("DeletedBy");
+
+                    b.Property<string>("Description")
+                        .IsRequired();
+
+                    b.Property<string>("Email")
+                        .IsRequired();
+
+                    b.Property<int>("Portnumber");
+
+                    b.Property<string>("SmtpNo")
+                        .IsRequired();
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime?>("UpdatedOn");
+
+                    b.Property<string>("password")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EmailSetting");
+                });
+
+            modelBuilder.Entity("UserManagement.Entities.Field", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime>("CreatedOn");
+
+                    b.Property<int>("Status");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime?>("UpdatedOn");
+
+                    b.Property<string>("description")
+                        .IsRequired()
+                        .HasMaxLength(500);
+
+                    b.Property<string>("field")
+                        .IsRequired()
+                        .HasMaxLength(500);
+
+                    b.Property<int>("lang_id");
+
+                    b.Property<int>("screen_id");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("lang_id");
+
+                    b.ToTable("Field");
+                });
+
             modelBuilder.Entity("UserManagement.Entities.Languages", b =>
                 {
                     b.Property<int>("lang_id")
@@ -237,6 +315,31 @@ namespace UserManagement.DataLayer.Migrations
                     b.ToTable("Languages");
                 });
 
+            modelBuilder.Entity("UserManagement.Entities.LogRecord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasMaxLength(500);
+
+                    b.Property<DateTime>("CreatedOn");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(500);
+
+                    b.Property<DateTime?>("UpdatedOn");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LogRecord");
+                });
+
             modelBuilder.Entity("UserManagement.Entities.LoginModule", b =>
                 {
                     b.Property<int>("Id")
@@ -245,13 +348,17 @@ namespace UserManagement.DataLayer.Migrations
 
                     b.Property<int?>("CompanyId");
 
+                    b.Property<DateTime?>("LastLogin");
+
                     b.Property<int?>("RoleId");
+
+                    b.Property<int>("Status");
 
                     b.Property<int>("UserId");
 
                     b.Property<DateTime?>("createdOn");
 
-                    b.Property<bool?>("status");
+                    b.Property<bool?>("status1");
 
                     b.HasKey("Id");
 
@@ -319,6 +426,8 @@ namespace UserManagement.DataLayer.Migrations
                     b.Property<string>("Ip_Address")
                         .IsRequired();
 
+                    b.Property<int?>("LangId");
+
                     b.Property<DateTime?>("LastLogin");
 
                     b.Property<string>("Mobile")
@@ -352,6 +461,8 @@ namespace UserManagement.DataLayer.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
+
+                    b.HasIndex("LangId");
 
                     b.HasIndex("RoleId");
 
@@ -455,6 +566,14 @@ namespace UserManagement.DataLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("UserManagement.Entities.Field", b =>
+                {
+                    b.HasOne("UserManagement.Entities.Languages", "Language")
+                        .WithMany()
+                        .HasForeignKey("lang_id")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("UserManagement.Entities.LoginModule", b =>
                 {
                     b.HasOne("UserManagement.Entities.User", "user")
@@ -469,6 +588,10 @@ namespace UserManagement.DataLayer.Migrations
                         .WithMany()
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("UserManagement.Entities.Languages", "Language")
+                        .WithMany()
+                        .HasForeignKey("LangId");
 
                     b.HasOne("UserManagement.Entities.UserRole", "Role")
                         .WithMany()
