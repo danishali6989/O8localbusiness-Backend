@@ -39,6 +39,10 @@ namespace UserManagement.Config
             services.AddScoped<ILanguagesManager, LanguagesManager>();
             services.AddScoped<IFieldManager, FieldManager>();
             services.AddScoped<IEmailSettingManager,EmailSettingManager>();
+            services.AddScoped<IPermissionManager, PermissionManager>();
+            services.AddScoped<IRolePermiManager, RolePermiManager>();
+            services.AddScoped<IPermiManager, PermiManager>();
+
 
 
 
@@ -57,6 +61,9 @@ namespace UserManagement.Config
             services.AddScoped<ILanguagesRepository, LanguagesRepository>();
             services.AddScoped<IFieldRepository, FieldRepository>();
             services.AddScoped<IEmailSettingRepository, EmailSettingRepository>();
+            services.AddScoped<IPermissionRepository, PermissionRepository>();
+            services.AddScoped<IRolePermiRepository, RolePermiRepository>();
+            services.AddScoped<IPermiRepository, PermiRepository>();
 
 
 

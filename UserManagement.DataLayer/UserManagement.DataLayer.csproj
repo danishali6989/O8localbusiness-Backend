@@ -5,6 +5,61 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20210903095604_sldkjf7.cs" />
+    <Compile Remove="Migrations\20210903095604_sldkjf7.Designer.cs" />
+    <Compile Remove="Migrations\20210903100204_live932021.cs" />
+    <Compile Remove="Migrations\20210903100204_live932021.Designer.cs" />
+    <Compile Remove="Migrations\20210903100621_live932021g.cs" />
+    <Compile Remove="Migrations\20210903100621_live932021g.Designer.cs" />
+    <Compile Remove="Migrations\20210903111915_sedfkkk.cs" />
+    <Compile Remove="Migrations\20210903111915_sedfkkk.Designer.cs" />
+    <Compile Remove="Migrations\20210903113346_sdflkj43434fg.cs" />
+    <Compile Remove="Migrations\20210903113346_sdflkj43434fg.Designer.cs" />
+    <Compile Remove="Migrations\20210903114806_permi1.cs" />
+    <Compile Remove="Migrations\20210903114806_permi1.Designer.cs" />
+    <Compile Remove="Migrations\20210903132033_slip.cs" />
+    <Compile Remove="Migrations\20210903132033_slip.Designer.cs" />
+    <Compile Remove="Migrations\20210903141647_lal6.cs" />
+    <Compile Remove="Migrations\20210903141647_lal6.Designer.cs" />
+    <Compile Remove="Migrations\20210903142833_you6.cs" />
+    <Compile Remove="Migrations\20210903142833_you6.Designer.cs" />
+    <Compile Remove="Migrations\20210903143256_you6870.cs" />
+    <Compile Remove="Migrations\20210903143256_you6870.Designer.cs" />
+    <Compile Remove="Migrations\20210903190024_942021to.cs" />
+    <Compile Remove="Migrations\20210903190024_942021to.Designer.cs" />
+    <Compile Remove="Migrations\20210904061813_sdd5.cs" />
+    <Compile Remove="Migrations\20210904061813_sdd5.Designer.cs" />
+    <Compile Remove="Migrations\20210904111744_sat94.cs" />
+    <Compile Remove="Migrations\20210904111744_sat94.Designer.cs" />
+    <Compile Remove="Migrations\20210904112920_slkdf3yy.cs" />
+    <Compile Remove="Migrations\20210904112920_slkdf3yy.Designer.cs" />
+    <Compile Remove="Migrations\20210905111318_dkdkj23.cs" />
+    <Compile Remove="Migrations\20210905111318_dkdkj23.Designer.cs" />
+    <Compile Remove="Migrations\20210905111850_slsl34.cs" />
+    <Compile Remove="Migrations\20210905111850_slsl34.Designer.cs" />
+    <Compile Remove="Migrations\20210905145057_slsdlsdl12.cs" />
+    <Compile Remove="Migrations\20210905145057_slsdlsdl12.Designer.cs" />
+    <Compile Remove="Migrations\20210905145823_slsdlsdl123.cs" />
+    <Compile Remove="Migrations\20210905145823_slsdlsdl123.Designer.cs" />
+    <Compile Remove="Migrations\20210905145932_slsdlsdl1234.cs" />
+    <Compile Remove="Migrations\20210905145932_slsdlsdl1234.Designer.cs" />
+    <Compile Remove="Migrations\20210905150058_update1.cs" />
+    <Compile Remove="Migrations\20210905150058_update1.Designer.cs" />
+    <Compile Remove="Migrations\20210905150145_update1.cs" />
+    <Compile Remove="Migrations\20210905150145_update1.Designer.cs" />
+    <Compile Remove="Migrations\20210905150234_update2.cs" />
+    <Compile Remove="Migrations\20210905150234_update2.Designer.cs" />
+    <Compile Remove="Migrations\20210905150435_update3.cs" />
+    <Compile Remove="Migrations\20210905150435_update3.Designer.cs" />
+    <Compile Remove="Migrations\20210905152252_update2.cs" />
+    <Compile Remove="Migrations\20210905152252_update2.Designer.cs" />
+    <Compile Remove="Migrations\20210905154257_update4.cs" />
+    <Compile Remove="Migrations\20210905154257_update4.Designer.cs" />
+    <Compile Remove="Migrations\20210905163339_update3.cs" />
+    <Compile Remove="Migrations\20210905163339_update3.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.0" />

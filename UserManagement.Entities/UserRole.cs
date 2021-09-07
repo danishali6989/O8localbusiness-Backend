@@ -14,7 +14,7 @@ namespace UserManagement.Entities
         public string CreatedBy { get; set; }
         public DateTime? UpdatedOn { get; set; }
         public string UpdatedBy { get; set; }
-      public int CompanyId { get; set; }
+      public int CompanyId{ get; set; }
        // public int? LangId { get; set; }
 
        // public Languages Languages { get; set; }

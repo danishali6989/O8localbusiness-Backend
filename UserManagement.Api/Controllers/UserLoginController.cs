@@ -152,7 +152,7 @@ namespace UserManagement.Api.Controllers
 
         [HttpPost]
         [Route("UserLoginTwoStep1")]
-        public async Task<IActionResult> LoginTwoStep(UserLoginModel model,int id)
+        public async Task<IActionResult> LoginTwoStep(UserLoginModel model)
         {
             try
             {
@@ -200,7 +200,7 @@ namespace UserManagement.Api.Controllers
                             
 
                             EmailSetting email1 = new EmailSetting();
-                            email1 = await _repository.GetAsync1(id);
+                            email1 = await _repository.GetAsync1(data.CompanyId);
                             
 
 
@@ -341,7 +341,7 @@ namespace UserManagement.Api.Controllers
 
         [HttpPost]
         [Route("forgotPassword")]
-        public async Task<IActionResult> FogotPassword(string email,int id)
+        public async Task<IActionResult> FogotPassword(string email)
         {
             try
             {
@@ -375,7 +375,7 @@ namespace UserManagement.Api.Controllers
                     };
 
                     EmailSetting email1 = new EmailSetting();
-                    email1 = await _repository.GetAsync1(id);
+                    email1 = await _repository.GetAsync1(exist.CompanyId);
 
                     MailMessage mail = new MailMessage();
                     SmtpClient SmtpServer = new SmtpClient();

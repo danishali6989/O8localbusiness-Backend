@@ -33,7 +33,7 @@ namespace UserManagement.DataLayer.Repositories
 
         public async Task<EmailSetting> GetAsync1(int id)
         {
-            return await _dataContext.EmailSetting.Where(x=>x.Id==id).FirstOrDefaultAsync();
+            return await _dataContext.EmailSetting.Where(x=>x.CompanyId==id).FirstOrDefaultAsync();
         }
 
         public async Task<EmailSetting> GetAsync(int id,int header)

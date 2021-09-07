@@ -97,13 +97,15 @@ namespace UserManagement.Api
                         .AllowAnyMethod()
                         .AllowCredentials());
             });
-
+            
             services.AddHttpContextAccessor();
 
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
+
+         
 
             MiddlewareConfiguration.ConfigureEf(services, Configuration.GetConnectionString("DataConnection"));
             MiddlewareConfiguration.ConfigureUow(services);

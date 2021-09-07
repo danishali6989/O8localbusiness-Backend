@@ -244,6 +244,8 @@ namespace UserManagement.DataLayer.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CompanyId");
+
                     b.ToTable("EmailSetting");
                 });
 
@@ -365,6 +367,102 @@ namespace UserManagement.DataLayer.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("LoginModule");
+                });
+
+            modelBuilder.Entity("UserManagement.Entities.Permi", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Compny_Id");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime>("CreatedOn");
+
+                    b.Property<string>("Permision_Description")
+                        .IsRequired();
+
+                    b.Property<string>("Permisions")
+                        .IsRequired();
+
+                    b.Property<int>("ScrenId");
+
+                    b.Property<int>("Status");
+
+                    b.Property<string>("UpdatedBy");
+
+                    b.Property<DateTime?>("UpdatedOn");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Compny_Id");
+
+                    b.HasIndex("ScrenId");
+
+                    b.ToTable("Permi");
+                });
+
+            modelBuilder.Entity("UserManagement.Entities.Permission", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Company_Id");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime>("CreatedOn");
+
+                    b.Property<string>("Permission_Description")
+                        .IsRequired();
+
+                    b.Property<string>("Permissions")
+                        .IsRequired();
+
+                    b.Property<int>("ScreenId");
+
+                    b.Property<int>("Status");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime?>("UpdatedOn");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Company_Id");
+
+                    b.HasIndex("ScreenId");
+
+                    b.ToTable("Permission");
+                });
+
+            modelBuilder.Entity("UserManagement.Entities.RolePermi", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Companyid");
+
+                    b.Property<int>("Pid");
+
+                    b.Property<int>("Roleid");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("Pid");
+
+                    b.HasIndex("Roleid");
+
+                    b.ToTable("RolePermission");
                 });
 
             modelBuilder.Entity("UserManagement.Entities.ScreenDetail", b =>
@@ -566,6 +664,13 @@ namespace UserManagement.DataLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("UserManagement.Entities.EmailSetting", b =>
+                {
+                    b.HasOne("UserManagement.Entities.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+                });
+
             modelBuilder.Entity("UserManagement.Entities.Field", b =>
                 {
                     b.HasOne("UserManagement.Entities.Languages", "Language")
@@ -579,6 +684,45 @@ namespace UserManagement.DataLayer.Migrations
                     b.HasOne("UserManagement.Entities.User", "user")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("UserManagement.Entities.Permi", b =>
+                {
+                    b.HasOne("UserManagement.Entities.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("Compny_Id")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("UserManagement.Entities.ScreenDetail", "Screen")
+                        .WithMany()
+                        .HasForeignKey("ScrenId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("UserManagement.Entities.Permission", b =>
+                {
+                    b.HasOne("UserManagement.Entities.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("Company_Id")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("UserManagement.Entities.ScreenDetail", "Screen")
+                        .WithMany()
+                        .HasForeignKey("ScreenId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("UserManagement.Entities.RolePermi", b =>
+                {
+                    b.HasOne("UserManagement.Entities.Permi", "Permi")
+                        .WithMany()
+                        .HasForeignKey("Pid")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("UserManagement.Entities.UserRole", "Role")
+                        .WithMany()
+                        .HasForeignKey("Roleid")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

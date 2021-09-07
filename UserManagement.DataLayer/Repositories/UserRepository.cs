@@ -164,7 +164,9 @@ namespace UserManagement.DataLayer.Repositories
                               CompanyId = s.CompanyId,
                               Status=s.Status,
                               otp = s.otp,
-                              LangId = s.LangId
+                              LangId = s.LangId,
+                             
+
                           })
                          .AsNoTracking()
                          .SingleOrDefaultAsync();
@@ -264,7 +266,9 @@ namespace UserManagement.DataLayer.Repositories
                               Mobile = s.Mobile,
                               Email = s.Email,
                               RoleId = s.RoleId,
-                              RoleName = s.Role.RoleName
+                              RoleName = s.Role.RoleName,
+                              CompanyId = s.CompanyId
+
                           })
                          .AsNoTracking()
                          .SingleOrDefaultAsync();

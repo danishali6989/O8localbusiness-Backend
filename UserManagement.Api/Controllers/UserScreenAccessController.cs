@@ -56,8 +56,15 @@ namespace UserManagement.Api.Controllers
         public async Task<IActionResult> GetScreenAccessByUserRoleId(int id)
         {
             var header = Request.Headers["CompanyId"];
-
-            return Ok(await _manager.GetUserScreenAccessById(id, Convert.ToInt32(header)));
+            var screens = await _manager.GetUserScreenAccessById(id, Convert.ToInt32(header));
+            var permissions = await _manager.GetUserPermissionAccessById(id, Convert.ToInt32(header));
+            var data = new
+            {
+                screens,
+                permissions
+            };
+            // return Ok(await _manager.GetUserScreenAccessById(id, Convert.ToInt32(header)));
+            return Ok(data);
         }
         [HttpGet]
         [Authorize]

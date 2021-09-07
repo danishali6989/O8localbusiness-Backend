@@ -9,7 +9,7 @@ namespace UserManagement.DataLayer
     {
         public DataContext(DbContextOptions options) : base(options) { }
 
-
+        
         public DbSet<User> User { get; set; }
         public DbSet<UserRole> UsersRoles { get; set; }
         public DbSet<LoginModule> LoginModule { get; set; }
@@ -21,6 +21,10 @@ namespace UserManagement.DataLayer
         public DbSet<EmailSetting> EmailSetting { get; set; }
 
         public DbSet<LogRecord> LogRecord { get; set; }
+        public DbSet<Permission> Permission { get; set; }
+      //  public DbSet<PermiRole> PermiRole { get; set; }
+        public DbSet<Permi> Permi { get; set; }
+        public DbSet<RolePermi> RolePermi { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -38,6 +42,10 @@ namespace UserManagement.DataLayer
             modelBuilder.ApplyConfiguration(new FieldConfiguration());
             modelBuilder.ApplyConfiguration(new EmailSettingConfiguration());
             modelBuilder.ApplyConfiguration(new LogRecordConfiguration());
+           modelBuilder.ApplyConfiguration(new PermissionConfiguration());
+           modelBuilder.ApplyConfiguration(new RolePermisionConfiguration());
+            modelBuilder.ApplyConfiguration(new PermiConfiguration());
+          
 
 
 

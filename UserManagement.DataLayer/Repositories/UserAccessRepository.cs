@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using Microsoft.EntityFrameworkCore;
 using UserManagement.Infrastructure.Repositories;
+using UserManagement.Dtos.RolePermission;
 
 namespace UserManagement.DataLayer.Repositories
 {
@@ -48,6 +49,31 @@ namespace UserManagement.DataLayer.Repositories
                          .AsNoTracking()
                          .OrderBy("ScreenName Asc")
                          .ToListAsync();
+            return obj;
+        }
+
+        public async Task<List<RolePermissionDto>> GetAsyncUserPermissionAccess(int id, int header)
+        {
+            var obj = await (from s in _dataContext.RolePermi
+                             join s1 in _dataContext.Permi on s.Pid equals s1.Id
+                             where s.Roleid == id && s1.Compny_Id == header
+                             select new RolePermissionDto
+                             {
+                                 Id = s1.Id,
+                                 Per_id = s.Permi.Id,
+                                 Rol_id = s.Role.Id,
+                                 screenId=s1.ScrenId,
+                                 permin_title = s1.Permisions,
+
+
+                                 CompanyId = header,
+                                
+
+
+                             })
+                          .AsNoTracking().ToListAsync();
+
+
             return obj;
         }
 

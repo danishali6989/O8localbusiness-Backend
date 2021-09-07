@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using UserManagement.Dtos.RolePermission;
 using UserManagement.Dtos.UserAccess;
 using UserManagement.Entities;
 using UserManagement.Factories;
 using UserManagement.Infrastructure.DataLayer;
 using UserManagement.Infrastructure.Managers;
 using UserManagement.Infrastructure.Repositories;
+using UserManagement.Models.RolePermission;
 using UserManagement.Models.UserAccess;
 using UserManagement.Utilities;
 
@@ -40,6 +42,16 @@ namespace UserManagement.Managers
             await _unitOfWork.SaveChangesAsync();
         }
 
+       /* public async Task AddUserPermissionAccessAsync(AddRolePermission model, string header)
+        {
+*//*            await _repository.DeleteAsyncUserScreenAccess(model.UserRoleId);
+            await _unitOfWork.SaveChangesAsync();*//*
+            List<RolePermi> item = new List<RolePermi>();
+
+            RolePermiFactory.CreateUserRolePermissionAccess(model, item, header);
+            await _repository.AddUserScreenAccessAsync(item);
+            await _unitOfWork.SaveChangesAsync();
+        }*/
         public async Task<List<ScreenAccessDto>> GetUserScreenAccessById(int id, int header)
         {
             List<ScreenAccessDto> data = new List<ScreenAccessDto>();
@@ -60,6 +72,28 @@ namespace UserManagement.Managers
                     data.Add(obj);
                 }
             }
+
+            return data;
+        }
+
+        public async Task<List<RolePermissionDto>> GetUserPermissionAccessById(int id, int header)
+        {
+            List<RolePermissionDto> data = new List<RolePermissionDto>();
+            data = await _repository.GetAsyncUserPermissionAccess(id, header);
+           /* if (data.Count == 0)
+            {
+                //var screenData = await _repository.GetAllScreen();
+                RolePermissionDto obj = new RolePermissionDto();
+                foreach (var item in data)
+                {
+
+
+                    obj.Per_id = item.Id;
+                    obj.Rol_id = id;
+                   
+                    data.Add(obj);
+                }
+            }*/
 
             return data;
         }
