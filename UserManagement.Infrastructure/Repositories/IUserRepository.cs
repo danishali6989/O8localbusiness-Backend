@@ -13,11 +13,16 @@ namespace UserManagement.Infrastructure.Repositories
 {
     public interface IUserRepository
     {
+
+
+        Task AddAsync1(User entity);
+        int GetLastNextDoorUserId(string email);
         Task AddAsync(User entity);
         Task LoginAddAsync(LoginModule entity);
         void Edit(User entity);
 
         Task<User> GetAsync(int id, int header);
+        Task<User> GetNextDoorUserAsync(int userid);
 
         Task<UserDetailDto> GetByUserEmailAsync(string username);
 
@@ -30,8 +35,11 @@ namespace UserManagement.Infrastructure.Repositories
         Task DeleteAsync(int id, int header);
 
         Task<UserDetailDto> GetByUserAsync(string username);
+        Task<UserDetailDto> GetBynxtUserAsync(int userid);
 
         bool GetByUserAllradyAsync(int userid);
+
+       // int GetLastUserId(int id);
 
 
         Task<UserDetailDto> Login(UserLoginModel model);
@@ -41,6 +49,8 @@ namespace UserManagement.Infrastructure.Repositories
         Task<UserDetailDto> getOtp(string email);
 
         Task changePassword(string email, string password);
+        Task NxtchangePassword(int userid, string Newpassword);
+        
 
         // int UserCount(int id, DateTime? startDate, DateTime? endDate);
 

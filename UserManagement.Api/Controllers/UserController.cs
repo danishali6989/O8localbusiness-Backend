@@ -20,6 +20,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IO;
 using Microsoft.AspNetCore.Identity;
 using UserManagement.DataLayer;
+using System.Diagnostics;
 
 namespace UserManagement.Api.Controllers
 {
@@ -47,7 +48,65 @@ namespace UserManagement.Api.Controllers
 
         
         [HttpPost]
-      [Authorize]
+        [Route("addNextDoorUser")]
+        public async Task<IActionResult> AddNext([FromBody] AddUserModel model)
+        {
+            var header = Request.Headers["CompanyId"];
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.GetErrorList());
+            }
+            if ( await _manager.CheckUser(model.UserName) != null)
+            {
+                return BadRequest("Username Already Exist");
+            }
+
+            if ( await _manager.CheckEmail(model.Email) != null)
+            {
+                return BadRequest("Email Already SS Exist");
+            }
+
+            try
+            {
+
+                //this is a simple white background image
+                var myfilename = string.Format(@"{0}", Guid.NewGuid());
+
+                //Generate unique filename
+                string uploadsFolder = Path.Combine(_hostingEnv.WebRootPath, "images");
+
+                string filepath = uploadsFolder + "/" + myfilename + ".jpeg";
+
+                string filename = "images/" + myfilename + ".jpeg";
+
+
+                var bytess = Convert.FromBase64String(model.image);
+                using (var imageFile = new FileStream(filepath, FileMode.Create))
+                {
+                    imageFile.Write(bytess, 0, bytess.Length);
+                    imageFile.Flush();
+                }
+                model.imageUrl = filename;
+
+
+
+
+                await _manager.AddAsync1(model, header.ToString());
+              // await  _manager.AddAsync1(model);
+                var h = _manager.GetLastNextDoorUserId(model.Email);
+                return Ok(h);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+        [HttpPost]
+      //  [Authorize]
         [Route("add")]
         public async Task<IActionResult> Add([FromBody] AddUserModel model)
         {
@@ -146,7 +205,31 @@ namespace UserManagement.Api.Controllers
             return Ok("User Updated");
         }
 
-       
+        [HttpPost]
+        // [Authorize]
+        [Route("editNextDoorUser")]
+        public async Task<IActionResult> Edit([FromBody] EditNextDoorUser model)
+        {
+
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.GetErrorList());
+            }
+
+            try
+            {
+                await _manager.EditNextDoorAsync(model);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Ok("User Updated");
+        }
+
+
         [HttpGet]
         [Authorize]
         [AllowAnonymous]

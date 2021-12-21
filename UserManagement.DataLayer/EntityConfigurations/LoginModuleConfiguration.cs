@@ -20,7 +20,10 @@ namespace UserManagement.DataLayer.EntityConfigurations
                 builder.Property(x => x.Status).IsRequired();
                 builder.Property(x => x.RoleId).IsRequired(false);
                 builder.Property(x => x.LastLogin).IsRequired(false);
-                
+                builder.Property(x => x.Ip_Address).IsRequired(false);
+                builder.Property(x => x.BrowserAgent).IsRequired(false);
+
+
                 builder.HasOne(x => x.user).WithMany().HasForeignKey(x => x.UserId);
             }
         }

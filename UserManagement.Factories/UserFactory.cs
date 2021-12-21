@@ -33,7 +33,36 @@ namespace UserManagement.Factories
                 Status = Constants.RecordStatus.Active,
                 CreatedBy = userId ?? "0",
                 CreatedOn = Utility.GetDateTime(),
-                CompanyId = Convert.ToInt32(header),
+               // CompanyId = Convert.ToInt32(header),
+                CompanyId = 1,
+                LangId = 1,
+
+            };
+            return data;
+        }
+
+        public static User Create(AddUserModel model, string userId)
+        {
+            var data = new User
+            {
+                Usr_FName = model.FirstName,
+                Usr_LName = model.LastName,
+                UserName = model.UserName,
+                Email = model.Email,
+                App_id = model.App_id,
+                Finance_year = model.Finance_year,
+                //App_id = model.App_id == null?1 : model.App_id,
+                // Finance_year = model.Finance_year == null ?2000 : model.Finance_year,
+                Ip_Address = model.Ip_Address,
+                Password = Utility.Encrypt(model.Password),
+                Mobile = model.Mobile,
+                RoleId = model.RoleId,
+                image = model.imageUrl,
+
+                Status = Constants.RecordStatus.Active,
+                CreatedBy = userId ?? "0",
+                CreatedOn = Utility.GetDateTime(),
+                CompanyId = 1,
                 LangId = 1,
 
             };
@@ -76,6 +105,18 @@ namespace UserManagement.Factories
             entity.CompanyId = Convert.ToInt32(header);
 
         }
+        public static void Create(EditNextDoorUser model, User entity, string userId)
+        {
+
+            entity.Usr_FName = model.FirstName;
+            entity.Usr_LName = model.LastName;
+            entity.Email = model.Email;
+            //  entity.Password = Utility.Encrypt(model.Password);
+            entity.UpdatedBy = userId ?? "0";
+            entity.UpdatedOn = Utility.GetDateTime();
+            
+
+        }
 
 
         public static LoginModule Login(UserDetailDto model)
@@ -90,9 +131,9 @@ namespace UserManagement.Factories
                 createdOn = Utility.GetDateTime(),
                 RoleId = model.RoleId,
                 CompanyId = model.CompanyId,
-             
-               
-
+                Ip_Address = model.Ip_Address,
+                BrowserAgent = model.BrowserAgent,
+                
             };
 
             return data;

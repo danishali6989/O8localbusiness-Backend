@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using UserManagement.Dtos.User;
+using UserManagement.Entities;
 
 namespace UserManagement.Managers
 {
@@ -43,6 +44,18 @@ namespace UserManagement.Managers
         {
             await _repository.AddAsync(UserFactory.Create(model, _userId, header));
             await _unitOfWork.SaveChangesAsync();
+            
+        }
+        public  async Task  AddAsync1(AddUserModel model,string header)
+        {
+              await  _repository.AddAsync1(UserFactory.Create(model, _userId,header));
+            //  await _unitOfWork.SaveChangesAsync();
+           
+
+        }
+        public int GetLastNextDoorUserId(string Email)
+        {
+            return  _repository.GetLastNextDoorUserId(Email);
         }
 
         public async Task LoginAddAsync(UserDetailDto model)
@@ -51,6 +64,13 @@ namespace UserManagement.Managers
             await _unitOfWork.SaveChangesAsync();
         }
 
+        public async Task EditNextDoorAsync(EditNextDoorUser model)
+        {
+            var item = await _repository.GetNextDoorUserAsync(model.UserId);
+            UserFactory.Create(model, item, _userId);
+            _repository.Edit(item);
+            await _unitOfWork.SaveChangesAsync();
+        }
         public async Task EditAsync(EditUserModel model, string header)
         {
             var item = await _repository.GetAsync(model.Id, Convert.ToInt32(header));
@@ -59,13 +79,13 @@ namespace UserManagement.Managers
             await _unitOfWork.SaveChangesAsync();
         }
 
-       /* public async Task UpdateAsync(LanguagesUpdateModel model)
-        {
-            var item = await _repository.GetAsync(model);
-            UserFactory.Create(model, item, _userId);
-            _repository.Edit(item);
-            await _unitOfWork.SaveChangesAsync();
-        }*/
+        /* public async Task UpdateAsync(LanguagesUpdateModel model)
+         {
+             var item = await _repository.GetAsync(model);
+             UserFactory.Create(model, item, _userId);
+             _repository.Edit(item);
+             await _unitOfWork.SaveChangesAsync();
+         }*/
 
 
         public async Task UpdateStatus(UserStatus model, string header)
@@ -104,9 +124,17 @@ namespace UserManagement.Managers
             return _repository.GetByUserAllradyAsync(userid);
         }
 
+       /* public int GetLastUserId(int id)
+        {
+            return _repository.GetLastUserId(id);
+        }*/
         public async Task<UserDetailDto> CheckUser(string username)
         {
             return await _repository.GetByUserAsync(username);
+        }
+        public async Task<UserDetailDto> ChecknxtUser(int userid)
+        {
+            return await _repository.GetBynxtUserAsync(userid);
         }
         public async Task<UserDetailDto> Login(UserLoginModel model)
         {
@@ -117,7 +145,7 @@ namespace UserManagement.Managers
         public async Task LogOut(int id, int header)
         {
             await _repository.LogOut(id, header);
-            await _unitOfWork.SaveChangesAsync();
+           
         }
 
         public async Task saveOtp(string email, int otp)
@@ -129,6 +157,12 @@ namespace UserManagement.Managers
         public async Task changePassword(string email, string password)
         {
             await _repository.changePassword(email, password);
+            await _unitOfWork.SaveChangesAsync();
+        }
+
+        public async Task NxtChangePassword(int userid, string Newpassword)
+        {
+            await _repository.NxtchangePassword(userid, Newpassword);
             await _unitOfWork.SaveChangesAsync();
         }
         public async Task<UserDetailDto> isExist(string email)

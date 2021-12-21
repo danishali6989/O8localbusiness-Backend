@@ -22,6 +22,7 @@ namespace UserManagement.Dtos.UserLogin
         public int App_id { get; set; }
         public int Finance_year { get; set; }
         public string Ip_Address { get; set; }
+        public string BrowserAgent { get; set; }
         public string CompanyName { get; set; }
         public int otp { get; set; }
         public string image { get; set; }

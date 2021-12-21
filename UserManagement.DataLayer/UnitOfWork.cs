@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Threading.Tasks;
+using System;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace UserManagement.DataLayer
 {
@@ -10,9 +12,10 @@ namespace UserManagement.DataLayer
         private readonly DataContext _dataContext;
         private IDbContextTransaction _dbTransaction;
 
-        public UnitOfWork(DataContext dataContext)
+        public UnitOfWork(DataContext dataContext,IServiceProvider serviceProvider )
         {
-            _dataContext = dataContext;
+            //  _dataContext = dataContext;
+            _dataContext = serviceProvider.CreateScope().ServiceProvider.GetRequiredService<DataContext>();
         }
 
         public void BeginTransaction()

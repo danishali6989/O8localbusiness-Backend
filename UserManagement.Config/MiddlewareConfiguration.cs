@@ -43,7 +43,9 @@ namespace UserManagement.Config
             services.AddScoped<IRolePermiManager, RolePermiManager>();
             services.AddScoped<IPermiManager, PermiManager>();
 
+            // nextdoor configuration starts from here
 
+            services.AddScoped<INextDoorUserManager,NextDoorUserManager>();
 
 
 
@@ -66,7 +68,9 @@ namespace UserManagement.Config
             services.AddScoped<IPermiRepository, PermiRepository>();
 
 
+            // nextdoor configuration starts from here
 
+            services.AddScoped<INextDoorUserRepository,NextDoorUserRepository>();
 
         }
         public static void ConfigureServices(IServiceCollection services)

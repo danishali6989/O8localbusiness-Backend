@@ -40,13 +40,13 @@ namespace UserManagement.DataLayer.Repositories
         {
             var data = await _dataContext.RolePermi.FindAsync(id);
             //data.Status = Constants.RecordStatus.Deleted;
-            _dataContext.RolePermi.Update(data);
+            _dataContext.RolePermi.Remove(data);
         }
         public async Task DeleteAsync1(int id)
         {
             var data = await _dataContext.RolePermi.FindAsync(id);
             //data.Status = Constants.RecordStatus.Deleted;
-            _dataContext.RolePermi.Update(data);
+            _dataContext.RolePermi.Remove(data);
         }
 
         public  RolePermissionDto isExist(AddRolePermission model)

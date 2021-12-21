@@ -64,6 +64,7 @@ namespace UserManagement.DataLayer.Repositories
                                  Rol_id = s.Role.Id,
                                  screenId=s1.ScrenId,
                                  permin_title = s1.Permisions,
+                                 ScreenName = s1.Screen.ScreenName, 
 
 
                                  CompanyId = header,

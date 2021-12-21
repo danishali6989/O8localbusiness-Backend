@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using UserManagement.Utilities;
 using UserManagement.Infrastructure.Repositories;
 using UserManagement.Models.UserLogin;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace UserManagement.DataLayer.Repositories
 {
@@ -17,14 +18,31 @@ namespace UserManagement.DataLayer.Repositories
     {
         private readonly DataContext _dataContext;
 
-        public UserRepository(DataContext dataContext)
+        public UserRepository(DataContext dataContext, IServiceProvider serviceProvider)
         {
-            _dataContext = dataContext;
+            //  _dataContext = dataContext;
+            _dataContext = serviceProvider.CreateScope().ServiceProvider.GetRequiredService<DataContext>();
         }
 
         public async Task AddAsync(User entity)
         {
             await _dataContext.User.AddAsync(entity);
+          //  _dataContext.User.OrderBy(x => x.Id).LastOrDefault();
+           
+        }
+
+        public async Task AddAsync1(User entity)
+        {
+            await _dataContext.User.AddAsync(entity);
+            await _dataContext.SaveChangesAsync();
+
+        }
+
+         public int GetLastNextDoorUserId(string Email)
+        {
+            // var obj = _dataContext.User.OrderBy(x => x.Email).LastOrDefault();
+            var obj = _dataContext.User.Where(x => x.Email == Email).FirstOrDefault();
+            return obj.Id;
         }
 
         public async Task LoginAddAsync(LoginModule entity)
@@ -36,17 +54,26 @@ namespace UserManagement.DataLayer.Repositories
                 _dataContext.User.Update(obj);
             }
             await _dataContext.LoginModule.AddAsync(entity);
-            
+            await _dataContext.SaveChangesAsync();
+
+
         }
 
         public void Edit(User entity)
         {
             _dataContext.User.Update(entity);
+             _dataContext.SaveChangesAsync();
         }
 
         public async Task<User> GetAsync(int id, int header)
         {
             return await _dataContext.User.FindAsync(id);
+        }
+        public async Task<User> GetNextDoorUserAsync(int userid)
+        {
+            var data = _dataContext.User.Where(x => x.Id == userid).FirstOrDefault();
+            return data;
+         //   return await _dataContext.User.FindAsync(id);
         }
 
         public async Task<UserDetailDto> GetDetailAsync(int id, int header)
@@ -143,6 +170,14 @@ namespace UserManagement.DataLayer.Repositories
                 return false;
             }
         }
+
+      /*  public int GetLastUserId(int id)
+        {
+            //return _dataContext.User.Where(x => x.Id == id ).LastOrDefault();
+            var lastColumn = _dataContext.User.LastOrDefault();
+            return lastColumn.Id;
+
+        }*/
         public async Task<UserDetailDto> GetByUserAsync(string username)
         {
             return await (from s in _dataContext.User
@@ -171,7 +206,34 @@ namespace UserManagement.DataLayer.Repositories
                          .AsNoTracking()
                          .SingleOrDefaultAsync();
         }
+        public async Task<UserDetailDto> GetBynxtUserAsync(int userid)
+        {
+            return await (from s in _dataContext.User
+                          where s.Id == userid
+                          select new UserDetailDto
+                          {
+                              Id = s.Id,
+                              Usr_FName = s.Usr_FName,
+                              Usr_LName = s.Usr_LName,
+                              UserName = s.UserName,
+                              Password = s.Password,
+                              Mobile = s.Mobile,
+                              Email = s.Email,
+                              RoleId = s.RoleId,
+                              RoleName = s.Role.RoleName,
+                              App_id = s.App_id,
+                              Finance_year = s.Finance_year,
+                              Ip_Address = s.Ip_Address,
+                              CompanyId = s.CompanyId,
+                              Status = s.Status,
+                              otp = s.otp,
+                              LangId = s.LangId,
 
+
+                          })
+                         .AsNoTracking()
+                         .SingleOrDefaultAsync();
+        }
         public async Task<UserDetailDto> getOtp(string email)
         {
             return await (from s in _dataContext.User
@@ -283,7 +345,8 @@ namespace UserManagement.DataLayer.Repositories
             data.status1 = false;
             data.Status = Constants.RecordStatus.Deleted;
             _dataContext.LoginModule.Update(data);
-         
+            await _dataContext.SaveChangesAsync();
+
 
         }
 
@@ -304,6 +367,25 @@ namespace UserManagement.DataLayer.Repositories
 
             _dataContext.User.Update(data);
 
+
+        }
+
+        public async Task NxtchangePassword(int userid, string Newpassword)
+        {
+            try
+            {
+
+
+                var data = await _dataContext.User.Where(x => x.Id == userid).FirstOrDefaultAsync();
+                data.Password = Utility.Encrypt(Newpassword);
+
+                _dataContext.User.Update(data);
+                await _dataContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
         }
 

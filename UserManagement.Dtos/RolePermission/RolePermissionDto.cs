@@ -12,5 +12,6 @@ namespace UserManagement.Dtos.RolePermission
         public int Per_id { get; set; }
         public int Rol_id { get; set; }
         public int CompanyId { get; set; }
+        public string ScreenName { get; set; }
     }
 }

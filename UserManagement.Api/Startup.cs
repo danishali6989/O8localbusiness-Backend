@@ -20,6 +20,7 @@ using IRecurringJobManager = Hangfire.IRecurringJobManager;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using UserManagement.Infrastructure.Services;
 using UserManagement.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace UserManagement.Api
 {
@@ -37,6 +38,10 @@ namespace UserManagement.Api
             services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<DataContext>()
                 .AddDefaultTokenProviders();
+            
+            
+            services.AddDbContext<DataContext>(options =>
+                       options.UseSqlServer(Configuration.GetConnectionString("DataConnection")),ServiceLifetime.Scoped );
 
             services.Configure<IdentityOptions>(options =>
             {

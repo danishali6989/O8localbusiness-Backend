@@ -348,7 +348,11 @@ namespace UserManagement.DataLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("BrowserAgent");
+
                     b.Property<int?>("CompanyId");
+
+                    b.Property<string>("Ip_Address");
 
                     b.Property<DateTime?>("LastLogin");
 
@@ -367,6 +371,54 @@ namespace UserManagement.DataLayer.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("LoginModule");
+                });
+
+            modelBuilder.Entity("UserManagement.Entities.NextDoorUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ApartmentNo");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime>("CreatedOn");
+
+                    b.Property<string>("Email")
+                        .IsRequired();
+
+                    b.Property<string>("FirstName")
+                        .IsRequired();
+
+                    b.Property<string>("Gender")
+                        .IsRequired();
+
+                    b.Property<double>("Lan");
+
+                    b.Property<string>("LastName")
+                        .IsRequired();
+
+                    b.Property<double>("Lat");
+
+                    b.Property<string>("Password")
+                        .IsRequired();
+
+                    b.Property<int>("Status");
+
+                    b.Property<string>("StreetAdress")
+                        .IsRequired();
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime?>("UpdatedOn");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("NextDoorUser");
                 });
 
             modelBuilder.Entity("UserManagement.Entities.Permi", b =>

@@ -1,4 +1,4 @@
-﻿namespace UserManagement.Utilities
+﻿    namespace UserManagement.Utilities
 {
     public class Constants
     {

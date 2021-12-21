@@ -115,7 +115,7 @@ namespace UserManagement.Api.Controllers
                                         ),
                                     Audience = _configuration.GetValue<string>("Jwt:Audience"),
                                     Issuer = _configuration.GetValue<string>("Jwt:Issuer"),
-                                    Expires = DateTime.UtcNow.AddDays(7),
+                                    Expires = DateTime.UtcNow.AddDays(10),
                                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                                 };
 
@@ -262,7 +262,7 @@ namespace UserManagement.Api.Controllers
         }
 
 
-        [HttpPost]
+        /*[HttpPost]
         [Route("Userlogin")]
         public async Task<IActionResult> Login(UserLoginModelOne model)
         {
@@ -337,8 +337,106 @@ namespace UserManagement.Api.Controllers
                
            
             
+        }*/
+
+        [HttpPost]
+        [Route("NextDoorUserlogin")]
+        public async Task<IActionResult> Login([FromBody] UserLoginModelOne model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState.GetErrorList());
+                }
+                var data = await _manager.CheckUser(model.UserName);
+                if (data != null)
+                {
+                    var user = _manager.UserAllReadyLogin(data.Id);
+                    if (model.UserName == "riyaztrad" || model.UserName == "Admin" || model.UserName == "Manager" || model.UserName == "Employee")
+                    {
+                        user = false;
+                    }
+                    
+                    
+                        if (UserManagement.Utilities.Utility.Decrypt(model.Password, data.Password) == false)
+                        {
+                            return BadRequest("Invalid Password");
+                        }
+                        else
+                        {
+
+                            
+                            await _manager.LoginAddAsync(data);
+
+                            var tokenHandler = new JwtSecurityTokenHandler();
+                            var key = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("Jwt:secret"));
+                            var tokenDescription = new SecurityTokenDescriptor
+                            {
+                                Subject = new ClaimsIdentity(new[]
+                                    { new Claim("id", data.Id.ToString()) ,
+                                      new Claim("Name", data.UserName.ToString()),
+                                      new Claim("RoleId", data.RoleId.ToString()),
+                                      new Claim("RoleName", data.RoleName.ToString()),
+                                      new Claim("CompanyId", data.CompanyId.ToString())
+                                }
+                                    ),
+                                Audience = _configuration.GetValue<string>("Jwt:Audience"),
+                                Issuer = _configuration.GetValue<string>("Jwt:Issuer"),
+                                Expires = DateTime.UtcNow.AddDays(10),
+                                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                            };
+
+                            var token = tokenHandler.CreateToken(tokenDescription);
+
+
+
+                            return Ok(tokenHandler.WriteToken(token));
+                        
+                       
+
+                    }
+
+                }
+                else
+                {
+                    return BadRequest("Invalid UserName");
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+
+
+
         }
 
+        [HttpPost]
+        [Route("checkpassword")]
+        public async Task<IActionResult> NextDoorCheckPassword(CheckPasswordModel model)
+        {
+            try
+            {
+                //var data = await _manager.CheckUser(model.UserName);
+                var data = await _manager.ChecknxtUser(model.userid);
+                if (UserManagement.Utilities.Utility.Decrypt(model.oldpassword, data.Password) == false)
+                {
+                    return BadRequest("Invalid Password");
+                }
+                else
+                {
+                    return Ok("valid old password");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpPost]
         [Route("forgotPassword")]
         public async Task<IActionResult> FogotPassword(string email)
@@ -459,6 +557,15 @@ namespace UserManagement.Api.Controllers
 
         }
 */
+
+        [HttpPost]
+        [Route("nxtchangePassword")]
+        public async Task<IActionResult> nxtChangePassword(NxtChangePasswordModel model)
+        {
+            await _manager.NxtChangePassword(model.userid, model.Newpassword);
+            return Ok("password change");
+        }
+
         [HttpPost]
         [Route("changePassword")]
         public async Task<IActionResult> ChangePassword(int otp, string password, string email)

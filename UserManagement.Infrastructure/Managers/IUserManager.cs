@@ -14,10 +14,15 @@ namespace UserManagement.Infrastructure.Managers
 {
     public interface IUserManager
     {
+
+        Task AddAsync1(AddUserModel model,string header);
+
+        int GetLastNextDoorUserId(string email);
         Task AddAsync(AddUserModel model, string header);
         Task LoginAddAsync(UserDetailDto model);
         Task EditAsync(EditUserModel model, string header);
-      //  Task UpdateAsync(LanguagesUpdateModel model);
+        Task EditNextDoorAsync(EditNextDoorUser model);
+        //  Task UpdateAsync(LanguagesUpdateModel model);
         Task EditImgAsync(EditImgModel model, string header);
 
         //Task<List<AssignUserRoleDto>> GetAssignUserRoleById(int id);
@@ -29,7 +34,9 @@ namespace UserManagement.Infrastructure.Managers
         Task<JqDataTableResponse<UserDetailDto>> GetPagedResultAsync(JqDataTableRequest model, int header);
         Task DeleteAsync(int id, int header);
         Task<UserDetailDto> CheckUser(string username);
+        Task<UserDetailDto> ChecknxtUser(int userid);
         bool UserAllReadyLogin(int userid);
+        
 
         Task<UserDetailDto> Login(UserLoginModel model);
         // Task<JqDataTableResponse<UserDetailDto>> GetAgentPagedResultAsync(JqDataTableRequest model);
@@ -39,6 +46,7 @@ namespace UserManagement.Infrastructure.Managers
         Task<UserDetailDto> getOtp(string email);
 
         Task changePassword(string email, string password);
+        Task NxtChangePassword(int userid, string Newpassword);
         Task UpdateStatus(UserStatus model, string header);
 
 

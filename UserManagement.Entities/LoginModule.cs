@@ -17,6 +17,8 @@ namespace UserManagement.Entities
         public int? CompanyId { get; set; }
        
         public DateTime? LastLogin { get; set; }
+        public string Ip_Address { get; set; }
+        public string BrowserAgent { get; set; }
 
 
     }
