@@ -191,6 +191,7 @@ namespace UserManagement.DataLayer.Repositories
                               Password = s.Password,
                               Mobile = s.Mobile,
                               Email = s.Email,
+                            //  PostalCode = s.Postalcode,
                               RoleId = s.RoleId,
                               RoleName = s.Role.RoleName,
                               App_id = s.App_id,

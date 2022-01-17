@@ -14,6 +14,8 @@ namespace UserManagement.Dtos.UserLogin
         public string Email { get; set; }
         public string Password { get; set; }
         public string Mobile { get; set; }
+        public string PostalCode { get; set; }
+
         public int RoleId { get; set; }
         public string RoleName { get; set; }
         public bool CallStatus { get; set; }

@@ -31,6 +31,8 @@ namespace UserManagement.DataLayer.EntityConfigurations
             builder.Property(x => x.Status).IsRequired();
             builder.Property(x => x.CreatedOn).IsRequired();
             builder.Property(x => x.image).IsRequired(false);
+            builder.Property(x => x.Postalcode).IsRequired(false);
+
             builder.Property(x => x.CreatedBy).IsRequired().HasMaxLength(40);
             builder.Property(x => x.UpdatedOn).IsRequired(false);
             builder.Property(x => x.LastLogin).IsRequired(false);

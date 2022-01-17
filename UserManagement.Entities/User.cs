@@ -31,6 +31,8 @@ namespace UserManagement.Entities
         public int CompanyId { get; set; }
         public Company Company { get; set; }
 
+        public string Postalcode { get; set; }
+
 
         public int otp { get; set;}
         public string image { get; set; }

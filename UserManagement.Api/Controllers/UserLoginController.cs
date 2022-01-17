@@ -110,9 +110,10 @@ namespace UserManagement.Api.Controllers
                                       new Claim("Name", data.UserName.ToString()),
                                       new Claim("RoleId", data.RoleId.ToString()),
                                       new Claim("RoleName", data.RoleName.ToString()),
-                                      new Claim("CompanyId", data.CompanyId.ToString())
-                                }
-                                        ),
+                                      new Claim("CompanyId", data.CompanyId.ToString()),
+                                      new Claim("CompanyId", data.PostalCode.ToString())
+
+                                } ),
                                     Audience = _configuration.GetValue<string>("Jwt:Audience"),
                                     Issuer = _configuration.GetValue<string>("Jwt:Issuer"),
                                     Expires = DateTime.UtcNow.AddDays(10),
@@ -369,32 +370,33 @@ namespace UserManagement.Api.Controllers
                             
                             await _manager.LoginAddAsync(data);
 
-                            var tokenHandler = new JwtSecurityTokenHandler();
-                            var key = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("Jwt:secret"));
-                            var tokenDescription = new SecurityTokenDescriptor
-                            {
-                                Subject = new ClaimsIdentity(new[]
-                                    { new Claim("id", data.Id.ToString()) ,
+                        /*var tokenHandler = new JwtSecurityTokenHandler();
+                        var key = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("Jwt:secret"));
+                        var tokenDescription = new SecurityTokenDescriptor
+                        {
+                            Subject = new ClaimsIdentity(new[]
+                                { new Claim("id", data.Id.ToString()) ,
                                       new Claim("Name", data.UserName.ToString()),
+                                       new Claim("FirstName", data.Usr_FName.ToString()),
                                       new Claim("RoleId", data.RoleId.ToString()),
                                       new Claim("RoleName", data.RoleName.ToString()),
                                       new Claim("CompanyId", data.CompanyId.ToString())
                                 }
-                                    ),
-                                Audience = _configuration.GetValue<string>("Jwt:Audience"),
-                                Issuer = _configuration.GetValue<string>("Jwt:Issuer"),
-                                Expires = DateTime.UtcNow.AddDays(10),
-                                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-                            };
+                                ),
+                            Audience = _configuration.GetValue<string>("Jwt:Audience"),
+                            Issuer = _configuration.GetValue<string>("Jwt:Issuer"),
+                            Expires = DateTime.UtcNow.AddDays(10),
+                            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                        };
 
-                            var token = tokenHandler.CreateToken(tokenDescription);
+                        var token = tokenHandler.CreateToken(tokenDescription);
 
 
 
-                            return Ok(tokenHandler.WriteToken(token));
-                        
-                       
+                        return Ok(tokenHandler.WriteToken(token));
 
+*/
+                        return Ok(data.Id);
                     }
 
                 }
