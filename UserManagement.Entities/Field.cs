@@ -8,7 +8,7 @@ namespace UserManagement.Entities
     public class Field
     {
         public int id { get; set; }
-       // public int lang_id { get; set; }
+      
         public string field { get; set; }
         public string description { get; set; }
         public int screen_id { get; set; }

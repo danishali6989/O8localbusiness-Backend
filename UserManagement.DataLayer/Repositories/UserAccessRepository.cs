@@ -16,7 +16,7 @@ namespace UserManagement.DataLayer.Repositories
     {
         private readonly DataContext _dataContext;
 
-        public UserAccessRepository(DataContext dataContext)
+        public UserAccessRepository(DataContext dataContext,IServiceProvider serviceProvider)
         {
             _dataContext = dataContext;
         }
@@ -25,6 +25,7 @@ namespace UserManagement.DataLayer.Repositories
             foreach (var item in entity)
             {
                 await _dataContext.UserScreenAccess.AddAsync(item);
+                await _dataContext.SaveChangesAsync();
             }
 
         }

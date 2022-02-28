@@ -49,9 +49,13 @@ namespace UserManagement.Managers
         public  async Task  AddAsync1(AddUserModel model,string header)
         {
               await  _repository.AddAsync1(UserFactory.Create(model, _userId,header));
-            //  await _unitOfWork.SaveChangesAsync();
            
 
+        }
+
+        public async Task AddUser(AddUserModel model)
+        {
+            await _repository.AddUser(UserFactory.Create(model,_userId));
         }
         public int GetLastNextDoorUserId(string Email)
         {
@@ -79,13 +83,7 @@ namespace UserManagement.Managers
             await _unitOfWork.SaveChangesAsync();
         }
 
-        /* public async Task UpdateAsync(LanguagesUpdateModel model)
-         {
-             var item = await _repository.GetAsync(model);
-             UserFactory.Create(model, item, _userId);
-             _repository.Edit(item);
-             await _unitOfWork.SaveChangesAsync();
-         }*/
+       
 
 
         public async Task UpdateStatus(UserStatus model, string header)
@@ -124,10 +122,7 @@ namespace UserManagement.Managers
             return _repository.GetByUserAllradyAsync(userid);
         }
 
-       /* public int GetLastUserId(int id)
-        {
-            return _repository.GetLastUserId(id);
-        }*/
+      
         public async Task<UserDetailDto> CheckUser(string username)
         {
             return await _repository.GetByUserAsync(username);
@@ -186,16 +181,7 @@ namespace UserManagement.Managers
             return await _repository.OnlineUserPagedResult(model, header);
         }
 
-        /*public async Task<IEnumerable<UserDetailDto>> GetAllAsync(Constants.RecordStatus? status = null)
-        {
-            var response = await _repository.GetAllAsync(status);
-            foreach (var item in response)
-            {
-                var invSum = _repository.UserCount(item.Id, null, null);
-               
-            }
-            return response;
-        }*/
+        
 
 
         public async Task<List<UserDetailDto>> GetAllAsync(int header)

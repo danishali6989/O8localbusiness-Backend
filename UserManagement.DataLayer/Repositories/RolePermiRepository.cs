@@ -11,6 +11,7 @@ using System.Linq.Dynamic.Core;
 using Microsoft.EntityFrameworkCore;
 using UserManagement.Utilities;
 using UserManagement.Models.RolePermission;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace UserManagement.DataLayer.Repositories
 {
@@ -18,14 +19,17 @@ namespace UserManagement.DataLayer.Repositories
     {
         private readonly DataContext _dataContext;
 
-        public RolePermiRepository(DataContext dataContext)
+        public RolePermiRepository(DataContext dataContext,IServiceProvider serviceProvider)
         {
-            _dataContext = dataContext;
+            // _dataContext = dataContext;
+            _dataContext = serviceProvider.CreateScope().ServiceProvider.GetRequiredService<DataContext>();
+
         }
 
         public async Task AddAsync(RolePermi entity)
         {
             await _dataContext.RolePermi.AddAsync(entity);
+            await _dataContext.SaveChangesAsync();
         }
 
         public async Task AddUserScreenAccessAsync(List<RolePermi> entity)
@@ -33,20 +37,22 @@ namespace UserManagement.DataLayer.Repositories
             foreach (var item in entity)
             {
                 await _dataContext.RolePermi.AddAsync(item);
+                await _dataContext.SaveChangesAsync();
             }
 
         }
         public async Task DeleteAsync(int id, int header)
         {
             var data = await _dataContext.RolePermi.FindAsync(id);
-            //data.Status = Constants.RecordStatus.Deleted;
             _dataContext.RolePermi.Remove(data);
+            await _dataContext.SaveChangesAsync();
         }
         public async Task DeleteAsync1(int id)
         {
             var data = await _dataContext.RolePermi.FindAsync(id);
-            //data.Status = Constants.RecordStatus.Deleted;
             _dataContext.RolePermi.Remove(data);
+            await _dataContext.SaveChangesAsync();
+
         }
 
         public  RolePermissionDto isExist(AddRolePermission model)
@@ -59,9 +65,6 @@ namespace UserManagement.DataLayer.Repositories
                               Per_id = s.Pid,
                               Rol_id = s.Roleid,
                               CompanyId = s.Companyid
-                             
-                             
-
                           })
                          .AsNoTracking()
                          .FirstOrDefault();

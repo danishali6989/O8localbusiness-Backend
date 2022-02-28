@@ -45,7 +45,10 @@ namespace UserManagement.Config
 
             // nextdoor configuration starts from here
 
-            services.AddScoped<INextDoorUserManager,NextDoorUserManager>();
+            services.AddScoped<IFormBuilderTypeManager,FormBuilderTypeManager>();
+            services.AddScoped<IFormManager,FormManager>();
+            services.AddScoped<IBusinessCategoryManager,BusinessCategoryManager>();
+            services.AddScoped<IBusinessSubCategoryManager,BusinessSubCategoryManager>();
 
 
 
@@ -70,7 +73,12 @@ namespace UserManagement.Config
 
             // nextdoor configuration starts from here
 
+            services.AddScoped<IFormBuilderTypeRepository, FormBuilderTypeRepository>();
             services.AddScoped<INextDoorUserRepository,NextDoorUserRepository>();
+            services.AddScoped<IFormRepository, FormRepository>();
+            services.AddScoped<IBusinessCategoryRepository, BusinessCategoryRepository>();
+            services.AddScoped<IBusinessSubCategoryRepository, BusinessSubCategoryRepository>();
+
 
         }
         public static void ConfigureServices(IServiceCollection services)

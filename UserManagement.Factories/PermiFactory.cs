@@ -23,7 +23,7 @@ namespace UserManagement.Factories
                 UpdatedBy = userId ?? "0",
                 UpdatedOn = Utility.GetDateTime(),
                 Compny_Id = Convert.ToInt32(header),
-                // Language = model.lang_id
+               
 
             };
             return data;

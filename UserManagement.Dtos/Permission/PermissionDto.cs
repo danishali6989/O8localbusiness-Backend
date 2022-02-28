@@ -11,10 +11,7 @@ namespace UserManagement.Dtos.Permission
         public string Permissions { get; set; }
         public string Permission_Description { get; set; }
         public int CompanyId { get; set; }
-        
         public Constants.RecordStatus Status { get; set; }
-       
-
         public int ScreenId { get; set; }
        
     }

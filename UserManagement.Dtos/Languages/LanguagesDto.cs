@@ -10,7 +10,6 @@ namespace UserManagement.Dtos.Languages
         public int lang_id { get; set; }
         public string lang_name { get; set; }
         public string lang_orientation { get; set; }
-
         public Constants.RecordStatus Status { get; set; }
 
     }

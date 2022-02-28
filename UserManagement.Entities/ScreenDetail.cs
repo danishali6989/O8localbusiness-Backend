@@ -10,7 +10,7 @@ namespace UserManagement.Entities
         public int Id { get; set; }
         public string ScreenName { get; set; }
        public string ScreenCode { get; set; }
-       // public int screen_id { get; set; }
+     
         public Constants.RecordStatus Status { get; set; }
         public DateTime CreatedOn { get; set; }
         public string CreatedBy { get; set; }

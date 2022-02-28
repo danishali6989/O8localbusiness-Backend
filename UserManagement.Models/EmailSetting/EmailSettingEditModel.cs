@@ -6,7 +6,7 @@ namespace UserManagement.Models.EmailSetting
 {
     public  class EmailSettingEditModel
     {
-        // public int companyId { get; set; }
+       
         public int Id { get; set; }
         public string Email { get; set; }
         public string password { get; set; }

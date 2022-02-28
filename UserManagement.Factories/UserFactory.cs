@@ -22,8 +22,7 @@ namespace UserManagement.Factories
                 Email = model.Email,
                 App_id = model.App_id,
                 Finance_year = model.Finance_year,
-                //App_id = model.App_id == null?1 : model.App_id,
-                // Finance_year = model.Finance_year == null ?2000 : model.Finance_year,
+               
                 Ip_Address = model.Ip_Address,
                 Password = Utility.Encrypt(model.Password),
                 Mobile = model.Mobile,
@@ -33,7 +32,7 @@ namespace UserManagement.Factories
                 Status = Constants.RecordStatus.Active,
                 CreatedBy = userId ?? "0",
                 CreatedOn = Utility.GetDateTime(),
-               // CompanyId = Convert.ToInt32(header),
+               Postalcode = model.PostalCode,
                 CompanyId = 1,
                 LangId = 1,
 
@@ -51,8 +50,7 @@ namespace UserManagement.Factories
                 Email = model.Email,
                 App_id = model.App_id,
                 Finance_year = model.Finance_year,
-                //App_id = model.App_id == null?1 : model.App_id,
-                // Finance_year = model.Finance_year == null ?2000 : model.Finance_year,
+                
                 Ip_Address = model.Ip_Address,
                 Password = Utility.Encrypt(model.Password),
                 Mobile = model.Mobile,
@@ -75,7 +73,7 @@ namespace UserManagement.Factories
             entity.UserName = model.UserName;
             entity.Email = model.Email;
             entity.RoleId = model.RoleId;
-            //  entity.Password = Utility.Encrypt(model.Password);
+           
             entity.Mobile = model.Mobile;
             entity.UpdatedBy = userId ?? "0";
             entity.UpdatedOn = Utility.GetDateTime();
@@ -98,7 +96,7 @@ namespace UserManagement.Factories
         public static void EditImag(EditImgModel model, User entity, string userId, string header)
         {
 
-            //  entity.Password = Utility.Encrypt(model.Password);
+            
             entity.UpdatedBy = userId ?? "0";
             entity.UpdatedOn = Utility.GetDateTime();
             entity.image = model.imageUrl;
@@ -111,7 +109,7 @@ namespace UserManagement.Factories
             entity.Usr_FName = model.FirstName;
             entity.Usr_LName = model.LastName;
             entity.Email = model.Email;
-            //  entity.Password = Utility.Encrypt(model.Password);
+            entity.image = model.imageUrl;
             entity.UpdatedBy = userId ?? "0";
             entity.UpdatedOn = Utility.GetDateTime();
             

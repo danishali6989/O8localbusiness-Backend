@@ -5,15 +5,11 @@ using System.Threading.Tasks;
 using UserManagement.Dtos.EmailSetting;
 using UserManagement.Entities;
 using UserManagement.Infrastructure.Repositories;
-
-
-
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using UserManagement.Utilities;
 using Microsoft.EntityFrameworkCore;
-
-
+using Microsoft.Extensions.DependencyInjection;
 
 namespace UserManagement.DataLayer.Repositories
 {
@@ -21,14 +17,16 @@ namespace UserManagement.DataLayer.Repositories
     {
         private readonly DataContext _dataContext;
 
-        public EmailSettingRepository(DataContext dataContext)
+        public EmailSettingRepository(DataContext dataContext,IServiceProvider serviceProvider)
         {
-            _dataContext = dataContext;
+            _dataContext = serviceProvider.CreateScope().ServiceProvider.GetRequiredService<DataContext>();
+            //  _dataContext = dataContext;
         }
 
         public async Task AddAsync1(EmailSetting entity)
         {
             await _dataContext.EmailSetting.AddAsync(entity);
+            await _dataContext.SaveChangesAsync();
         }
 
         public async Task<EmailSetting> GetAsync1(int id)
@@ -43,6 +41,7 @@ namespace UserManagement.DataLayer.Repositories
         public void Edit(EmailSetting entity)
         {
             _dataContext.EmailSetting.Update(entity);
+            _dataContext.SaveChanges();
         }
 
 
@@ -92,10 +91,9 @@ namespace UserManagement.DataLayer.Repositories
         public async Task DeleteAsync(int id,int header)
         {
             var data = await _dataContext.EmailSetting.FindAsync(id);
-            
-
             _dataContext.EmailSetting.Update(data);
             _dataContext.EmailSetting.Remove(data);
+            await _dataContext.SaveChangesAsync();
         }
     }
 }

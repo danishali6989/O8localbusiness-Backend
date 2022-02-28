@@ -192,6 +192,62 @@ namespace UserManagement.DataLayer.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("UserManagement.Entities.BusinessCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("BusinessCategoryName")
+                        .IsRequired();
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime>("CreatedOn");
+
+                    b.Property<int>("Status");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime?>("UpdatedOn");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BusinessCategory");
+                });
+
+            modelBuilder.Entity("UserManagement.Entities.BusinessSubCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BusinessCategoryId");
+
+                    b.Property<string>("BusinessSubCategoryName")
+                        .IsRequired();
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime>("CreatedOn");
+
+                    b.Property<int>("Status");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime?>("UpdatedOn");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BusinessSubCategory");
+                });
+
             modelBuilder.Entity("UserManagement.Entities.Company", b =>
                 {
                     b.Property<int>("CompanyId")
@@ -285,6 +341,216 @@ namespace UserManagement.DataLayer.Migrations
                     b.HasIndex("lang_id");
 
                     b.ToTable("Field");
+                });
+
+            modelBuilder.Entity("UserManagement.Entities.Form", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address");
+
+                    b.Property<string>("BusinessAlias");
+
+                    b.Property<int?>("BusinessCategoryId");
+
+                    b.Property<string>("BusinessName");
+
+                    b.Property<int?>("BusinessSubCategoryId");
+
+                    b.Property<int?>("ClaimUserId");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime>("CreatedOn");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Email");
+
+                    b.Property<bool>("IsClaim");
+
+                    b.Property<int?>("MobileNo");
+
+                    b.Property<int?>("Otp");
+
+                    b.Property<string>("Postalcode");
+
+                    b.Property<int>("Status");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime?>("UpdatedOn");
+
+                    b.Property<int>("UserId");
+
+                    b.Property<string>("UserName");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Form");
+                });
+
+            modelBuilder.Entity("UserManagement.Entities.FormBuilderType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime>("CreatedOn");
+
+                    b.Property<int>("Status");
+
+                    b.Property<string>("TypeName")
+                        .IsRequired();
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime?>("UpdatedOn");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FormBuilderType");
+                });
+
+            modelBuilder.Entity("UserManagement.Entities.FormField", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool?>("Access");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime>("CreatedOn");
+
+                    b.Property<bool?>("EnableOther");
+
+                    b.Property<string>("FieldName")
+                        .IsRequired();
+
+                    b.Property<string>("FormFieldType");
+
+                    b.Property<int>("FormId");
+
+                    b.Property<string>("HelpText");
+
+                    b.Property<bool?>("Inline");
+
+                    b.Property<double?>("Maxlength");
+
+                    b.Property<bool?>("Multiple");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Placeholder");
+
+                    b.Property<bool?>("Required");
+
+                    b.Property<double?>("Rows");
+
+                    b.Property<int>("Status");
+
+                    b.Property<string>("Style");
+
+                    b.Property<string>("SubType");
+
+                    b.Property<bool?>("Toggle");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime?>("UpdatedOn");
+
+                    b.Property<double?>("Value");
+
+                    b.Property<string>("className");
+
+                    b.Property<bool?>("requireValidOption");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FormField");
+                });
+
+            modelBuilder.Entity("UserManagement.Entities.FormFieldValue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime>("CreatedOn");
+
+                    b.Property<int>("FormFieldId");
+
+                    b.Property<int>("FormId");
+
+                    b.Property<int>("Status");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime?>("UpdatedOn");
+
+                    b.Property<int>("UserId");
+
+                    b.Property<string>("Value")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FormFieldValue");
+                });
+
+            modelBuilder.Entity("UserManagement.Entities.FormOption", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime>("CreatedOn");
+
+                    b.Property<int>("FieldId");
+
+                    b.Property<int>("FormId");
+
+                    b.Property<bool?>("IsSelected");
+
+                    b.Property<string>("OptionName")
+                        .IsRequired();
+
+                    b.Property<int>("Status");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime?>("UpdatedOn");
+
+                    b.Property<string>("Value")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FormOption");
                 });
 
             modelBuilder.Entity("UserManagement.Entities.Languages", b =>

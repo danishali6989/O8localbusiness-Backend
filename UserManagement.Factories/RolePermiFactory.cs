@@ -17,33 +17,11 @@ namespace UserManagement.Factories
 
                 
                 Companyid = Convert.ToInt32(header),
-                // Language = model.lang_id
-
+               
             };
             return data;
         }
 
-        /*public static void Create(List<AddRolePermission> model, List<RolePermi> entities,string header)
-        {
-
-            foreach (var item in model)
-            {
-                var data = new RolePermi
-                {
-                    //  Id = Guid.NewGuid(),
-                    Pid = item.Permission_id,
-                    Roleid = item.Role_id,
-                    Companyid = Convert.ToInt32(header)
-                };
-                entities.Add(data);
-            }
-        }*/
-
-        /* public static RolePermi CreateUserRolePermissionAccess(AddRolePermission model,string userId,string header)
-         {
-
-
-
-         }*/
+        
     }
 }

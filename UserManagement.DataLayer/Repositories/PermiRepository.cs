@@ -9,6 +9,7 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using Microsoft.EntityFrameworkCore;
 using UserManagement.Utilities;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace UserManagement.DataLayer.Repositories
 {
@@ -16,18 +17,22 @@ namespace UserManagement.DataLayer.Repositories
     {
         private readonly DataContext _dataContext;
 
-        public PermiRepository(DataContext dataContext)
+        public PermiRepository(DataContext dataContext, IServiceProvider serviceProvider)
         {
-            _dataContext = dataContext;
+            //_dataContext = dataContext;
+            _dataContext = serviceProvider.CreateScope().ServiceProvider.GetRequiredService<DataContext>();
+
         }
 
         public async Task AddAsync(Permi entity)
         {
             await _dataContext.Permi.AddAsync(entity);
+            await  _dataContext.SaveChangesAsync();
         }
         public void Edit(Permi entity)
         {
             _dataContext.Permi.Update(entity);
+            _dataContext.SaveChanges();
         }
 
         public async Task<Permi> GetAsync(int id, int header)
@@ -96,6 +101,7 @@ namespace UserManagement.DataLayer.Repositories
             var data = await _dataContext.Permi.FindAsync(id);
             data.Status = Constants.RecordStatus.Deleted;
             _dataContext.Permi.Update(data);
+            await _dataContext.SaveChangesAsync();
         }
     }
 }

@@ -17,7 +17,7 @@ namespace UserManagement.Models.User
         public int App_id { get; set; }
         public int Finance_year { get; set; }
         public string Ip_Address { get; set; }
-       // public int CompanyId { get; set; }
+      public string PostalCode { get; set; }
         public string image { get; set; }
         public string imageUrl { get; set; }
     }

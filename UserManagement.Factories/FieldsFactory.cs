@@ -22,8 +22,7 @@ namespace UserManagement.Factories
                 CreatedOn = Utility.GetDateTime(),
                 UpdatedBy = userId??"0",
                 UpdatedOn = Utility.GetDateTime(),
-               // Language = model.lang_id
-
+               
             };
             return data;
         }

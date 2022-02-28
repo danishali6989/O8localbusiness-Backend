@@ -16,6 +16,7 @@ namespace UserManagement.Infrastructure.Repositories
 
 
         Task AddAsync1(User entity);
+        Task AddUser(User entity);
         int GetLastNextDoorUserId(string email);
         Task AddAsync(User entity);
         Task LoginAddAsync(LoginModule entity);
@@ -27,9 +28,7 @@ namespace UserManagement.Infrastructure.Repositories
         Task<UserDetailDto> GetByUserEmailAsync(string username);
 
         Task<UserDetailDto> GetDetailAsync(int id, int header);
-        //Task<UserDetailDto> UpdateStatus(int id);
-
-
+       
         Task<JqDataTableResponse<UserDetailDto>> GetPagedResultAsync(JqDataTableRequest model, int header);
 
         Task DeleteAsync(int id, int header);
@@ -39,7 +38,7 @@ namespace UserManagement.Infrastructure.Repositories
 
         bool GetByUserAllradyAsync(int userid);
 
-       // int GetLastUserId(int id);
+      
 
 
         Task<UserDetailDto> Login(UserLoginModel model);
@@ -52,16 +51,11 @@ namespace UserManagement.Infrastructure.Repositories
         Task NxtchangePassword(int userid, string Newpassword);
         
 
-        // int UserCount(int id, DateTime? startDate, DateTime? endDate);
-
+      
         Task<List<UserDetailDto>> GetAllAsync(int header);
-        // Task<UserDetailDto> GetDetailAsync(int id);
-
-
-        /*        Task<IEnumerable<UserDetailDto>> GetAllAsync(Constants.RecordStatus? status = null);
-        */
+        
         Task<JqDataTableResponse<UserDetailDto>> OnlineUserPagedResult(JqDataTableRequest model, int header);
-        // Task<JqDataTableResponse<UserDetailDto>> GetOnlyOnlineAgentPagedResultAsync(JqDataTableRequest model);
+       
         bool CheckPasswordAsync(int adminid, string adminPassword);
         Task ChangePasswordAdmin(ChangePasswordModel model);
     }

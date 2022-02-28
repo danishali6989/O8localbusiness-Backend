@@ -21,7 +21,7 @@ namespace UserManagement.Managers
 
         private readonly string _userId;
 
-        public RolePermiManager(IHttpContextAccessor contextAccessor,
+        public RolePermiManager(IHttpContextAccessor contextAccessor,IServiceProvider serviceProvider,
           IRolePermiRepository repository,
           IUnitOfWork unitOfWork)
         {

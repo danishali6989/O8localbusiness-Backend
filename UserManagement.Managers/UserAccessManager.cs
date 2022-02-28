@@ -42,23 +42,14 @@ namespace UserManagement.Managers
             await _unitOfWork.SaveChangesAsync();
         }
 
-       /* public async Task AddUserPermissionAccessAsync(AddRolePermission model, string header)
-        {
-*//*            await _repository.DeleteAsyncUserScreenAccess(model.UserRoleId);
-            await _unitOfWork.SaveChangesAsync();*//*
-            List<RolePermi> item = new List<RolePermi>();
-
-            RolePermiFactory.CreateUserRolePermissionAccess(model, item, header);
-            await _repository.AddUserScreenAccessAsync(item);
-            await _unitOfWork.SaveChangesAsync();
-        }*/
+       
         public async Task<List<ScreenAccessDto>> GetUserScreenAccessById(int id, int header)
         {
             List<ScreenAccessDto> data = new List<ScreenAccessDto>();
           data = await _repository.GetAsyncUserScreenAccess(id, header);
             if(data.Count == 0)
             {
-                //var screenData = await _repository.GetAllScreen();
+               
                 ScreenAccessDto obj = new ScreenAccessDto();
                 foreach (var item in data)
                 {
@@ -80,20 +71,7 @@ namespace UserManagement.Managers
         {
             List<RolePermissionDto> data = new List<RolePermissionDto>();
             data = await _repository.GetAsyncUserPermissionAccess(id, header);
-           /* if (data.Count == 0)
-            {
-                //var screenData = await _repository.GetAllScreen();
-                RolePermissionDto obj = new RolePermissionDto();
-                foreach (var item in data)
-                {
-
-
-                    obj.Per_id = item.Id;
-                    obj.Rol_id = id;
-                   
-                    data.Add(obj);
-                }
-            }*/
+          
 
             return data;
         }

@@ -18,28 +18,12 @@ namespace UserManagement.Factories
                 Status = Constants.RecordStatus.Active,
                 CreatedBy = userId ?? "0",
                 CreatedOn = Utility.GetDateTime(),
-               // lang_id = model.lang_id,
-                
-
+             
             };
             return data;
         }
 
-        /* public static Languages Update(LanguagesUpdateModel model,User entity, string userId)
-         {
-             var data = new Languages
-             {
-                // entity.LangId = model.lang_id,
-                 Status = Constants.RecordStatus.Active,
-                 CreatedBy = userId ?? "0",
-                 CreatedOn = Utility.GetDateTime(),
-                 // lang_id = model.lang_id,
-
-
-             };
-             return data;
-         }*/
-
+        
         public static void Update(LanguagesUpdateModel model, User entity, string userId)
         {
             entity.LangId = model.lang_id;

@@ -8,7 +8,7 @@ namespace UserManagement.Models.Permission
     public  class PermissionAddModel
     {
 
-       // public int Id { get; set; }
+      
         public string Permissions { get; set; }
         public string Permission_Description { get; set; }
      

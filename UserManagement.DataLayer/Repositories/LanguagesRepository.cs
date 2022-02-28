@@ -1,10 +1,4 @@
-﻿/*using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using UserManagement.Dtos.Languages;
-using UserManagement.Entities;
-using UserManagement.Infrastructure.Repositories;*/
+﻿
 
 using UserManagement.Dtos.UserLogin;
 using UserManagement.Entities;
@@ -20,6 +14,7 @@ using UserManagement.Infrastructure.Repositories;
 using UserManagement.Dtos;
 using UserManagement.Dtos.Screen;
 using UserManagement.Dtos.Languages;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace UserManagement.DataLayer.Repositories
 {
@@ -27,23 +22,27 @@ namespace UserManagement.DataLayer.Repositories
     {
         private readonly DataContext _dataContext;
 
-        public LanguagesRepository(DataContext dataContext)
+        public LanguagesRepository(DataContext dataContext,IServiceProvider serviceProvider)
         {
-            _dataContext = dataContext;
+            _dataContext = serviceProvider.CreateScope().ServiceProvider.GetRequiredService<DataContext>();
+           // _dataContext = dataContext;
         }
         public async Task AddAsync(Languages entity)
         {
             await _dataContext.Languages.AddAsync(entity);
+            await _dataContext.SaveChangesAsync();
         }
 
         public void Edit(Languages entity)
         {
             _dataContext.Languages.Update(entity);
+            _dataContext.SaveChanges();
         }
 
         public void Edit(User entity)
         {
             _dataContext.User.Update(entity);
+            _dataContext.SaveChanges();
         }
         public async Task<Languages> GetAsync(int id)
         {
@@ -119,6 +118,7 @@ namespace UserManagement.DataLayer.Repositories
             var data = await _dataContext.Languages.FindAsync(id);
             data.Status = Constants.RecordStatus.Deleted;
             _dataContext.Languages.Update(data);
+            await _dataContext.SaveChangesAsync();
         }
     }
 }

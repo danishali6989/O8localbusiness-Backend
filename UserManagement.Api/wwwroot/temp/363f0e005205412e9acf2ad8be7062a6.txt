@@ -1,3 +1,0 @@
-Edit invoice 
-	delete attachments not work
-	edit invoice number (changed)

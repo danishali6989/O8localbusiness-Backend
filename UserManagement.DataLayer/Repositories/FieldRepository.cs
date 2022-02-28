@@ -11,6 +11,7 @@ using UserManagement.Utilities;
 using UserManagement.Infrastructure.Repositories;
 using UserManagement.Models.UserLogin;
 using UserManagement.Dtos.Field;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace UserManagement.DataLayer.Repositories
 {
@@ -18,18 +19,22 @@ namespace UserManagement.DataLayer.Repositories
     {
         private readonly DataContext _dataContext;
 
-        public FieldRepository(DataContext dataContext)
+        public FieldRepository(DataContext dataContext,IServiceProvider serviceProvider)
         {
-            _dataContext = dataContext;
+            // _dataContext = dataContext;
+            _dataContext = serviceProvider.CreateScope().ServiceProvider.GetRequiredService<DataContext>();
+
         }
         public async Task AddAsync(Field entity)
         {
             await _dataContext.Field.AddAsync(entity);
+            await _dataContext.SaveChangesAsync();
         }
 
         public void Edit(Field entity)
         {
             _dataContext.Field.Update(entity);
+            _dataContext.SaveChanges();
         }
 
         public async Task<FieldDto> GetDetailAsync(int id)
@@ -143,6 +148,7 @@ namespace UserManagement.DataLayer.Repositories
             var data = await _dataContext.Field.FindAsync(id);
             data.Status = Constants.RecordStatus.Deleted;
             _dataContext.Field.Update(data);
+            await _dataContext.SaveChangesAsync();
         }
     }
 }

@@ -1,2 +1,0 @@
-customer
-	add & edit (both client side email valdiation not work)

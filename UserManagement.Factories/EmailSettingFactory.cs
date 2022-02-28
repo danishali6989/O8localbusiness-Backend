@@ -17,15 +17,13 @@ namespace UserManagement.Factories
                 password = model.password,
                 Portnumber = model.Portnumber,
                 DeletedBy = model.DeletedBy,
-               /* UpdatedOn = Utility.GetDateTime(),
-                UpdatedBy = userId ?? "0",*/
+              
                 CreatedOn = Utility.GetDateTime(),
                 CreatedBy = userId ?? "0",
                 Description = model.description,
                 SmtpNo = model.smtpNo,
                 CompanyId = Convert.ToInt32(header),
-             //   CompanyId = model.companyId,
-
+          
 
             };
             return data;

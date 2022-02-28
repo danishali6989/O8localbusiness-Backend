@@ -21,7 +21,7 @@ namespace UserManagement.Entities
         public DateTime CreatedOn { get; set; }
         public string CreatedBy { get; set; }
 
-        //public int CompanyId { get; set; }
+     
         public Company Company { get; set; }
 
     }

@@ -14,14 +14,6 @@ namespace UserManagement.Infrastructure.Managers
             Task DeleteAsync(int id, int header);
             Task DeleteAsync2(int id);
             RolePermissionDto isExist(AddRolePermission id);
-        /*    Task EditAsync(PermissionEditModel model, string header);
-
-            Task<PermissionDto> GetDetailAsync(int id, int header);
-            Task<PermissionDto> GetDetailByScreenAsync(int id, int header);
-
-            Task<List<PermissionDto>> GetAllAsync(int header);
-
-            Task DeleteAsync(int id, int header);
-        */
+        
     }
 }

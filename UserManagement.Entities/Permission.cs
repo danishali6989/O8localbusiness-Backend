@@ -17,8 +17,7 @@ namespace UserManagement.Entities
         public string CreatedBy { get; set; }
         public DateTime? UpdatedOn { get; set; }
         public string UpdatedBy { get; set; }
-      //  public DateTime? updatedDate { get; set; }
-
+    
         public int ScreenId { get; set; }
         public ScreenDetail Screen { get; set; }
 

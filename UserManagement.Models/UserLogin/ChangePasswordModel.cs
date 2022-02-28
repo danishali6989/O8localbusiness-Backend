@@ -27,10 +27,4 @@ namespace UserManagement.Models.UserLogin
     }
 }
 
-           /* [Required]
-            [Compare("NewPassword")]
-            public string ConfirmPassword { get; set; }*/
-        /* [Required]
-         [MinLength(6)]
-         [MaxLength(50)]
-         public string CurrentPassword { get; set; }*/
+         

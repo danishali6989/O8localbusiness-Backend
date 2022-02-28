@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using UserManagement.Infrastructure.Repositories;
 using UserManagement.Dtos;
 using UserManagement.Dtos.Screen;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace UserManagement.DataLayer.Repositories
 {
@@ -18,19 +19,24 @@ namespace UserManagement.DataLayer.Repositories
     {
         private readonly DataContext _dataContext;
 
-        public ScreenRepository(DataContext dataContext)
+        public ScreenRepository(DataContext dataContext, IServiceProvider serviceProvider)
         {
-            _dataContext = dataContext;
+            //_dataContext = dataContext;
+            _dataContext = serviceProvider.CreateScope().ServiceProvider.GetRequiredService<DataContext>();
+
         }
 
         public async Task AddAsync(ScreenDetail entity)
         {
             await _dataContext.ScreenDetail.AddAsync(entity);
+            await _dataContext.SaveChangesAsync();
         }
 
         public void Edit(ScreenDetail entity)
         {
             _dataContext.ScreenDetail.Update(entity);
+            _dataContext.SaveChanges();
+
         }
 
         public async Task<ScreenDetail> GetAsync(int id, int header)
@@ -113,6 +119,7 @@ namespace UserManagement.DataLayer.Repositories
             var data = await _dataContext.ScreenDetail.FindAsync(id);
             data.Status = Constants.RecordStatus.Deleted;
             _dataContext.ScreenDetail.Update(data);
+            await _dataContext.SaveChangesAsync();
         }
     }
 }

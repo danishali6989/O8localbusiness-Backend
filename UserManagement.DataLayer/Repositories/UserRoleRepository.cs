@@ -10,6 +10,7 @@ using UserManagement.Utilities;
 using Microsoft.EntityFrameworkCore;
 using UserManagement.Infrastructure.Repositories;
 using UserManagement.Dtos;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace UserManagement.DataLayer.Repositories
 {
@@ -17,19 +18,23 @@ namespace UserManagement.DataLayer.Repositories
     {
         private readonly DataContext _dataContext;
 
-        public UserRoleRepository(DataContext dataContext)
+        public UserRoleRepository(DataContext dataContext,IServiceProvider serviceProvider)
         {
-            _dataContext = dataContext;
+            //_dataContext = dataContext;
+            _dataContext = serviceProvider.CreateScope().ServiceProvider.GetRequiredService<DataContext>();
+
         }
 
         public async Task AddAsync(UserRole entity)
         {
             await _dataContext.UsersRoles.AddAsync(entity);
+            await _dataContext.SaveChangesAsync();
         }
 
         public void Edit(UserRole entity)
         {
             _dataContext.UsersRoles.Update(entity);
+            _dataContext.SaveChanges();
         }
 
         public async Task<UserRole> GetAsync(int id, int header)
@@ -62,8 +67,7 @@ namespace UserManagement.DataLayer.Repositories
                           where s.CompanyId == header
                           select new UserRoleDetailDto
                           {
-                             // KeyInt = s.Id,
-                             // Value = s.RoleName,
+                            
                              RoleName=s.RoleName,
                              Id=s.Id,
                               CompanyId=s.CompanyId,
@@ -129,6 +133,7 @@ namespace UserManagement.DataLayer.Repositories
             var data = await _dataContext.UsersRoles.FindAsync(id);
             data.Status = Constants.RecordStatus.Deleted;
             _dataContext.UsersRoles.Update(data);
+            await _dataContext.SaveChangesAsync();
         }
     }
 }

@@ -39,9 +39,7 @@ namespace UserManagement.Managers
         {
             await SeedRolesAsync();
             await SeedAdminAsync();
-           /* await SeedItemTypesAsync();
-            await SeedPaymentMethodsAsync();
-            await SeedCountryAsync();*/
+           
         }
 
         private async Task SeedRolesAsync()
@@ -122,103 +120,6 @@ namespace UserManagement.Managers
             }
         }
 
-     /*   private async Task SeedItemTypesAsync()
-        {
-
-            if (await _itemTypeRepository.HasItemsAsync())
-            {
-                return;
-            }
-            try
-            {
-                await _itemTypeRepository.AddAsync(new ItemType
-                {
-                    Id = 1,
-                    Name = "Application Development",
-                    Status = Constants.RecordStatus.Active
-                });
-                await _itemTypeRepository.AddAsync(new ItemType
-                {
-                    Id = 2,
-                    Name = "Application Hosting",
-                    Status = Constants.RecordStatus.Active
-                });
-                await _itemTypeRepository.AddAsync(new ItemType
-                {
-                    Id = 3,
-                    Name = "Consulting",
-                    Status = Constants.RecordStatus.Active
-                });
-
-                await _unitOfWork.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error in item types seeding {ex}");
-            }
-        }*/
-
-       /* private async Task SeedCountryAsync()
-        {
-            if (await _countryRepository.HasItemsAsync())
-            {
-                return;
-            }
-            try
-            {
-                await _countryRepository.AddAsync(new Country
-                {
-                    Id = 1,
-                    Name = "Canada",
-                    IsoCode = "CAN",
-                    Status = Constants.RecordStatus.Active
-                });
-
-                await _unitOfWork.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error in country seeding {ex}");
-            }
-        }*/
-
-/*        private async Task SeedPaymentMethodsAsync()
-        {
-            if (await _paymentMethodRepository.HasItemsAsync())
-            {
-                return;
-            }
-
-            try
-            {
-
-                await _paymentMethodRepository.AddAsync(new PaymentMethod
-                {
-                    // Id = 1,
-                    Name = "Bank Transfer",
-                    Status = Constants.RecordStatus.Active
-                });
-
-                await _paymentMethodRepository.AddAsync(new PaymentMethod
-                {
-                    //   Id = 2,
-                    Name = "Cash",
-                    Status = Constants.RecordStatus.Active
-                });
-
-                await _paymentMethodRepository.AddAsync(new PaymentMethod
-                {
-                    // Id = 3,
-                    Name = "Cheque",
-                    Status = Constants.RecordStatus.Active
-                });
-
-                await _unitOfWork.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error in payment methods seeding {ex}");
-            }
-        }*/
+    
     }
 }

@@ -16,16 +16,16 @@ namespace UserManagement.Infrastructure.Managers
     {
 
         Task AddAsync1(AddUserModel model,string header);
-
+        Task AddUser(AddUserModel model);
         int GetLastNextDoorUserId(string email);
         Task AddAsync(AddUserModel model, string header);
         Task LoginAddAsync(UserDetailDto model);
         Task EditAsync(EditUserModel model, string header);
         Task EditNextDoorAsync(EditNextDoorUser model);
-        //  Task UpdateAsync(LanguagesUpdateModel model);
+       
         Task EditImgAsync(EditImgModel model, string header);
 
-        //Task<List<AssignUserRoleDto>> GetAssignUserRoleById(int id);
+       
         Task<UserDetailDto> CheckEmail(string Email);
 
 
@@ -39,7 +39,7 @@ namespace UserManagement.Infrastructure.Managers
         
 
         Task<UserDetailDto> Login(UserLoginModel model);
-        // Task<JqDataTableResponse<UserDetailDto>> GetAgentPagedResultAsync(JqDataTableRequest model);
+      
         Task LogOut(int id, int header);
         Task<UserDetailDto> isExist(string email);
         Task saveOtp(string email, int otp);
@@ -51,14 +51,12 @@ namespace UserManagement.Infrastructure.Managers
 
 
         Task<List<UserDetailDto>> GetAllAsync(int header);
-        /*        Task<IEnumerable<UserDetailDto>> OnlineUserPagedResult(Constants.RecordStatus? status = null);
-        */
+      
         Task<JqDataTableResponse<UserDetailDto>> OnlineUserPagedResult(JqDataTableRequest model, int header);
         bool CheckPassword(int adminid, string adminPassword);
         Task ChangePasswordAdmin(ChangePasswordModel model);
 
-       
-        //  Task<JqDataTableResponse<UserDetailDto>> GetOnlyOnlineAgentPagedResultAsync(JqDataTableRequest model);
+      
     }
 
 }

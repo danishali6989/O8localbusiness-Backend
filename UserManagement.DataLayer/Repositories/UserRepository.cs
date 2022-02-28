@@ -27,8 +27,7 @@ namespace UserManagement.DataLayer.Repositories
         public async Task AddAsync(User entity)
         {
             await _dataContext.User.AddAsync(entity);
-          //  _dataContext.User.OrderBy(x => x.Id).LastOrDefault();
-           
+            await _dataContext.SaveChangesAsync();
         }
 
         public async Task AddAsync1(User entity)
@@ -37,10 +36,15 @@ namespace UserManagement.DataLayer.Repositories
             await _dataContext.SaveChangesAsync();
 
         }
-
-         public int GetLastNextDoorUserId(string Email)
+        public async Task AddUser(User entity)
         {
-            // var obj = _dataContext.User.OrderBy(x => x.Email).LastOrDefault();
+            await _dataContext.User.AddAsync(entity);
+            await _dataContext.SaveChangesAsync();
+
+        }
+        public int GetLastNextDoorUserId(string Email)
+        {
+           
             var obj = _dataContext.User.Where(x => x.Email == Email).FirstOrDefault();
             return obj.Id;
         }
@@ -62,7 +66,7 @@ namespace UserManagement.DataLayer.Repositories
         public void Edit(User entity)
         {
             _dataContext.User.Update(entity);
-             _dataContext.SaveChangesAsync();
+             _dataContext.SaveChanges();
         }
 
         public async Task<User> GetAsync(int id, int header)
@@ -73,7 +77,7 @@ namespace UserManagement.DataLayer.Repositories
         {
             var data = _dataContext.User.Where(x => x.Id == userid).FirstOrDefault();
             return data;
-         //   return await _dataContext.User.FindAsync(id);
+         
         }
 
         public async Task<UserDetailDto> GetDetailAsync(int id, int header)
@@ -155,6 +159,7 @@ namespace UserManagement.DataLayer.Repositories
             var data = await _dataContext.User.FindAsync(id);
             data.Status = Constants.RecordStatus.Deleted;
             _dataContext.User.Update(data);
+            await _dataContext.SaveChangesAsync();
         }
 
         public bool GetByUserAllradyAsync(int userid)
@@ -171,13 +176,7 @@ namespace UserManagement.DataLayer.Repositories
             }
         }
 
-      /*  public int GetLastUserId(int id)
-        {
-            //return _dataContext.User.Where(x => x.Id == id ).LastOrDefault();
-            var lastColumn = _dataContext.User.LastOrDefault();
-            return lastColumn.Id;
-
-        }*/
+     
         public async Task<UserDetailDto> GetByUserAsync(string username)
         {
             return await (from s in _dataContext.User
@@ -191,7 +190,7 @@ namespace UserManagement.DataLayer.Repositories
                               Password = s.Password,
                               Mobile = s.Mobile,
                               Email = s.Email,
-                            //  PostalCode = s.Postalcode,
+                            
                               RoleId = s.RoleId,
                               RoleName = s.Role.RoleName,
                               App_id = s.App_id,
@@ -357,7 +356,7 @@ namespace UserManagement.DataLayer.Repositories
             data.otp = otp;
 
             _dataContext.User.Update(data);
-
+            await _dataContext.SaveChangesAsync();
 
         }
 
@@ -367,7 +366,7 @@ namespace UserManagement.DataLayer.Repositories
             data.Password = Utility.Encrypt(password);
 
             _dataContext.User.Update(data);
-
+            await _dataContext.SaveChangesAsync();
 
         }
 
@@ -435,8 +434,7 @@ namespace UserManagement.DataLayer.Repositories
 
         public bool CheckPasswordAsync(int adminid, string adminPassword)
         {
-            // if (UserManagement.Utilities.Utility.Decrypt(adminPassword, data.Password) == false)
-
+           
             var pass = adminPassword;
             var user = _dataContext.User.Where(x => x.Id == adminid && (Utilities.Utility.Decrypt(pass, x.Password))).FirstOrDefault();
 
@@ -456,7 +454,7 @@ namespace UserManagement.DataLayer.Repositories
             data.Password = Utility.Encrypt(model.NewPassword);
 
             _dataContext.User.Update(data);
-
+            await _dataContext.SaveChangesAsync();
 
         }
 

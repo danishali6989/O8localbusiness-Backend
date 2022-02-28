@@ -100,6 +100,7 @@ namespace UserManagement.DataLayer.Repositories
             var data = await _dataContext.Permission.FindAsync(id);
             data.Status = Constants.RecordStatus.Deleted;
             _dataContext.Permission.Update(data);
+            await _dataContext.SaveChangesAsync();
         }
 
 
